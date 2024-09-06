@@ -8,7 +8,7 @@ import DefaultLayout from "@/layouts/default";
 import { EyeFilledIcon } from "@/components/icons";
 import { EyeSlashFilledIcon } from "@/components/icons";
 
-export default function IndexPage() {
+export default function LoginPage() {
   const [isVisible, setIsVisible] = React.useState(false);
 
   const toggleVisibility = () => setIsVisible(!isVisible);
