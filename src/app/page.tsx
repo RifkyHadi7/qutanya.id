@@ -18,9 +18,6 @@ export default function IndexPage() {
 
   const toggleVisibility = () => setIsVisible(!isVisible);
   
-  const colors = [
-    "primary",
-  ];
   return (
     <DefaultLayout>
       <section className="flex flex-col items-center justify-center gap-4 mt-32 ">
@@ -30,37 +27,75 @@ export default function IndexPage() {
           
         </div>
 
-        {colors.map((color) => (
-        <Input
-          
-          isRequired
-          isClearable
-          type="email"
-          label="Email"
-          variant="bordered"
-          placeholder="Enter your email"
-          onClear={() => console.log("input cleared")}
-          className="max-w-xs"
-        />
-      ))}
+<Input
+  isRequired
+  isClearable
+  label="Email"
+  type="email"
+  variant="bordered"
+  placeholder="Enter your email"
+  className="max-w-xs"
+  classNames={{
+    label: "text-black/50 dark:text-white/90",
+    input: [
+      "bg-transparent",
+      "text-black/90 dark:text-white/90",
+      "placeholder:text-default-700/50 dark:placeholder:text-white/60",
+    ],
+    innerWrapper: "bg-transparent",
+    inputWrapper: [
+      "shadow-xl",
+      "bg-default-200/50",
+      "dark:bg-default/60",
+      "backdrop-blur-xl",
+      "backdrop-saturate-200",
+      "hover:bg-default-200/70",
+      "dark:hover:bg-default/70",
+      "group-data-[focus=true]:bg-default-200/50",
+      "dark:group-data-[focus=true]:bg-default/60",
+      "!cursor-text",
+    ],
+  }}
+/>
         
-        <Input
-          isRequired
-          label="Password"
-          variant="bordered"
-          placeholder="Enter your password"
-          endContent={
-            <button className="focus:outline-none" type="button" onClick={toggleVisibility} aria-label="toggle password visibility">
-              {isVisible ? (
-                <EyeSlashFilledIcon className="text-2xl text-default-400 pointer-events-none" />
-                ) : (
-                <EyeFilledIcon className="text-2xl text-default-400 pointer-events-none" />
-              )}
-            </button>
-            }
-          type={isVisible ? "text" : "password"}
-          className="max-w-xs"
-        />
+<Input
+  isRequired
+  label="Password"
+  variant="bordered"
+  placeholder="Enter your password"
+  endContent={
+    <button className="focus:outline-none" type="button" onClick={toggleVisibility} aria-label="toggle password visibility">
+      {isVisible ? (
+        <EyeSlashFilledIcon className="text-2xl text-default-400 pointer-events-none" />
+      ) : (
+        <EyeFilledIcon className="text-2xl text-default-400 pointer-events-none" />
+      )}
+    </button>
+  }
+  type={isVisible ? "text" : "password"}
+  className="max-w-xs"
+  classNames={{
+    label: "text-black/50 dark:text-white/90",
+    input: [
+      "bg-transparent",
+      "text-black/90 dark:text-white/90",
+      "placeholder:text-default-700/50 dark:placeholder:text-white/60",
+    ],
+    innerWrapper: "bg-transparent",
+    inputWrapper: [
+      "shadow-xl",
+      "bg-default-200/50",
+      "dark:bg-default/60",
+      "backdrop-blur-xl",
+      "backdrop-saturate-200",
+      "hover:bg-default-200/70",
+      "dark:hover:bg-default/70",
+      "group-data-[focus=true]:bg-default-200/50",
+      "dark:group-data-[focus=true]:bg-default/60",
+      "!cursor-text",
+    ],
+  }}
+/>
       
 
           
