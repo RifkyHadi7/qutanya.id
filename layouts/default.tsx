@@ -1,10 +1,12 @@
+"use client"; // Ensure this directive is present
+
 import { NextUIProvider } from "@nextui-org/react";
 import { useEffect, useState } from "react";
-import { lightTheme, darkTheme } from "./theme"; // Import your themes
+import { lightTheme, darkTheme } from "./theme"; // Ensure this import is correct
 import { Link } from "@nextui-org/link";
 import { Head } from "./head";
 
-// Apply themes directly in the provider
+// Define your ThemeProvider as a functional component
 const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
   const [isDark, setIsDark] = useState(false);
 
@@ -25,7 +27,7 @@ const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
   const theme = isDark ? darkTheme : lightTheme;
 
   return (
-    <NextUIProvider>
+    <NextUIProvider >
       <div style={{ backgroundColor: theme.colors.background, color: theme.colors.primary }}>
         {children}
       </div>
@@ -33,6 +35,7 @@ const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
+// Main layout component
 export default function DefaultLayout({
   children,
 }: {
