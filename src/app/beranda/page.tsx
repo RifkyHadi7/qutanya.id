@@ -84,7 +84,7 @@ export default function BerandaPage() {
         <section className="flex flex-col gap-4 mt-16 w-full px-4">
           <Card
             isBlurred
-            className="border-none bg-background/60 dark:bg-default-100/50 w-full"
+            className="border-none bg-background/60 dark:bg-default-100/50 w-full lg:w-2/4 mx-auto"
             shadow="sm"
           >
             <CardBody>
@@ -110,7 +110,7 @@ export default function BerandaPage() {
           </Card>
           <Card
             isBlurred
-            className="border-none bg-background/60 dark:bg-default-100/50 w-full"
+            className="border-none bg-background/60 dark:bg-default-100/50 w-full lg:w-2/4 mx-auto"
             shadow="sm"
           >
             <CardBody>
@@ -134,7 +134,6 @@ export default function BerandaPage() {
               </div>
             </CardBody>
           </Card>
-          
         </section>
 
         <MenuButton />
