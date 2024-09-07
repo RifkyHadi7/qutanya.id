@@ -11,7 +11,7 @@ import Link from "next/link";
 
 export const MenuButton = () => {
   return (
-    <div className="flex gap-16 mb-5 bg-primary p-4">
+    <div className="flex gap-4 mb-5 bg-primary p-4">
       <Link href="/loginpage">
         {/* <Image  src={location.pathname === '/loginpage' ? HomeIconFilled : HomeIcon}  alt="Home Icon" width={40} /> */}
         <Image src={HomeIconFilled} alt="Home Icon" width={40} />

@@ -1,4 +1,18 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {};
+const nextConfig = {
+    reactStrictMode: true,
+    images: {
+        domains: ['https://i.pravatar.cc', 'localhost'],
+        remotePatterns: [
+            {
+              protocol: 'https',
+              hostname: 'i.pravatar.cc',
+              port: '',
+              pathname: '**',
+            },
+            
+          ],
+      },
+};
 
 export default nextConfig;
