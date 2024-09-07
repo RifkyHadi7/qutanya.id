@@ -2,6 +2,7 @@ import * as React from "react";
 
 import { IconSvgProps } from "@/types";
 
+
 export const QutanyaLogo: React.FC<IconSvgProps> = ({
   width = 125, // Default width
   height = 158, // Default height
@@ -29,7 +30,6 @@ export const QutanyaLogo: React.FC<IconSvgProps> = ({
     />
   </svg>
 );
-
 
 export const SearchIcon = (props: IconSvgProps) => (
   <svg

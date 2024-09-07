@@ -25,3 +25,12 @@ body {
     text-wrap: balance;
   }
 }
+
+.bg-background2 {
+  background-color: #FBFCFA; /* Warna background2 */
+}
+
+.rounded-b-extra {
+  border-bottom-left-radius: 3rem; /* Sesuaikan nilai sesuai kebutuhan */
+  border-bottom-right-radius: 3rem; /* Sesuaikan nilai sesuai kebutuhan */
+}

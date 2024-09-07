@@ -13,7 +13,8 @@ const config: Config = {
       colors: {
         primary: "#FFFFFF",
         secondary: "#808585",
-        background:"#25E5DA"
+        background:"#25E5DA",
+        background2:"#F2F2FE",
       }
     },
   },
@@ -24,14 +25,16 @@ const config: Config = {
         colors: {
           primary: "#FFFFFF",
           secondary: "#808585",
-          background:"#25E5DA"
+          background:"#25E5DA",
+          background2:"#F2F2FE",
         }
       },
       dark: {
         colors: {
           primary: "#FFFFFF",
           secondary: "#808585",
-          background: "#25E5DA"
+          background: "#25E5DA",
+          background2:"#F2F2FE",
         }
       },
     },
