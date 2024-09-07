@@ -1,22 +1,18 @@
 "use client";
 import { Link } from "@nextui-org/link";
-import { Input, Tab, Tabs } from "@nextui-org/react";
-import { Button } from "@nextui-org/react";
+import { Input } from "@nextui-org/react";
 import React from "react";
 import { QutanyaLogo, SearchIcon } from "@/components/icons";
 import DefaultLayout from "@/layouts/default1";
-
-
 import { MenuButton } from "@/layouts/menu";
 import { HeaderAvatar } from "@/layouts/headerAvatar";
-
+import { Card, CardBody, Image, Button, Slider } from "@nextui-org/react";
 
 export default function BerandaPage() {
-
   return (
     <DefaultLayout>
       <section className="flex flex-col items-center justify-between min-h-screen bg-background2">
-        <HeaderAvatar></HeaderAvatar>
+        <HeaderAvatar />
 
         <div className="absolute top-28 -mt-6 px-4 w-3/4">
           <Input
@@ -45,7 +41,103 @@ export default function BerandaPage() {
           />
         </div>
 
-        <MenuButton/>
+        <div className="flex flex-row gap-4 mt-10 absolute top-32">
+          <div className="flex flex-col items-center">
+            <button
+              className="w-16 h-16 flex items-center justify-center bg-white shadow-xl rounded-full transition transform duration-300 active:scale-95"
+            >
+              {/* Tempat untuk logo */}
+            </button>
+            <span className="text-xs mt-2 text-secondary">Isi Survey</span>
+          </div>
+          <div className="flex flex-col items-center">
+            <button
+              className="w-16 h-16 flex items-center justify-center bg-white shadow-xl rounded-full transition transform duration-300 active:scale-95"
+            >
+              {/* Tempat untuk logo */}
+            </button>
+            <span className="text-xs mt-2 text-secondary">Buat Survey</span>
+          </div>
+          <div className="flex flex-col items-center">
+            <button
+              className="w-16 h-16 flex items-center justify-center bg-white shadow-xl rounded-full transition transform duration-300 active:scale-95"
+            >
+              {/* Tempat untuk logo */}
+            </button>
+            <span className="text-xs mt-2 text-secondary">ArtikelQu</span>
+          </div>
+          <div className="flex flex-col items-center">
+            <button
+              className="w-16 h-16 flex items-center justify-center bg-white shadow-xl rounded-full transition transform duration-300 active:scale-95"
+            >
+              {/* Tempat untuk logo */}
+            </button>
+            <span className="text-xs mt-2 text-secondary">Menu</span>
+          </div>
+        </div>
+
+        <div className="flex flex-row gap-4 mt-24 min-w-80 absolute top-48 items-end justify-between">
+          <span className="text-md text-secondary leading-none font-bold">Survey Tersedia</span>
+          <span className="text-sm text-secondary leading-none">Filter</span>
+        </div>
+
+        <section className="flex flex-col gap-4 mt-16 w-full px-4">
+          <Card
+            isBlurred
+            className="border-none bg-background/60 dark:bg-default-100/50 w-full"
+            shadow="sm"
+          >
+            <CardBody>
+              <div className="grid grid-cols-3 gap-4 items-center">
+                <div className="col-span-1">
+                  <Image
+                    alt="Album cover"
+                    className="object-cover"
+                    height={90}
+                    shadow="md"
+                    src="https://nextui.org/images/album-cover.png"
+                    width="100%"
+                  />
+                </div>
+                <div className="col-span-2">
+                  {/* Konten lain di sebelah kanan gambar */}
+                  <h3 className="text-lg font-bold">Judul Survey</h3>
+                  <p className="text-sm text-secondary">Deskripsi singkat tentang survey ini.</p>
+                  <Button className="mt-2">Mulai Survey</Button>
+                </div>
+              </div>
+            </CardBody>
+          </Card>
+          <Card
+            isBlurred
+            className="border-none bg-background/60 dark:bg-default-100/50 w-full"
+            shadow="sm"
+          >
+            <CardBody>
+              <div className="grid grid-cols-3 gap-4 items-center">
+                <div className="col-span-1">
+                  <Image
+                    alt="Album cover"
+                    className="object-cover"
+                    height={90}
+                    shadow="md"
+                    src="https://nextui.org/images/album-cover.png"
+                    width="100%"
+                  />
+                </div>
+                <div className="col-span-2">
+                  {/* Konten lain di sebelah kanan gambar */}
+                  <h3 className="text-lg font-bold">Judul Survey</h3>
+                  <p className="text-sm text-secondary">Deskripsi singkat tentang survey ini.</p>
+                  <Button className="mt-2">Mulai Survey</Button>
+                </div>
+              </div>
+            </CardBody>
+          </Card>
+          
+        </section>
+
+        <MenuButton />
       </section>
     </DefaultLayout>
   );
