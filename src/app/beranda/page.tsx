@@ -81,7 +81,7 @@ export default function BerandaPage() {
           <span className="text-sm text-secondary leading-none">Filter</span>
         </div>
 
-        <section className="flex flex-col gap-4 mt-16 w-full px-4">
+        <section className="flex flex-col gap-4 mt-32 w-full px-4">
             <Content />
             <Content />     
         </section>

@@ -15,6 +15,7 @@ const config: Config = {
         secondary: "#808585",
         background:"#25E5DA",
         background2:"#F2F2FE",
+        balance: "#21FF5C",
       }
     },
   },
@@ -27,6 +28,7 @@ const config: Config = {
           secondary: "#808585",
           background:"#25E5DA",
           background2:"#F2F2FE",
+          balance: "#21FF5C",
         }
       },
       dark: {
@@ -35,6 +37,7 @@ const config: Config = {
           secondary: "#808585",
           background: "#25E5DA",
           background2:"#F2F2FE",
+          balance: "#21FF5C",
         }
       },
     },
