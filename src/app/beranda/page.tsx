@@ -1,14 +1,12 @@
 "use client";
-import { Link } from "@nextui-org/link";
+
 import { Input } from "@nextui-org/react";
 import React from "react";
-import { QutanyaLogo, SearchIcon } from "@/components/icons";
+import { SearchIcon } from "@/components/icons";
 import DefaultLayout from "@/layouts/default1";
 import { MenuButton } from "@/layouts/menu";
 import { HeaderAvatar } from "@/layouts/headerAvatar";
-import { Card, CardBody, Image, Button, Slider } from "@nextui-org/react";
-import { ScrollShadow } from "@nextui-org/react";
-import { Content } from "../Content";
+import { Content } from "../../../layouts/Content";
 
 export default function BerandaPage() {
   return (
@@ -84,6 +82,7 @@ export default function BerandaPage() {
         </div>
 
         <section className="flex flex-col gap-4 mt-16 w-full px-4">
+            <Content />
             <Content />     
         </section>
 
