@@ -30,7 +30,6 @@ export const QutanyaLogo: React.FC<IconSvgProps> = ({
   </svg>
 );
 
-
 export const SearchIcon = (props: IconSvgProps) => (
   <svg
     aria-hidden="true"
@@ -142,3 +141,4 @@ export const EyeFilledIcon = (props: IconSvgProps) => (
     />
   </svg>
 );
+
