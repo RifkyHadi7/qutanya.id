@@ -23,7 +23,7 @@ export const Content = () => (
           </div>
           <div className="col-span-2">
             {/* Konten lain di sebelah kanan gambar */}
-            <h3 className="text-lg font-bold">Judul Survey</h3>
+            <h3 className="text-md font-semibold">Judul Survey</h3>
             <p className="text-sm text-secondary">Deskripsi singkat tentang survey ini.</p>
             <Button className="mt-2">Mulai Survey</Button>
           </div>

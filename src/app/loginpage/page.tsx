@@ -94,7 +94,7 @@ export default function LoginPage() {
       <section className="flex flex-col items-center justify-center mt-32 gap-4 max-w-xs mx-auto">
         <QutanyaLogo size={200} />
         <div className="inline-block max-w-md text-center justify-center">
-          <h1 className="text-3xl lg:text-4xl">Qutanya.id</h1>
+          <h1 className="text-3xl lg:text-4xl font-semibold">Qutanya.id</h1>
         </div>
 
         <form onSubmit={handleLogin}>

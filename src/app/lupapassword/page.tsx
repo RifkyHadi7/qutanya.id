@@ -16,13 +16,13 @@ const toggleVisibility = () => setIsVisible(!isVisible);
 
 return (
   <DefaultLayout>
-    <section className="flex flex-col items-center justify-center mt-32 gap-2 max-w-xs mx-auto">
+    <section className="flex flex-col items-center justify-center mt-32 gap-2 mx-auto">
       <QutanyaLogo size={200} />
       <div className="inline-block max-w-md text-center justify-center">
-        <h1 className="text-3xl lg:text-4xl">Qutanya.id</h1>
+        <h1 className="text-3xl lg:text-4xl font-semibold">Qutanya.id</h1>
       </div>
 
-      <div className="text-2xl text-primary text-lg font-medium">
+      <div className="text-2xl text-primary text-lg font-semibold">
         Password Recovery
       </div>
         <span className="text-secondary">Enter your email to recover your password</span>
