@@ -50,6 +50,11 @@ export default function BerandaPage() {
         <section className="flex flex-col gap-4 w-full px-4">
           
           <div className="flex flex-col gap-4 w-full mx-auto">
+          <Input
+              label="Judul survey"
+              placeholder="Masukkan judul survey"
+              className="mx-auto lg:w-1/2"
+            />
             <Input
               label="Link Form untuk responden"
               placeholder="Masukkan link form"
@@ -61,8 +66,8 @@ export default function BerandaPage() {
               className="mx-auto lg:w-1/2"
             />
             <Input
-              label="Jumlah Pertanyaan"
-              placeholder="Masukkan jumlah pertanyaan"
+              label="Reward survey"
+              placeholder="Masukkan reward survey"
               type="number"
               className="mx-auto lg:w-1/2"
             />
