@@ -1,7 +1,10 @@
+"use client";
+
 import DefaultLayout from "@/layouts/default1";
 import { MenuButton } from "@/layouts/menu";
 import { HeaderAvatar } from "@/layouts/headerAvatar";
 import { Saldo } from "@/layouts/saldo";
+import { Router } from "react-router-dom";
 
 export default function BerandaPage() {
   return (
@@ -17,8 +20,10 @@ export default function BerandaPage() {
             <Saldo />
           </div>
         </section>
-
+        
+      <Router location={"/balance"} navigator={undefined}>
         <MenuButton />
+      </Router>
       </section>
     </DefaultLayout>
   );

@@ -7,6 +7,7 @@ import DefaultLayout from "@/layouts/default1";
 import { MenuButton } from "@/layouts/menu";
 import { HeaderAvatar } from "@/layouts/headerAvatar";
 import { Content } from "../../../layouts/Content";
+import { Router } from "react-router-dom";
 
 export default function BerandaPage() {
   return (
@@ -86,7 +87,9 @@ export default function BerandaPage() {
             <Content />     
         </section>
 
+        <Router location={"/beranda"} navigator={undefined}>
         <MenuButton />
+        </Router>
       </section>
     </DefaultLayout>
   );

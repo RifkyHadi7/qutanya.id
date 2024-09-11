@@ -7,7 +7,7 @@ export const HeaderAvatar = () => {
     <header className="relative bg-background shadow-lg rounded-b-extra p-4 pb-12 flex items-center justify-between w-full">
       <div className="flex items-center">
         <Image
-          src="https://i.pravatar.cc/150?u=a04258114e29026702d"
+          src="https://oadqfnknwbaahnminxvl.supabase.co/storage/v1/object/public/foto_profile/Azizi"
           width={40}
           height={50}
           alt="Profile"
