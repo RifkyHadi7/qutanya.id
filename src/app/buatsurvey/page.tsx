@@ -11,39 +11,17 @@ import { Button } from "@nextui-org/react";
 export default function BerandaPage() {
   return (
     <DefaultLayout>
-      <section className="flex flex-col items-center justify-between min-h-screen bg-background2">
+      <section className="flex flex-col items-center justify-between min-h-screen bg-background2 relative z-10">
         <HeaderAvatar />
 
-        <div className="absolute top-28 -mt-6 px-4 w-3/4">
-          <Input
-            startContent={<SearchIcon className="text-secondary" />}
-            isClearable
-            placeholder="Cari survei sesuai fashion anda"
-            className="w-full"
-            classNames={{
-              input: [
-                "bg-white",
-                "text-black/90 dark:text-white/90",
-                "placeholder:text-default-700/50 dark:placeholder:text-white/60",
-              ],
-              innerWrapper: "bg-white",
-              inputWrapper: [
-                "shadow-xl",
-                "bg-white",
-                "dark:bg-default/60",
-                "backdrop-blur-xl",
-                "backdrop-saturate-200",
-                "!cursor-text",
-                "!hover:bg-white",
-                "!dark:hover:bg-default/60",
-              ],
-            }}
-          />
-        </div>
+        
+          <MenuButton />
+        
+      </section>
 
-        <NavbarTop />
-
-        <h2 className="text-2xl font-bold text-center text-secondary mt-20">
+      
+      <section className="flex flex-col items-center gap-4 top-20 absolute w-full z-20">
+        <h2 className="text-2xl font-bold text-center text-secondary mt-6">
             Buat Survey
           </h2>
 
@@ -54,29 +32,29 @@ export default function BerandaPage() {
               label="Judul survey"
               placeholder="Masukkan judul survey"
               className="mx-auto lg:w-1/2"
-            />
+              />
             <Input
               label="Link Form untuk responden"
               placeholder="Masukkan link form"
               className="mx-auto lg:w-1/2"
-            />
+              />
             <Input
               label="Link Form untuk acces edit"
               placeholder="Masukkan link form"
               className="mx-auto lg:w-1/2"
-            />
+              />
             <Input
               label="Reward survey"
               placeholder="Masukkan reward survey"
               type="number"
               className="mx-auto lg:w-1/2"
-            />
+              />
             <Input
               label="Jumlah Responden"
               placeholder="Masukkan jumlah responden"
               type="number"
               className="mx-auto lg:w-1/2"
-            />
+              />
             <Button
               variant="solid"
               size="lg"
@@ -99,14 +77,14 @@ export default function BerandaPage() {
                 "dark:group-data-[focus=true]:bg-default/60",
                 "!cursor-pointer",
               ].join(" ")}
-            >
+              >
               Buat Survey
             </Button>
           </div>
+              </section>
         </section>
 
-        <MenuButton />
-      </section>
+        
     </DefaultLayout>
   );
 }

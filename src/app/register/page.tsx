@@ -1,12 +1,25 @@
 "use client";
 
 import React, { useEffect, useState, useMemo } from "react";
-import { Input, Spacer, Button, Autocomplete, AutocompleteItem, DatePicker } from "@nextui-org/react";
-import { QutanyaLogo, EyeFilledIcon, EyeSlashFilledIcon } from "@/components/icons";
+import {
+  Input,
+  Spacer,
+  Button,
+  Autocomplete,
+  AutocompleteItem,
+  DatePicker,
+  DateInput,
+} from "@nextui-org/react";
+import {
+  QutanyaLogo,
+  EyeFilledIcon,
+  EyeSlashFilledIcon,
+} from "@/components/icons";
 import DefaultLayout from "@/layouts/default";
 import axios from "axios";
 import Head from "next/head";
 import { useRouter } from "next/navigation";
+import dayjs from "dayjs";
 
 export default function RegisterPage() {
   const [isVisible, setIsVisible] = useState(false);
@@ -133,10 +146,12 @@ export default function RegisterPage() {
       return;
     }
 
+    console.log('Tanggal Lahir Sebelum Dikirim:', tanggal_lahir.toISOString());
+
     try {
       const response = await axios.post("https://qutanya-be.vercel.app/user", {
         nama,
-        tanggal_lahir: tanggal_lahir.toISOString().split('T')[0],
+        tanggal_lahir: dayjs(tanggal_lahir).format("YYYY-MM-DD"),
         gender,
         provinsi: provinsiName,
         kota: selectedKotaName,
@@ -181,8 +196,10 @@ export default function RegisterPage() {
           <h1 className="text-3xl lg:text-4xl font-semibold">Qutanya.id</h1>
         </div>
         {errorMessage && (
-            <div className="text-red-500 text-center font-bold">{errorMessage}</div>
-          )}
+          <div className="text-red-500 text-center font-bold">
+            {errorMessage}
+          </div>
+        )}
         <form className="w-full mx-auto max-w-xs" onSubmit={handleRegister}>
           <Input
             id="nama-lengkap-input"
@@ -216,33 +233,35 @@ export default function RegisterPage() {
           />
           <Spacer y={2}></Spacer>
 
-          <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
-            <DatePicker
-              id="tanggal-lahir-input"
-              label="Tanggal Lahir"
-              className="max-w-sm"
-              classNames={{
-                label: "text-black/50 dark:text-white/90",
-                input: [
-                  "bg-white",
-                  "text-black/90 dark:text-white/90",
-                  "placeholder:text-default-700/50 dark:placeholder:text-white/60",
-                ],
-                innerWrapper: "bg-white",
-                inputWrapper: [
-                  "shadow-xl",
-                  "bg-white",
-                  "dark:bg-default/60",
-                  "backdrop-blur-xl",
-                  "backdrop-saturate-200",
-                  "!hover:bg-white", // Disable hover effect
-                  "!dark:hover:bg-default/60", // Disable dark mode hover effect
-                ],
-              }}
-              selected={tanggal_lahir}
-              onValueChange={(e) => setTanggalLahir(dayjs(e))}
-            />
-          </div>
+          <DateInput
+            id="tanggal-lahir-input"
+            label="Tanggal Lahir"
+            className="max-w-sm"
+            classNames={{
+              label: "text-black/50 dark:text-white/90",
+              input: [
+                "bg-white",
+                "text-black/90 dark:text-white/90",
+                "placeholder:text-default-700/50 dark:placeholder:text-white/60",
+              ],
+              innerWrapper: "bg-white",
+              inputWrapper: [
+                "shadow-xl",
+                "bg-white",
+                "dark:bg-default/60",
+                "backdrop-blur-xl",
+                "backdrop-saturate-200",
+                "!hover:bg-white",
+                "!dark:hover:bg-default/60",
+              ],
+            }}
+          
+            onValueChange={(e) => {
+               setTanggalLahir(tanggal_lahir);
+              console.log("Tanggal Lahir Dipilih:", tanggal_lahir.toISOString()); // Log nilai tanggal
+            }}
+          />
+
           <Spacer y={2}></Spacer>
 
           <Autocomplete
@@ -479,7 +498,7 @@ export default function RegisterPage() {
           />
           <Spacer y={2}></Spacer>
           {/* Password Input */}
-          
+
           <Input
             value={password}
             isRequired

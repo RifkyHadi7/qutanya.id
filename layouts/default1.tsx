@@ -48,16 +48,9 @@ export default function DefaultLayout({
         <main className="container flex-grow pt-16 mx-auto w-full">
           {children}
         </main>
-        <footer className="flex items-center justify-center w-full py-3">
-          <Link
-            isExternal
-            className="flex items-center gap-1 text-current"
-            href="https://nextui-docs-v2.vercel.app?utm_source=next-pages-template"
-            title="nextui.org homepage"
-          >
+        <footer className="flex items-center justify-center w-full py-3">      
             <span className="text-default-600">Copyright</span>
             <p className="text-secondary">ⓒ 2024 Cod Sapi Digital</p>
-          </Link>
         </footer>
       </div>
     </ThemeProvider>

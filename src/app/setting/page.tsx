@@ -9,6 +9,7 @@ import { EyeFilledIcon } from "@/components/icons";
 import { EyeSlashFilledIcon } from "@/components/icons";
 import { HeaderAvatar } from "@/layouts/headerAvatar";
 import { useRouter } from "next/navigation"; // Import useRouter
+import { MenuButton } from "@/layouts/menu";
 
 export default function SettingsPage() {
   const [name, setName] = useState("");
@@ -42,20 +43,22 @@ export default function SettingsPage() {
 
   return (
     <DefaultLayout>
-      <section className="flex flex-col h-screen bg-background2 mx-auto">
+      <section className="flex flex-col h-screen bg-background2 items-center justify-between mx-auto relative z-10">
         <HeaderAvatar />
+        <MenuButton/>
+        </section>
 
-        <section className="flex flex-col items-center justify-center gap-2">
+        <section className="flex flex-col items-center justify-center w-screen mx-auto gap-2 absolute top-24 z-20">
           <div className="inline-block max-w-xs text-center">
-            <h2 className="text-xl lg:text-2xl mt-8 text-secondary">
+            <h2 className="text-secondary text-2xl font-bold">
               General Settings
             </h2>
           </div>
 
-          <Divider className="my-4 mx-4" />
+          <Divider className="my-2 mx-2" />
 
           {userData && (
-            <div className="flex flex-col items-center w-full max-w-xs bg-white p-4 rounded-lg shadow-lg">
+            <div className="flex flex-col items-center w-full max-w-md mx-auto bg-white rounded-lg shadow-lg">
               <h3 className="text-lg font-semibold text-secondary">Biodata</h3>
               <p className="text-sm text-black/90 dark:text-white/90">
                 Nama: {userData.nama}
@@ -75,13 +78,13 @@ export default function SettingsPage() {
             </div>
           )}
 
-          <Accordion variant="splitted" className="w-full max-w-xs mt-4">
+          <Accordion variant="splitted" className="w-full max-w-md mx-auto p-2">
             <AccordionItem
               key="1"
               aria-label="Accordion 1"
               title="Update Biodata"
             >
-              <div className="flex flex-col gap-4">
+              <div className="flex flex-col gap-2">
                 <Input
                   label="Nama"
                   placeholder="Enter your name"
@@ -119,7 +122,7 @@ export default function SettingsPage() {
               aria-label="Accordion 2"
               title="Ganti Password"
             >
-              <div className="flex flex-col gap-4">
+              <div className="flex flex-col gap-2">
                 <Input
                   isRequired
                   label="Old Password"
@@ -233,24 +236,24 @@ export default function SettingsPage() {
             size="md"
             fullWidth
             className={[
-              "max-w-xs",
+              "max-w-md",
               "bg-default-200/50",
               "dark:bg-default/60",
               "text-black/90 dark:text-white/90",
               "shadow-xl",
-              "bg-transparent",
+              "bg-background",
               "backdrop-blur-xl",
               "backdrop-saturate-200",
               "hover:bg-default-200/70",
               "dark:hover:bg-default/70",
-              "mt-8",
+              "mt-4",
             ].join(" ")}
             onClick={handleLogout} // Add onClick handler
           >
             Log Out
           </Button>
         </section>
-      </section>
+      
     </DefaultLayout>
   );
 }
