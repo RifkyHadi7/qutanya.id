@@ -43,19 +43,31 @@ export default function BerandaPage() {
 
         <NavbarTop />
 
-        <section className="flex flex-col gap-4 mt-2 w-full px-4">
-          <h2 className="text-2xl font-bold text-center text-secondary">
+        <h2 className="text-2xl font-bold text-center text-secondary mt-20">
             Buat Survey
           </h2>
+
+        <section className="flex flex-col gap-4 w-full px-4">
+          
           <div className="flex flex-col gap-4 w-full mx-auto">
+          <Input
+              label="Judul survey"
+              placeholder="Masukkan judul survey"
+              className="mx-auto lg:w-1/2"
+            />
             <Input
-              label="Link Form"
+              label="Link Form untuk responden"
               placeholder="Masukkan link form"
               className="mx-auto lg:w-1/2"
             />
             <Input
-              label="Jumlah Pertanyaan"
-              placeholder="Masukkan jumlah pertanyaan"
+              label="Link Form untuk acces edit"
+              placeholder="Masukkan link form"
+              className="mx-auto lg:w-1/2"
+            />
+            <Input
+              label="Reward survey"
+              placeholder="Masukkan reward survey"
               type="number"
               className="mx-auto lg:w-1/2"
             />

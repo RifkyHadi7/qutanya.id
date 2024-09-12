@@ -1,12 +1,14 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button, Input } from "@nextui-org/react";
 import DefaultLayout from "@/layouts/default1";
 import { Divider } from "@nextui-org/react";
 import { Accordion, AccordionItem } from "@nextui-org/react";
 import { EyeFilledIcon } from "@/components/icons";
 import { EyeSlashFilledIcon } from "@/components/icons";
+import { HeaderAvatar } from "@/layouts/headerAvatar";
+import { useRouter } from "next/navigation"; // Import useRouter
 
 export default function SettingsPage() {
   const [name, setName] = useState("");
@@ -15,28 +17,33 @@ export default function SettingsPage() {
   const [newPassword, setNewPassword] = useState("");
   const [isVisible, setIsVisible] = React.useState(false);
   const [countdown, setCountdown] = useState(60);
+  const [userData, setUserData] = useState(null);
+  const router = useRouter(); // Initialize useRouter
+
+  useEffect(() => {
+    const userData = sessionStorage.getItem("userData");
+    if (userData) {
+      setUserData(JSON.parse(userData).data);
+    }
+  }, []);
 
   const toggleVisibility = () => setIsVisible(!isVisible);
+
+  const handleLogout = () => {
+    // Clear session storage
+    sessionStorage.clear();
+
+    // Clear session cookie
+    document.cookie = "session=; path=/; max-age=0";
+
+    // Redirect to login page
+    router.push("/loginpage");
+  };
 
   return (
     <DefaultLayout>
       <section className="flex flex-col h-screen bg-background2 mx-auto">
-        <header className="relative bg-[#25E5DA] shadow-lg rounded-b-extra p-4 pb-12 flex items-center justify-between w-full">
-          <div className="flex items-center">
-            <img
-              src="/path/to/profile.jpg"
-              alt="Profile"
-              className="w-12 h-12 rounded-full"
-            />
-            <div className="ml-4">
-              <span className="text-lg font-semibold text-secondary">Hi,</span>
-              <span className="text-lg font-semibold text-secondary">
-                {" "}
-                John Doe
-              </span>
-            </div>
-          </div>
-        </header>
+        <HeaderAvatar />
 
         <section className="flex flex-col items-center justify-center gap-2">
           <div className="inline-block max-w-xs text-center">
@@ -47,7 +54,28 @@ export default function SettingsPage() {
 
           <Divider className="my-4 mx-4" />
 
-          <Accordion variant="splitted" className="w-full max-w-xs">
+          {userData && (
+            <div className="flex flex-col items-center w-full max-w-xs bg-white p-4 rounded-lg shadow-lg">
+              <h3 className="text-lg font-semibold text-secondary">Biodata</h3>
+              <p className="text-sm text-black/90 dark:text-white/90">
+                Nama: {userData.nama}
+              </p>
+              <p className="text-sm text-black/90 dark:text-white/90">
+                Pekerjaan: {userData.biodata[0].pekerjaan}
+              </p>
+              <p className="text-sm text-black/90 dark:text-white/90">
+                Tanggal Lahir: {userData.biodata[0].tanggal_lahir}
+              </p>
+              <p className="text-sm text-black/90 dark:text-white/90">
+                Provinsi: {userData.biodata[0].provinsi}
+              </p>
+              <p className="text-sm text-black/90 dark:text-white/90">
+                Kota: {userData.biodata[0].kota}
+              </p>
+            </div>
+          )}
+
+          <Accordion variant="splitted" className="w-full max-w-xs mt-4">
             <AccordionItem
               key="1"
               aria-label="Accordion 1"
@@ -217,6 +245,7 @@ export default function SettingsPage() {
               "dark:hover:bg-default/70",
               "mt-8",
             ].join(" ")}
+            onClick={handleLogout} // Add onClick handler
           >
             Log Out
           </Button>
