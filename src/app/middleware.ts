@@ -5,9 +5,9 @@ export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   // Daftar halaman yang tidak memerlukan sesi
-  const publicPaths = ['/loginpage', '/register'];
+  const publicPaths = ['/loginpage', '/register', '/lupapassword'];
 
-  // Jika pengguna mencoba mengakses halaman login atau register, izinkan
+  // Jika pengguna mencoba mengakses halaman login, register, atau lupa password, izinkan
   if (publicPaths.includes(pathname)) {
     return NextResponse.next();
   }
@@ -28,5 +28,7 @@ export function middleware(request: NextRequest) {
 
 // Tentukan rute mana yang akan menggunakan middleware ini
 export const config = {
-  matcher: '/((?!api|_next/static|_next/image|favicon.ico).*)',
+  matcher: [
+    '/((?!api|_next/static|_next/image|favicon.ico|loginpage|register|lupapassword).*)',
+  ],
 };
