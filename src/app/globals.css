@@ -5,6 +5,13 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --font-inter: 'Inter', sans-serif;
+}
+
+body {
+  font-family: var(--font-inter);
+  color: var(--foreground);
+  background: var(--background);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -14,14 +21,18 @@
   }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-}
-
 @layer utilities {
   .text-balance {
+    color: #21FF5C; /* Tambahkan aturan warna teks */
     text-wrap: balance;
   }
+}
+
+.bg-background2 {
+  background-color: #FBFCFA; /* Warna background2 */
+}
+
+.rounded-b-extra {
+  border-bottom-left-radius: 3rem; /* Sesuaikan nilai sesuai kebutuhan */
+  border-bottom-right-radius: 3rem; /* Sesuaikan nilai sesuai kebutuhan */
 }

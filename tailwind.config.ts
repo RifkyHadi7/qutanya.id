@@ -13,7 +13,10 @@ const config: Config = {
       colors: {
         primary: "#FFFFFF",
         secondary: "#808585",
-        background:"#25E5DA"
+        background:"#25E5DA",
+        background2:"#F2F2FE",
+        balance: "#21FF5C",
+        saldo: "#21FF5C" ,
       }
     },
   },
@@ -24,14 +27,20 @@ const config: Config = {
         colors: {
           primary: "#FFFFFF",
           secondary: "#808585",
-          background:"#25E5DA"
+          background:"#25E5DA",
+          background2:"#F2F2FE",
+          balance: "#21FF5C",
+          saldo: "#21FF5C" ,
         }
       },
       dark: {
         colors: {
           primary: "#FFFFFF",
           secondary: "#808585",
-          background: "#25E5DA"
+          background: "#25E5DA",
+          background2:"#F2F2FE",
+          balance: "#21FF5C",
+          saldo: "#21FF5C" ,
         }
       },
     },
