@@ -4,9 +4,9 @@ import DefaultLayout from "@/layouts/default1";
 import { MenuButton } from "@/layouts/menu";
 import { HeaderAvatar } from "@/layouts/headerAvatar";
 import { Saldo } from "@/layouts/saldo";
-import { Router } from "react-router-dom";
+// import { Router } from "react-router-dom";
 import { ScrollShadow } from "@nextui-org/react";
-import { createBrowserHistory } from "history";
+// import { createBrowserHistory } from "history";
 
 const transactionHistory = [
   { id: 1, title: "Pembelian Pulsa", amount: "-Rp 50.000", date: "2023-01-01" },
@@ -16,7 +16,7 @@ const transactionHistory = [
 ];
 
 export default function BerandaPage() {
-  const history = createBrowserHistory();
+  // const history = createBrowserHistory();
   return (
     <DefaultLayout>
       <section className="flex flex-col items-center justify-between min-h-screen bg-background2">
@@ -46,9 +46,9 @@ export default function BerandaPage() {
           </div>
         </section>
         
-        <Router location={"/balance"} navigator={history}>
+        
           <MenuButton />
-        </Router>
+        
       </section>
     </DefaultLayout>
   );

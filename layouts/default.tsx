@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { lightTheme, darkTheme } from "./theme"; // Ensure this import is correct
 import { Link } from "@nextui-org/link";
 import { Head } from "./head";
+import { BrowserRouter } from "react-router-dom";
 
 // Define your ThemeProvider as a functional component
 const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
@@ -28,9 +29,11 @@ const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <NextUIProvider >
+      <BrowserRouter >
       <div style={{ backgroundColor: theme.colors.background, color: theme.colors.primary }}>
         {children}
       </div>
+      </BrowserRouter>
     </NextUIProvider>
   );
 };

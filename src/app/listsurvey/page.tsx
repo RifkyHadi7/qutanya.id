@@ -1,5 +1,3 @@
-"use client";
-
 import React from "react";
 import DefaultLayout from "@/layouts/default1";
 import { MenuButton } from "@/layouts/menu";

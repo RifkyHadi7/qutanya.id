@@ -7,20 +7,20 @@ import { SearchIcon } from "@/components/icons";
 import { MenuButton } from "@/layouts/menu";
 import { HeaderAvatar } from "@/layouts/headerAvatar";
 import { Content } from "../../../layouts/Content";
-import { Router } from "react-router-dom";
+// import { Router } from "react-router-dom";
 import { NavbarTop } from "@/layouts/navbar";
-import { createBrowserHistory } from "history";
+// import { createBrowserHistory } from "history";
 
 export default function BerandaPage() {
-  const history = createBrowserHistory();
+  // const history = createBrowserHistory();
   return (
     <DefaultLayout>
       <section className="flex flex-col items-center justify-between min-h-screen bg-background2 relative z-10">
         <HeaderAvatar />
 
-        <Router location={"/beranda"} navigator={history}>
+        {/* <Router location={"/beranda"} navigator={history}> */}
           <MenuButton />
-        </Router>
+        {/* </Router> */}
       </section>
 
       <section className="flex flex-col items-center gap-4 top-20 absolute w-full z-20">
