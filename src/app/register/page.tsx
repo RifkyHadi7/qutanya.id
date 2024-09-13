@@ -132,8 +132,8 @@ export default function RegisterPage() {
   }, [provinsi]);
 
   const genderOptions = [
-    { label: "Pria", value: "pria" },
-    { label: "Wanita", value: "wanita" },
+    { label: "Pria", value: "Pria" },
+    { label: "Wanita", value: "Wanita" },
   ];
 
   const handleRegister = async (e) => {
@@ -146,12 +146,12 @@ export default function RegisterPage() {
       return;
     }
 
-    console.log('Tanggal Lahir Sebelum Dikirim:', tanggal_lahir.toISOString());
+    console.log('Tanggal Lahir Sebelum Dikirim:', tanggal_lahir.toString());
 
     try {
       const response = await axios.post("https://qutanya-be.vercel.app/user", {
         nama,
-        tanggal_lahir: dayjs(tanggal_lahir).format("YYYY-MM-DD"),
+        tanggal_lahir: tanggal_lahir.toString(),
         gender,
         provinsi: provinsiName,
         kota: selectedKotaName,
@@ -256,9 +256,9 @@ export default function RegisterPage() {
               ],
             }}
           
-            onValueChange={(e) => {
-               setTanggalLahir(tanggal_lahir);
-              console.log("Tanggal Lahir Dipilih:", tanggal_lahir.toISOString()); // Log nilai tanggal
+            onChange={(e) => {
+              setTanggalLahir(e);
+              console.log("Tanggal Lahir Dipilih:", e.toString); // Log nilai tanggal
             }}
           />
 
