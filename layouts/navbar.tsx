@@ -50,7 +50,7 @@ export const NavbarTop = () => {
             className="w-16 h-16 flex items-center justify-center bg-white shadow-xl rounded-full transition transform duration-300 active:scale-95 active:bg-gray-200"
           >
             {/* Tempat untuk logo */}
-            <Image alt='isi-survey' src={MenuHome} width={40} height={30}></Image>
+            <Image alt='isi-survey' src={MenuHome} width={60} height={30}></Image>
           </button>
         </Link>
         </Badge>

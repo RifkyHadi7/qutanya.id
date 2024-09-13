@@ -234,7 +234,7 @@ export default function LoginPage() {
 
         <div className="flex flex-nowrap ">
           <span className="text-secondary" style={{ fontSize: "0.875rem" }}>
-            Don`&apos;` t have an account?
+            Don`t have an account?
           </span>{" "}
           {/* Add two spaces for spacing */}
           <Link href="/register" size="sm" className="text-secondary">
