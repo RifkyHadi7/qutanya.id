@@ -7,7 +7,6 @@ import {
   Button,
   Autocomplete,
   AutocompleteItem,
-  DatePicker,
   DateInput,
 } from "@nextui-org/react";
 import {
@@ -19,7 +18,6 @@ import DefaultLayout from "@/layouts/default";
 import axios from "axios";
 import Head from "next/head";
 import { useRouter } from "next/navigation";
-import dayjs from "dayjs";
 
 export default function RegisterPage() {
   const [isVisible, setIsVisible] = useState(false);
@@ -33,7 +31,7 @@ export default function RegisterPage() {
   const [selectedKotaName, setSelectedKotaName] = useState("");
   const [gender, setGender] = useState(null);
   const [nama, setNamaLengkap] = useState("");
-  const [tanggal_lahir, setTanggalLahir] = useState(new Date());
+  const [tanggal_lahir, setTanggalLahir] = useState("");
   const [pekerjaan, setPekerjaan] = useState("");
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -41,7 +39,7 @@ export default function RegisterPage() {
   const [password, setPassword] = useState("");
   const router = useRouter();
 
-  const validateEmail = (value) =>
+  const validateEmail = (value: string) =>
     /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value);
 
   const isInvalidEmail = useMemo(() => {
@@ -104,7 +102,7 @@ export default function RegisterPage() {
       .then((response) => response.json())
       .then((data) => {
         console.log("Fetched provinces:", data);
-        const transformedData = data.value.map((province) => ({
+        const transformedData = data.value.map((province: { name: string; id: string; }) => ({
           label: province.name,
           value: province.id,
         }));
@@ -121,7 +119,7 @@ export default function RegisterPage() {
         .then((response) => response.json())
         .then((data) => {
           console.log("Fetched kota:", data);
-          const transformedData = data.value.map((city) => ({
+          const transformedData = data.value.map((city: { name: string; id: string; }) => ({
             label: city.name,
             value: city.id,
           }));
@@ -136,7 +134,7 @@ export default function RegisterPage() {
     { label: "Wanita", value: "Wanita" },
   ];
 
-  const handleRegister = async (e) => {
+  const handleRegister = async (e: { preventDefault: () => void; }) => {
     e.preventDefault();
     setLoading(true);
     setErrorMessage(""); // Reset error message
@@ -256,7 +254,7 @@ export default function RegisterPage() {
               ],
             }}
           
-            onChange={(e) => {
+            onChange={(e: any) => {
               setTanggalLahir(e);
               console.log("Tanggal Lahir Dipilih:", e.toString); // Log nilai tanggal
             }}
@@ -296,9 +294,8 @@ export default function RegisterPage() {
                 "hover:bg-default-200/70",
                 "dark:hover:bg-default/70",
               ],
-              item: ["text-secondary"],
             }}
-            onSelectionChange={(selected) => setGender(selected)}
+            onSelectionChange={(selected: any) => setGender(selected)}
           >
             {genderOptions.map((option) => (
               <AutocompleteItem key={option.value} value={option.value}>
@@ -347,17 +344,16 @@ export default function RegisterPage() {
                 "hover:bg-default-200/70",
                 "dark:hover:bg-default/70",
               ],
-              item: ["text-secondary"],
             }}
-            onSelectionChange={(selected) => {
+            onSelectionChange={(selected: any) => {
               setProvinsi(selected);
-              const selectedProvince = provinces.find(
-                (province) => province.value === selected
+              const selectedProvince: any = provinces.find(
+                (province: any) => province.value === selected
               );
               setProvinsiName(selectedProvince?.label || "");
             }}
           >
-            {provinces.map((province) => (
+            {provinces.map((province: any) => (
               <AutocompleteItem key={province.value} value={province.value}>
                 {province.label}
               </AutocompleteItem>
@@ -404,15 +400,14 @@ export default function RegisterPage() {
                 "hover:bg-default-200/70",
                 "dark:hover:bg-default/70",
               ],
-              item: ["text-secondary"],
             }}
-            onSelectionChange={(selected) => {
+            onSelectionChange={(selected: any) => {
               setSelectedKota(selected);
-              const selectedCity = kota.find((city) => city.value === selected);
+              const selectedCity: any = kota.find((city: any) => city.value === selected);
               setSelectedKotaName(selectedCity?.label || "");
             }}
           >
-            {kota.map((city) => (
+            {kota.map((city: any) => (
               <AutocompleteItem key={city.value} value={city.value}>
                 {city.label}
               </AutocompleteItem>

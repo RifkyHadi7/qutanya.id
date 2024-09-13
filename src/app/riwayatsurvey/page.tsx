@@ -4,10 +4,9 @@ import React from "react";
 import { Card, ScrollShadow } from "@nextui-org/react";
 import DefaultLayout from "@/layouts/default1";
 import { HeaderAvatar } from "@/layouts/headerAvatar";
-import { NavbarTop } from "@/layouts/navbar";
 import { MenuButton } from "@/layouts/menu";
 import { Router } from "react-router-dom";
-import { Saldo } from "@/layouts/saldo";
+import { createBrowserHistory } from "history";
 
 const surveyHistory = [
   {
@@ -32,11 +31,12 @@ const surveyHistory = [
 ];
 
 export default function RiwayatSurveyPage() {
+  const history = createBrowserHistory()
   return (
     <DefaultLayout>
       <section className="flex flex-col items-center justify-between min-h-screen bg-background2 relative z-10">
         <HeaderAvatar />
-        <Router location={"/riwayatSurvey"} navigator={undefined}>
+        <Router location={"/riwayatSurvey"} navigator={history}>
           <MenuButton />
         </Router>
       </section>

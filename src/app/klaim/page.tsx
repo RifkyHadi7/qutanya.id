@@ -6,11 +6,12 @@ import DefaultLayout from "@/layouts/default1";
 import { HeaderAvatar } from "@/layouts/headerAvatar";
 import { MenuButton } from "@/layouts/menu";
 import { Router } from "react-router-dom";
+import { createBrowserHistory } from "history";
 
 export default function KlaimKeuntunganPage() {
   const saldoDidapat = "Rp 50.000"; // Contoh saldo yang didapat dari mengisi survey
   const [linkBukti, setLinkBukti] = useState("");
-
+  const history = createBrowserHistory();
   const handleKlaim = () => {
     if (linkBukti) {
       alert("Klaim anda telah dikirimkan! Saldo akan masuk dalam beberapa saat");
@@ -24,7 +25,7 @@ export default function KlaimKeuntunganPage() {
       <section className="flex flex-col items-center justify-between min-h-screen bg-background2 relative z-10">
         <HeaderAvatar />
 
-        <Router location={"/klaimKeuntungan"} navigator={undefined}>
+        <Router location={"/klaimKeuntungan"} navigator={history}>
           
            
         <MenuButton/>
@@ -52,13 +53,14 @@ export default function KlaimKeuntunganPage() {
               type="url"
               variant="bordered"
               placeholder="Masukkan link bukti pengisian"
-              className="w-full max-w-md mx-auto"
+              className="w-full max-w-md mx-auto mb-4"
               classNames={{
                 label: "text-black/50 dark:text-white/90",
                 input: [
                   "bg-white",
                   "text-black/90 dark:text-white/90",
                   "placeholder:text-default-700/50 dark:placeholder:text-white/60",
+                 ,
                 ],
                 innerWrapper: "bg-white",
                 inputWrapper: [
@@ -76,17 +78,16 @@ export default function KlaimKeuntunganPage() {
                 clearButton: "text-black",
               }}
               onChange={(e) => setLinkBukti(e.target.value)}
-              clearable
               onClear={() => setLinkBukti("")} // Menambahkan handler untuk menghapus teks
-              className="mb-4"
+              
             />
-            <Button className="w-full bg-background" color="" onClick={handleKlaim}>
+            <Button className="w-full bg-background" onClick={handleKlaim}>
               Klaim Keuntungan
             </Button>
           </Card>
         </div>
 
-        <Router location={"/klaimKeuntungan"} navigator={undefined}>
+        <Router location={"/klaimKeuntungan"} navigator={history}>
           <div className="absolute bottom-10">
            
           </div>

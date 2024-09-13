@@ -13,10 +13,9 @@ interface Article {
 
 interface ContentProps {
   articles: Article[];
-  onReadArticle: (articleId: string) => void;
 }
 
-export const Content: React.FC<ContentProps> = ({ articles, onReadArticle }) => {
+export const Content: React.FC<ContentProps> = ({ articles}) => {
   console.log("Articles in Content component:", articles); // Log data yang diterima
 
   if (articles.length === 0) {
@@ -47,7 +46,7 @@ export const Content: React.FC<ContentProps> = ({ articles, onReadArticle }) => 
               <div className="col-span-2">
                 <h3 className="text-md font-semibold">{artikel.judul}</h3>
                 <p className="text-sm text-secondary">{artikel.deskripsi}</p>
-                <Button className="mt-2" onClick={() => onReadArticle(artikel.id)}>
+                <Button className="mt-2" onClick={() => {}}>
                   Baca Artikel
                 </Button>
               </div>

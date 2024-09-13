@@ -4,9 +4,9 @@ import React from "react";
 import { Card } from "@nextui-org/react";
 import DefaultLayout from "@/layouts/default1";
 import { HeaderAvatar } from "@/layouts/headerAvatar";
-import { NavbarTop } from "@/layouts/navbar";
 import { MenuButton } from "@/layouts/menu";
 import { Router } from "react-router-dom";
+import { createBrowserHistory } from "history";
 
 const notifications = [
   { id: 1, title: "Notifikasi 1", description: "Deskripsi notifikasi 1" },
@@ -15,12 +15,13 @@ const notifications = [
 ];
 
 export default function NotifikasiPage() {
+  const history = createBrowserHistory();
   return (
     <DefaultLayout>
       <section className="flex flex-col items-center justify-between min-h-screen bg-background2 relative z-10">
         <HeaderAvatar />
 
-        <Router location={"/beranda"} navigator={undefined}>
+        <Router location={"/beranda"} navigator={history}>
           <MenuButton />
         </Router>
       </section>
