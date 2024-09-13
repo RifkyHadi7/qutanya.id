@@ -21,7 +21,7 @@ export const Saldo = () => {
         shadow="sm"
       >
         <CardBody>
-          <div className="grid gap-4 items-center mx-auto">
+          <div className="grid gap-4 items-center mx-auto w-full">
             <div className="col-span-2">
               {/* Konten lain di sebelah kanan gambar */}
               <h3 className="text-lg font-bold text-balance">
