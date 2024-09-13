@@ -19,7 +19,6 @@ export default function ListArtikel() {
           <span className="text-md text-secondary leading-none font-bold">
             Survey Tersedia
           </span>
-          <span className="text-sm text-secondary leading-none">Filter</span>
         </div>
 
         <section className="flex flex-col  gap-2 w-full px-4">

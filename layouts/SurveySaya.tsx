@@ -3,7 +3,7 @@ import { Card, CardBody } from "@nextui-org/react";
 import { Button } from "@nextui-org/react";
 import Image from 'next/image';
 import IsiSurvei from '../assets/respon_survei.svg'
-export const Content = () => (
+export const ContentSaya = () => (
   <div>
     <Card
       isBlurred
@@ -23,11 +23,10 @@ export const Content = () => (
           </div>
           <div className="flex-grow">
             {/* Konten lain di sebelah kanan gambar */}
-            <h3 className="text-md font-semibold">Judul Survey</h3>
+            <h3 className="text-md font-semibold">Survey Saya</h3>
             <p className="text-sm text-secondary">
               Deskripsi singkat tentang survey ini.
             </p>
-            <Button className="mt-2">Mulai Survey</Button>
           </div>
         </div>
       </CardBody>

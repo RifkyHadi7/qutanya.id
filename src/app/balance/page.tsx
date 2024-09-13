@@ -19,40 +19,38 @@ export default function BalancePage() {
   // const history = createBrowserHistory();
   return (
     <DefaultLayout>
-      <section className="flex flex-col items-center justify-between min-h-screen bg-background2">
+      <section className="flex flex-col items-center justify-between min-h-screen bg-background2 relative z-10">
         <HeaderAvatar />
 
-        <section className="flex flex-col gap-4 mt-2 w-full px-4 mx-auto">
+       
+        <MenuButton currentPath={"/balance"} />
+       
+      </section>
+
+        <section className="flex flex-col gap-4 mt-2 w-full px-4 mx-auto absolute top-20 z-20">
           <div className="bg-transparent rounded-lg mt-2 w-full max-w-md mx-auto">
-            <h2 className="text-xl font-bold text-secondary mb-4">
+            <h2 className="text-md font-bold text-secondary mb-2">
               Saldo Anda
             </h2>
             <Saldo />
           </div>
 
-          <div className="bg-white shadow-lg rounded-lg p-6 mt-4 w-full max-w-md mx-auto">
+          <div className="bg-background2 shadow-lg rounded-lg p-6 w-full max-w-md mx-auto">
           <div className="flex flex-row gap-4 min-w-80 items-center justify-between mx-auto">
           <span className="text-sm text-secondary leading-none font-bold">
             Riwayat transaksi
           </span>
-          <span className="text-sm text-secondary leading-none">Filter</span>
         </div>
             <ScrollShadow className="max-h-64 overflow-y-auto">
               {transactionHistory.map((transaction) => (
-                <div key={transaction.id} className="mb-4 p-4 border-b border-gray-200">
-                  <h4 className="text-secondary text-md font-semibold">{transaction.title}</h4>
-                  <p className="text-default text-sm">{transaction.amount}</p>
-                  <p className="text-gray-500 text-sm">{transaction.date}</p>
+                <div key={transaction.id} className="flex flex-row justify-between w-full mt-2 mb-2 p-2 border-b">
+                  <p className="text-secondary text-sm">{transaction.amount}</p>
+                  <h4 className="text-secondary text-sm font-light">{transaction.title}</h4>
                 </div>
               ))}
             </ScrollShadow>
           </div>
         </section>
-        
-        
-          <MenuButton currentPath={"/balance"} />
-        
-      </section>
     </DefaultLayout>
   );
 }

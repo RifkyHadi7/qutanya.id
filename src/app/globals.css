@@ -23,6 +23,7 @@ body {
 
 @layer utilities {
   .text-balance {
+    color: #21FF5C; /* Tambahkan aturan warna teks */
     text-wrap: balance;
   }
 }

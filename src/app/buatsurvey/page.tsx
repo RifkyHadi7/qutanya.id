@@ -78,7 +78,7 @@ export default function BuatSurveyPage() {
       </section>
 
       <section className="flex flex-col items-center gap-4 top-20 absolute w-full z-20">
-        <h2 className="text-2xl font-bold text-center text-secondary mt-6">
+        <h2 className="text-md font-bold text-center text-secondary mt-6">
           Buat Survey
         </h2>
 

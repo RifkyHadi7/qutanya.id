@@ -27,7 +27,6 @@ export const Content = () => (
             <p className="text-sm text-secondary">
               Deskripsi singkat tentang survey ini.
             </p>
-            <Button className="mt-2">Mulai Survey</Button>
           </div>
         </div>
       </CardBody>
