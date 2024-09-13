@@ -4,6 +4,7 @@ import { useSearchParams } from "next/navigation";
 import DefaultLayout from "@/layouts/default1";
 import { MenuButton } from "@/layouts/menu";
 import { HeaderAvatar } from "@/layouts/headerAvatar";
+import Image from "next/image";
 
 interface Article {
   id: string;
@@ -53,7 +54,7 @@ export default function BerandaPage() {
 
         <div className="w-[300px] h-[600px] -mt-2 mx-auto overflow-auto">
           <div className="p-4">
-            <img src={article.cover || "https://nextui.org/images/album-cover.png"} alt={article.judul} className="w-full h-auto mb-4" />
+            <Image src={article.cover || "https://nextui.org/images/album-cover.png"} alt={article.judul} className="w-full h-auto mb-4" />
             <p className="text-md text-secondary">{article.deskripsi}</p>
             <div className="mt-4 text-sm text-secondary">{article.isi}</div>
           </div>

@@ -9,15 +9,16 @@ import { HeaderAvatar } from "@/layouts/headerAvatar";
 import { Content } from "../../../layouts/Content";
 import { Router } from "react-router-dom";
 import { NavbarTop } from "@/layouts/navbar";
-import { Link } from "react-router-dom";
+import { createBrowserHistory } from "history";
 
 export default function BerandaPage() {
+  const history = createBrowserHistory();
   return (
     <DefaultLayout>
       <section className="flex flex-col items-center justify-between min-h-screen bg-background2 relative z-10">
         <HeaderAvatar />
 
-        <Router location={"/beranda"} navigator={undefined}>
+        <Router location={"/beranda"} navigator={history}>
           <MenuButton />
         </Router>
       </section>

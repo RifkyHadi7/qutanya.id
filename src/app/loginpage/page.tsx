@@ -21,7 +21,7 @@ export default function LoginPage() {
   const [showSuccessCard, setShowSuccessCard] = useState(false); // State untuk mengontrol visibilitas kartu sukses
   const router = useRouter(); // Use useRouter from next/navigation
 
-  const validateEmail = (value) =>
+  const validateEmail = (value: string) =>
     value.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i);
 
   const isInvalidEmail = React.useMemo(() => {
@@ -47,7 +47,7 @@ export default function LoginPage() {
     return isValid;
   };
 
-  const handleLogin = async (e) => {
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
     setErrorMessage(""); // Reset error message
@@ -234,7 +234,7 @@ export default function LoginPage() {
 
         <div className="flex flex-nowrap ">
           <span className="text-secondary" style={{ fontSize: "0.875rem" }}>
-            Don't have an account?
+            Don`&apos;` t have an account?
           </span>{" "}
           {/* Add two spaces for spacing */}
           <Link href="/register" size="sm" className="text-secondary">

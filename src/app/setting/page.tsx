@@ -14,15 +14,12 @@ import { MenuButton } from "@/layouts/menu";
 export default function SettingsPage() {
   const [name, setName] = useState("");
   const [job, setJob] = useState("");
-  const [oldPassword, setOldPassword] = useState("");
-  const [newPassword, setNewPassword] = useState("");
   const [isVisible, setIsVisible] = React.useState(false);
-  const [countdown, setCountdown] = useState(60);
-  const [userData, setUserData] = useState(null);
+  const [userData, setUserData] = useState<any>(null);
   const router = useRouter(); // Initialize useRouter
 
   useEffect(() => {
-    const userData = sessionStorage.getItem("userData");
+    const userData: any = sessionStorage.getItem("userData");
     if (userData) {
       setUserData(JSON.parse(userData).data);
     }

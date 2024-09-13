@@ -1,17 +1,14 @@
 "use client";
-import { Link } from "@nextui-org/link";
+
 import { Input } from "@nextui-org/react";
 import { Button } from "@nextui-org/react";
-import React, { useRef, useState, useEffect } from "react";
-import { QutanyaLogo } from "@/components/icons";
+import React from "react";
 import DefaultLayout from "@/layouts/default";
 import { EyeFilledIcon } from "@/components/icons";
 import { EyeSlashFilledIcon } from "@/components/icons";
 
 export default function LupaPage() {
   const [isVisible, setIsVisible] = React.useState(false);
-  const [countdown, setCountdown] = useState(60);
-  const inputRefs = useRef([]);
 
   const toggleVisibility = () => setIsVisible(!isVisible);
 
