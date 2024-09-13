@@ -19,6 +19,7 @@ export default function SettingsPage() {
   const [userData, setUserData] = useState<any>(null);
   const router = useRouter(); // Initialize useRouter
   const [profileImage, setProfileImage] = useState("");
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
   
     useEffect(() => {
       // Fungsi untuk mengambil data pengguna dari sessionStorage
@@ -58,17 +59,27 @@ export default function SettingsPage() {
     router.push("/loginpage");
   };
 
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      setSelectedFile(e.target.files[0]);
+    }
+  };
+
   const updateBiodata = async () => {
     try {
+      const formData = new FormData();
+      formData.append("nama", name);
+      formData.append("pekerjaan", job);
+      if (selectedFile) {
+        formData.append("foto_profil", selectedFile);
+      }
+
       const response = await axios.post(
         "https://qutanya-be.vercel.app/user/update",
-        {
-          nama: name,
-          pekerjaan: job,
-        },
+        formData,
         {
           headers: {
-            "Content-Type": "application/json",
+            "Content-Type": "multipart/form-data",
           },
         }
       );
@@ -82,12 +93,14 @@ export default function SettingsPage() {
           ...userData,
           nama: name,
           biodata: [{ ...userData.biodata[0], pekerjaan: job }],
+          foto_profil: data.foto_profil, // Update foto profil
         };
         sessionStorage.setItem(
           "userData",
           JSON.stringify({ data: updatedUserData })
         );
         setUserData(updatedUserData);
+        setProfileImage(data.foto_profil); // Update profile image
       } else {
         // Tangani kesalahan
         console.error("Failed to update biodata:", data);
@@ -145,6 +158,12 @@ export default function SettingsPage() {
                     placeholder="Enter your job"
                     value={job}
                     onChange={(e) => setJob(e.target.value)}
+                  />
+                <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleFileChange}
+                    className="mt-2"
                   />
                   <Button
                     variant="solid"
