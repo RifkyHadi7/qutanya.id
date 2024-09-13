@@ -16,6 +16,7 @@ const config: Config = {
         background:"#25E5DA",
         background2:"#F2F2FE",
         balance: "#21FF5C",
+        saldo: "#21FF5C" ,
       }
     },
   },
@@ -29,6 +30,7 @@ const config: Config = {
           background:"#25E5DA",
           background2:"#F2F2FE",
           balance: "#21FF5C",
+          saldo: "#21FF5C" ,
         }
       },
       dark: {
@@ -38,6 +40,7 @@ const config: Config = {
           background: "#25E5DA",
           background2:"#F2F2FE",
           balance: "#21FF5C",
+          saldo: "#21FF5C" ,
         }
       },
     },

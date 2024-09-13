@@ -23,7 +23,7 @@ export default function BerandaPage() {
         </Router>
       </section>
 
-      <section className="flex flex-col items-center gap-4 top-20 absolute w-full z-20">
+      <section className="flex flex-col items-center gap-6 top-20 absolute w-full z-20">
         <div className="px-4 w-3/4">
           <Input
             startContent={<SearchIcon className="text-secondary" />}
@@ -55,7 +55,7 @@ export default function BerandaPage() {
       </section>
 
       <section className="flex flex-col absolute top-64 gap-2 w-full px-4 z-30">
-        <div className="flex flex-row gap-4 min-w-80 items-center justify-between mx-auto">
+        <div className="flex flex-row min-w-80 items-center justify-between mx-auto">
           <span className="text-md text-secondary leading-none font-bold">
             Survey Tersedia
           </span>

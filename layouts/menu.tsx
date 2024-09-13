@@ -25,7 +25,7 @@ export const MenuButton = () => {
           <Image src={location.pathname === '/riwayatsurvey' ? SurveyIconFilled : SurveyIcon} alt="Survey Icon" width={40} />
         </Link>
         <Link href="/setting">
-          <Image src={location.pathname === '/settings' ? ProfileIconFilled : ProfileIcon} alt="Profile Icon" width={40} />
+          <Image src={location.pathname === '/setting' ? ProfileIconFilled : ProfileIcon} alt="Profile Icon" width={40} />
         </Link>
       
     </div>

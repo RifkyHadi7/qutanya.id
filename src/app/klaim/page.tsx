@@ -35,14 +35,14 @@ export default function KlaimKeuntunganPage() {
 
       <section className="flex flex-col items-center gap-4 top-20 absolute w-full z-20">
         <div className="flex flex-col items-center w-full px-4 mt-4"> {/* Menambahkan margin bawah */}
-        <h2 className="text-secondary text-2xl font-bold">
+        <h2 className="text-secondary text-md font-bold">
               Klaim Reward
             </h2>
           <Card className="bg-primary shadow-lg rounded-lg p-6 mt-2 w-full max-w-md mx-auto">
-            <h2 className="text-xl font-bold text-secondary mb-4">
+            <h2 className="text-sm font-bold text-secondary mb-2">
               Saldo yang Didapat dari Isi Survey
             </h2>
-            <p className="text-2xl font-semibold text-secondary mb-4">
+            <p className="text-xl font-semibold text-secondary mb-2">
               {saldoDidapat}
             </p>
             <Input

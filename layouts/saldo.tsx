@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Card, CardBody } from "@nextui-org/react";
-import { Button } from "@nextui-org/react";
+import { Card, CardBody, Button } from "@nextui-org/react";
+import { useRouter } from "next/navigation"; // Import useRouter
 
 export const Saldo = () => {
   const [saldo, setSaldo] = useState(0);
+  const router = useRouter(); // Initialize useRouter
 
   useEffect(() => {
     const userData = sessionStorage.getItem("userData");
@@ -12,6 +13,10 @@ export const Saldo = () => {
       setSaldo(parsedData.data.saldo);
     }
   }, []);
+
+  const handleTarikSaldo = () => {
+    router.push("/klaim"); // Redirect to klaim page
+  };
 
   return (
     <div>
@@ -24,13 +29,15 @@ export const Saldo = () => {
           <div className="grid gap-4 items-center mx-auto w-full">
             <div className="col-span-2">
               {/* Konten lain di sebelah kanan gambar */}
-              <h3 className="text-lg font-bold text-balance">
+              <h3 className="text-xl font-light text-balance-900">
                 Rp {saldo.toLocaleString("id-ID")}
               </h3>
-              <p className="text-xs font-extralight text-secondary">
-                Penarikan hanya bisa dilakukan dengan minimal saldo pada aplikasi Rp. 15.000,00
+              <p className="text-sm font-extralight text-secondary">
+                *Penarikan dengan minimal saldo Rp. 15.000
               </p>
-              <Button className="mt-2">Tarik Saldo</Button>
+              <Button className="mt-2" onClick={handleTarikSaldo}>
+                Tarik Saldo
+              </Button>
             </div>
           </div>
         </CardBody>
