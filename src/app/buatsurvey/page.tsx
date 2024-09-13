@@ -17,7 +17,7 @@ interface KategoriOption {
   value: number;
 }
 
-export default function BerandaPage() {
+export default function BuatSurveyPage() {
   const [judulSurvey, setJudulSurvey] = useState("");
   const [linkFormResponden, setLinkFormResponden] = useState("");
   const [linkFormEdit, setLinkFormEdit] = useState("");
@@ -74,7 +74,7 @@ export default function BerandaPage() {
       <section className="flex flex-col items-center justify-between min-h-screen bg-background2 relative z-10">
         <HeaderAvatar />
 
-        <MenuButton />
+        <MenuButton currentPath={"/buatsurvey"} />
       </section>
 
       <section className="flex flex-col items-center gap-4 top-20 absolute w-full z-20">

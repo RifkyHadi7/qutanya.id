@@ -8,38 +8,39 @@ import SurveyIconFilled from "../assets/survei-filled.svg";
 import ProfileIcon from "../assets/profil.svg";
 import ProfileIconFilled from "../assets/profil-filled.svg";
 import Image from "next/image";
-import { Link, useLocation } from 'react-router-dom';
+import  Link from 'next/link';
+interface MenuButtonProps {
+  currentPath: string;
+}
 
-
-export const MenuButton = () => {
-  const location = useLocation(); // Get the current location
+export const MenuButton:React.FC<MenuButtonProps>  = ({currentPath}) => {
 
   return (
     <div className="flex p-4 bg-primary bottom-0 shadow-xl backdrop-blur-xl backdrop-saturate-200" style={{ gap: "4rem" }}>
-      <Link to="/beranda">
+      <Link href="/beranda">
         <Image
-          src={location.pathname === '/beranda' ? HomeIconFilled : HomeIcon}
+          src={currentPath === '/beranda' ? HomeIconFilled : HomeIcon}
           alt="Home Icon"
           width={40}
         />
       </Link>
-      <Link to="/balance">
+      <Link href="/balance">
         <Image
-          src={location.pathname === '/balance' ? BalanceIconFilled : BalanceIcon}
+          src={currentPath === '/balance' ? BalanceIconFilled : BalanceIcon}
           alt="Balance Icon"
           width={40}
         />
       </Link>
-      <Link to="/riwayatsurvey">
+      <Link href="/riwayatsurvey">
         <Image
-          src={location.pathname === '/riwayatsurvey' ? SurveyIconFilled : SurveyIcon}
+          src={currentPath === '/riwayatsurvey' ? SurveyIconFilled : SurveyIcon}
           alt="Survey Icon"
           width={40}
         />
       </Link>
-      <Link to="/setting">
+      <Link href="/setting">
         <Image
-          src={location.pathname === '/setting' ? ProfileIconFilled : ProfileIcon}
+          src={currentPath === '/setting' ? ProfileIconFilled : ProfileIcon}
           alt="Profile Icon"
           width={40}
         />

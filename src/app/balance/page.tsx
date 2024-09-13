@@ -15,7 +15,7 @@ const transactionHistory = [
   // Tambahkan riwayat transaksi lainnya di sini
 ];
 
-export default function BerandaPage() {
+export default function BalancePage() {
   // const history = createBrowserHistory();
   return (
     <DefaultLayout>
@@ -50,7 +50,7 @@ export default function BerandaPage() {
         </section>
         
         
-          <MenuButton />
+          <MenuButton currentPath={"/balance"} />
         
       </section>
     </DefaultLayout>

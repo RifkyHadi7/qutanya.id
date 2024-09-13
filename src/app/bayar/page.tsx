@@ -5,11 +5,9 @@ import { Card, Button } from "@nextui-org/react";
 import DefaultLayout from "@/layouts/default1";
 import { HeaderAvatar } from "@/layouts/headerAvatar";
 import { NavbarTop } from "@/layouts/navbar";
-import { Router } from "react-router-dom";
-import { createBrowserHistory } from "history";
+
 
 export default function BayarPage() {
-  const history = createBrowserHistory();
   return (
     <DefaultLayout>
       <section className="flex flex-col items-center justify-between min-h-screen bg-background2">
@@ -30,12 +28,6 @@ export default function BayarPage() {
             </Button>
           </Card>
         </div>
-
-        <Router location={"/bayar"} navigator={history}>
-          <div className="absolute bottom-10">
-           
-          </div>
-        </Router>
       </section>
     </DefaultLayout>
   );
