@@ -41,7 +41,7 @@ export const Saldo = () => {
   }, []);
 
   const handleTarikSaldo = () => {
-    router.push("/klaim"); // Redirect to klaim page
+    router.push("/"); // Redirect to klaim page
   };
 
   return (
