@@ -13,7 +13,7 @@ export default function HasilSurveyPage() {
       <section className="flex flex-col items-center justify-between min-h-screen bg-background2 relative z-10">
         <HeaderAvatar />
         
-          <MenuButton currentPath={""} />
+          <MenuButton currentPath={"/hasilsurvey"} />
         
       </section>
 

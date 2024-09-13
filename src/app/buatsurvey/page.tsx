@@ -1,5 +1,5 @@
 "use client";
-import { Input, Select, SelectItem } from "@nextui-org/react";
+import { Input, Select, SelectItem, Spinner } from "@nextui-org/react";
 import React, { useEffect, useState } from "react";
 import DefaultLayout from "@/layouts/default1";
 import { MenuButton } from "@/layouts/menu";
@@ -13,8 +13,8 @@ interface Kategori {
 }
 
 interface KategoriOption {
-  label: string;
   value: number;
+  label: string;
 }
 
 export default function BuatSurveyPage() {
@@ -26,11 +26,16 @@ export default function BuatSurveyPage() {
   const [selectedKategori, setSelectedKategori] = useState<number[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
-    axios.get("https://qutanya-be.vercel.app/kategori") // Ganti dengan URL endpoint API Anda
+    axios
+      .get("https://qutanya-be.vercel.app/kategori") // Ganti dengan URL endpoint API Anda
       .then((response) => {
-        if (response.data.status === "success" && Array.isArray(response.data.data)) {
+        if (
+          response.data.status === "success" &&
+          Array.isArray(response.data.data)
+        ) {
           const transformedData = response.data.data.map((item: Kategori) => ({
             label: item.kategori,
             value: item.id,
@@ -44,26 +49,63 @@ export default function BuatSurveyPage() {
       .finally(() => setLoading(false));
   }, []);
 
-  const handleSubmit = () => {
-    const surveyData = {
-     title : judulSurvey,
-     form_res: linkFormResponden,
-     form_meta_req :  linkFormEdit,
-     kategori: selectedKategori,
-     harga: parseFloat(hargaSurvey as string), 
-     id_user_create : 37
-    };
 
-    axios.post("https://qutanya-be.vercel.app/survei/create", surveyData) // Ganti dengan URL endpoint API Anda
-      .then((response) => {
-        console.log("Survey submitted:", response.data);
-      })
-      .catch((error) => console.error("Error submitting survey:", error));
+  const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {  
+    const data = event.target.value.split(',').map(Number);
+    setSelectedKategori(data);
   };
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+
+  const handleSubmit = async () => {
+    const userData = sessionStorage.getItem("userData");
+    let user;
+    if (userData) {
+      user = JSON.parse(userData);
+    } else {
+      console.log("User data not found in session storage");
+    }
+    const surveyData = {
+      title: judulSurvey,
+      form_res: linkFormResponden,
+      form_meta_req: linkFormEdit,
+      kategori: selectedKategori,
+      harga: parseFloat(hargaSurvey as string),
+      id_user_create: user?.uuid,
+    };
+
+    try {
+      // Make sure there are no unwanted fields or circular references
+      console.log("Submitting surveyData: ", surveyData);
+      setLoading(true);
+
+      try {
+        const response = await axios.post(
+          "https://qutanya-be.vercel.app/survei/create",
+          surveyData,
+        );
+
+        if (response.status === 200) {
+          const data = response.data;
+          console.log(data);
+        }
+      } catch (error) {
+        // Type guard for Axios error or Error instance
+        if (axios.isAxiosError(error)) {
+          // Handle Axios error (from the server)
+          setErrorMessage(error.response?.data?.message || "Survei failed. created");
+        } else if (error instanceof Error) {
+          // Handle generic errors
+          setErrorMessage(error.message || "An unexpected error occurred.");
+        } else {
+          setErrorMessage("An unknown error occurred.");
+        }
+      } finally {
+        setLoading(false);
+      }
+    } catch (error) {
+      console.error("Error serializing surveyData:", error);
+    }
+  };
 
   if (error) {
     return <div>Error: {error}</div>;
@@ -73,7 +115,6 @@ export default function BuatSurveyPage() {
     <DefaultLayout>
       <section className="flex flex-col items-center justify-between min-h-screen bg-background2 relative z-10">
         <HeaderAvatar />
-
         <MenuButton currentPath={"/buatsurvey"} />
       </section>
 
@@ -81,6 +122,15 @@ export default function BuatSurveyPage() {
         <h2 className="text-md font-bold text-center text-secondary mt-6">
           Buat Survey
         </h2>
+        {errorMessage && (
+          <div className="text-red-500 text-center font-bold">
+            {errorMessage}
+          </div>
+        )}
+
+        {loading && (
+         <Spinner color="success"></Spinner>
+        )}
 
         <section className="flex flex-col gap-4 w-full px-4">
           <div className="flex flex-col gap-4 w-full mx-auto">
@@ -110,14 +160,16 @@ export default function BuatSurveyPage() {
               placeholder="Pilih kategori"
               selectionMode="multiple"
               className="mx-auto lg:w-1/2"
-              onChange={(selected) => setSelectedKategori(selected as unknown as number[])}
+              onChange={handleSelectChange}
             >
-              {kategori.map((item) => (
+              {
+              kategori.map((item) => (
                 <SelectItem key={item.value} value={item.value}>
                   {item.label}
                 </SelectItem>
               ))}
             </Select>
+
             <Input
               label="Harga survey"
               placeholder="Masukkan harga survey"
