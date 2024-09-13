@@ -1,60 +1,131 @@
 "use client";
-import { Input } from "@nextui-org/react";
-import React from "react";
-import { SearchIcon } from "@/components/icons";
+import { Input, Select, SelectItem } from "@nextui-org/react";
+import React, { useEffect, useState } from "react";
 import DefaultLayout from "@/layouts/default1";
 import { MenuButton } from "@/layouts/menu";
 import { HeaderAvatar } from "@/layouts/headerAvatar";
-import { NavbarTop } from "@/layouts/navbar";
 import { Button } from "@nextui-org/react";
+import axios from "axios";
+
+interface Kategori {
+  id: number;
+  kategori: string;
+}
+
+interface KategoriOption {
+  label: string;
+  value: number;
+}
 
 export default function BerandaPage() {
+  const [judulSurvey, setJudulSurvey] = useState("");
+  const [linkFormResponden, setLinkFormResponden] = useState("");
+  const [linkFormEdit, setLinkFormEdit] = useState("");
+  const [hargaSurvey, setHargaSurvey] = useState<string | "">("");
+  const [kategori, setKategori] = useState<KategoriOption[]>([]);
+  const [selectedKategori, setSelectedKategori] = useState<number[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    axios.get("https://qutanya-be.vercel.app/kategori") // Ganti dengan URL endpoint API Anda
+      .then((response) => {
+        if (response.data.status === "success" && Array.isArray(response.data.data)) {
+          const transformedData = response.data.data.map((item: Kategori) => ({
+            label: item.kategori,
+            value: item.id,
+          }));
+          setKategori(transformedData);
+        } else {
+          throw new Error("Data tidak dalam format yang diharapkan");
+        }
+      })
+      .catch((error) => setError(error.message))
+      .finally(() => setLoading(false));
+  }, []);
+
+  const handleSubmit = () => {
+    const surveyData = {
+     title : judulSurvey,
+     form_res: linkFormResponden,
+     form_meta_req :  linkFormEdit,
+     kategori: selectedKategori,
+     harga: parseFloat(hargaSurvey as string), 
+     id_user_create : 37
+    };
+
+    axios.post("https://qutanya-be.vercel.app/survei/create", surveyData) // Ganti dengan URL endpoint API Anda
+      .then((response) => {
+        console.log("Survey submitted:", response.data);
+      })
+      .catch((error) => console.error("Error submitting survey:", error));
+  };
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+
   return (
     <DefaultLayout>
       <section className="flex flex-col items-center justify-between min-h-screen bg-background2 relative z-10">
         <HeaderAvatar />
 
-        
-          <MenuButton />
-        
+        <MenuButton />
       </section>
 
-      
       <section className="flex flex-col items-center gap-4 top-20 absolute w-full z-20">
         <h2 className="text-2xl font-bold text-center text-secondary mt-6">
-            Buat Survey
-          </h2>
+          Buat Survey
+        </h2>
 
         <section className="flex flex-col gap-4 w-full px-4">
-          
           <div className="flex flex-col gap-4 w-full mx-auto">
-          <Input
+            <Input
               label="Judul survey"
               placeholder="Masukkan judul survey"
               className="mx-auto lg:w-1/2"
-              />
+              value={judulSurvey}
+              onChange={(e) => setJudulSurvey(e.target.value)}
+            />
             <Input
               label="Link Form untuk responden"
               placeholder="Masukkan link form"
               className="mx-auto lg:w-1/2"
-              />
+              value={linkFormResponden}
+              onChange={(e) => setLinkFormResponden(e.target.value)}
+            />
             <Input
-              label="Link Form untuk acces edit"
+              label="Link Form untuk akses edit"
               placeholder="Masukkan link form"
               className="mx-auto lg:w-1/2"
-              />
+              value={linkFormEdit}
+              onChange={(e) => setLinkFormEdit(e.target.value)}
+            />
+            <Select
+              label="Kategori"
+              placeholder="Pilih kategori"
+              selectionMode="multiple"
+              className="mx-auto lg:w-1/2"
+              onChange={(selected) => setSelectedKategori(selected as unknown as number[])}
+            >
+              {kategori.map((item) => (
+                <SelectItem key={item.value} value={item.value}>
+                  {item.label}
+                </SelectItem>
+              ))}
+            </Select>
             <Input
-              label="Reward survey"
-              placeholder="Masukkan reward survey"
+              label="Harga survey"
+              placeholder="Masukkan harga survey"
               type="number"
               className="mx-auto lg:w-1/2"
-              />
-            <Input
-              label="Jumlah Responden"
-              placeholder="Masukkan jumlah responden"
-              type="number"
-              className="mx-auto lg:w-1/2"
-              />
+              value={hargaSurvey}
+              onChange={(e) => setHargaSurvey(e.target.value)}
+            />
             <Button
               variant="solid"
               size="lg"
@@ -77,14 +148,13 @@ export default function BerandaPage() {
                 "dark:group-data-[focus=true]:bg-default/60",
                 "!cursor-pointer",
               ].join(" ")}
-              >
+              onClick={handleSubmit}
+            >
               Buat Survey
             </Button>
           </div>
-              </section>
         </section>
-
-        
+      </section>
     </DefaultLayout>
   );
 }

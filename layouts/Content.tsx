@@ -1,7 +1,8 @@
 import React from "react";
-import {  Card, CardBody } from "@nextui-org/react";
+import { Card, CardBody } from "@nextui-org/react";
 import { Button } from "@nextui-org/react";
-import { Image } from "@nextui-org/react";
+import Image from 'next/image';
+import IsiSurvei from '../assets/respon_survei.svg'
 export const Content = () => (
   <div>
     <Card
@@ -10,26 +11,26 @@ export const Content = () => (
       shadow="sm"
     >
       <CardBody>
-        <div className="grid grid-cols-3 gap-4 items-center">
-          <div className="col-span-1">
+        <div className="flex items-center gap-4">
+          <div className="flex-shrink-0">
             <Image
               alt="Album cover"
               className="object-cover"
               height={90}
-              shadow="md"
-              src="https://nextui.org/images/album-cover.png"
-              width="100%"
+              src={IsiSurvei}
+              width="90" // Lebar ditentukan sesuai kebutuhan
             />
           </div>
-          <div className="col-span-2">
+          <div className="flex-grow">
             {/* Konten lain di sebelah kanan gambar */}
             <h3 className="text-md font-semibold">Judul Survey</h3>
-            <p className="text-sm text-secondary">Deskripsi singkat tentang survey ini.</p>
+            <p className="text-sm text-secondary">
+              Deskripsi singkat tentang survey ini.
+            </p>
             <Button className="mt-2">Mulai Survey</Button>
           </div>
         </div>
       </CardBody>
     </Card>
   </div>
-    
 );

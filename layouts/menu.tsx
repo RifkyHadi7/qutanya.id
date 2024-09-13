@@ -4,7 +4,9 @@ import HomeIcon from "../assets/home.svg";
 import BalanceIcon from "../assets/saldo.svg";
 import BalanceIconFilled from "../assets/saldo-filled.svg";
 import SurveyIcon from "../assets/survei.svg";
+import SurveyIconFilled from "../assets/survei-filled.svg";
 import ProfileIcon from "../assets/profil.svg";
+import ProfileIconFilled from "../assets/profil-filled.svg";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -17,13 +19,13 @@ export const MenuButton = () => {
           <Image   src={location.pathname === '/beranda' ? HomeIconFilled : HomeIcon}  alt="Home Icon" width={40} />
         </Link>
         <Link href="/balance">
-          <Image src={location.pathname === '/mainpage' ? BalanceIconFilled : BalanceIcon} alt="Balance Icon" width={40} />
+          <Image src={location.pathname === '/balance' ? BalanceIconFilled : BalanceIcon} alt="Balance Icon" width={40} />
         </Link>
         <Link href="/riwayatsurvey">
-          <Image src={SurveyIcon} alt="Survey Icon" width={40} />
+          <Image src={location.pathname === '/riwayatsurvey' ? SurveyIconFilled : SurveyIcon} alt="Survey Icon" width={40} />
         </Link>
         <Link href="/setting">
-          <Image src={ProfileIcon} alt="Profile Icon" width={40} />
+          <Image src={location.pathname === '/settings' ? ProfileIconFilled : ProfileIcon} alt="Profile Icon" width={40} />
         </Link>
       
     </div>

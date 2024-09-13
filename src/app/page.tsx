@@ -11,7 +11,7 @@ export default function IndexPage() {
   useEffect(() => {
     const timer = setTimeout(() => {
       router.push("/loginpage"); // Ganti "/loginpage" dengan path halaman login Anda
-    }, 4000); // 4000 milidetik = 4 detik
+    }, 2000); // 2000 milidetik = 2 detik
 
     return () => clearTimeout(timer); // Bersihkan timer saat komponen unmount
   }, [router]);

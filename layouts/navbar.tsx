@@ -1,6 +1,11 @@
 import React from 'react';
 import Link from 'next/link';
 import {Badge, Avatar} from "@nextui-org/react";
+import Image from 'next/image';
+import BuatSurvei from '../assets/buat_survei.svg'
+import IsiSurvei from '../assets/isi_survey.svg'
+import MenuHome from '../assets/menus_home.svg'
+import ArtikelQu from '../assets/artikel_qu.svg'
 
 export const NavbarTop = () => {
   return (
@@ -11,6 +16,7 @@ export const NavbarTop = () => {
             className="w-16 h-16 flex items-center justify-center bg-white shadow-xl rounded-full transition transform duration-300 active:scale-95 active:bg-gray-200"
           >
             {/* Tempat untuk logo */}
+            <Image alt='isi-survey' src={IsiSurvei} width={60} height={30}></Image>
           </button>
         </Link>
         <span className="text-sm mt-2 text-secondary">List Survey</span>
@@ -21,6 +27,7 @@ export const NavbarTop = () => {
             className="w-16 h-16 flex items-center justify-center bg-white shadow-xl rounded-full transition transform duration-300 active:scale-95 active:bg-gray-200"
           >
             {/* Tempat untuk logo */}
+            <Image alt='isi-survey' src={BuatSurvei} width={60} height={30}></Image>
           </button>
         </Link>
         <span className="text-sm mt-2 text-secondary">Buat Survey</span>
@@ -31,6 +38,7 @@ export const NavbarTop = () => {
             className="w-16 h-16 flex items-center justify-center bg-white shadow-xl rounded-full transition transform duration-300 active:scale-95 active:bg-gray-200"
           >
             {/* Tempat untuk logo */}
+            <Image alt='isi-survey' src={ArtikelQu} width={60} height={30}></Image>
           </button>
         </Link>
         <span className="text-sm mt-2 text-secondary">List Artikel</span>
@@ -42,6 +50,7 @@ export const NavbarTop = () => {
             className="w-16 h-16 flex items-center justify-center bg-white shadow-xl rounded-full transition transform duration-300 active:scale-95 active:bg-gray-200"
           >
             {/* Tempat untuk logo */}
+            <Image alt='isi-survey' src={MenuHome} width={40} height={30}></Image>
           </button>
         </Link>
         </Badge>
