@@ -5,20 +5,18 @@ import { Card, ScrollShadow, Tabs, Tab } from "@nextui-org/react";
 import DefaultLayout from "@/layouts/default1";
 import { HeaderAvatar } from "@/layouts/headerAvatar";
 import { MenuButton } from "@/layouts/menu";
-import { Router } from "react-router-dom";
-import { createBrowserHistory } from "history";
 import { Content } from "@/layouts/ContentRiwayat";
 import { ContentSaya } from "@/layouts/SurveySaya";
 
 export default function RiwayatSurveyPage() {
-  const history = createBrowserHistory();
+
   return (
     <DefaultLayout>
       <section className="flex flex-col items-center justify-between min-h-screen bg-background2 relative z-10">
         <HeaderAvatar />
-        <Router location={"/riwayatSurvey"} navigator={history}>
-          <MenuButton />
-        </Router>
+      
+          <MenuButton currentPath={"/riwayatsurvey"} />
+
       </section>
 
       <section className="flex flex-col items-center absolute top-24 w-full mx-auto z-20">

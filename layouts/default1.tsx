@@ -3,7 +3,6 @@
 import { NextUIProvider } from "@nextui-org/react";
 import { useEffect, useState } from "react";
 import { lightTheme, darkTheme } from "./theme"; // Ensure this import is correct
-import { Link } from "@nextui-org/link";
 import { Head } from "./head";
 
 // Define your ThemeProvider as a functional component

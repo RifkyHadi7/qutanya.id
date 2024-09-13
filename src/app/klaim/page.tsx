@@ -5,13 +5,11 @@ import { Card, Button, Input } from "@nextui-org/react";
 import DefaultLayout from "@/layouts/default1";
 import { HeaderAvatar } from "@/layouts/headerAvatar";
 import { MenuButton } from "@/layouts/menu";
-import { Router } from "react-router-dom";
-import { createBrowserHistory } from "history";
 
 export default function KlaimKeuntunganPage() {
   const saldoDidapat = "Rp 50.000"; // Contoh saldo yang didapat dari mengisi survey
   const [linkBukti, setLinkBukti] = useState("");
-  const history = createBrowserHistory();
+
   const handleKlaim = () => {
     if (linkBukti) {
       alert("Klaim anda telah dikirimkan! Saldo akan masuk dalam beberapa saat");
@@ -24,14 +22,8 @@ export default function KlaimKeuntunganPage() {
     <DefaultLayout>
       <section className="flex flex-col items-center justify-between min-h-screen bg-background2 relative z-10">
         <HeaderAvatar />
-
-        <Router location={"/klaimKeuntungan"} navigator={history}>
-          
-           
-        <MenuButton/>
-          
-        </Router>
-        </section>
+        <MenuButton currentPath={"/klaimKeuntungan"} />
+      </section>
 
       <section className="flex flex-col items-center gap-4 top-20 absolute w-full z-20">
         <div className="flex flex-col items-center w-full px-4 mt-4"> {/* Menambahkan margin bawah */}
@@ -60,7 +52,6 @@ export default function KlaimKeuntunganPage() {
                   "bg-white",
                   "text-black/90 dark:text-white/90",
                   "placeholder:text-default-700/50 dark:placeholder:text-white/60",
-                 ,
                 ],
                 innerWrapper: "bg-white",
                 inputWrapper: [
@@ -78,23 +69,14 @@ export default function KlaimKeuntunganPage() {
                 clearButton: "text-black",
               }}
               onChange={(e) => setLinkBukti(e.target.value)}
-              onClear={() => setLinkBukti("")} // Menambahkan handler untuk menghapus teks
-              
+              onClear={() => setLinkBukti("")} // Handler for clearing the text
             />
             <Button className="w-full bg-background" onClick={handleKlaim}>
               Klaim Keuntungan
             </Button>
           </Card>
         </div>
-
-        <Router location={"/klaimKeuntungan"} navigator={history}>
-          <div className="absolute bottom-10">
-           
-          </div>
-        </Router>
-
-        </section>
-      
+      </section>
     </DefaultLayout>
   );
 }

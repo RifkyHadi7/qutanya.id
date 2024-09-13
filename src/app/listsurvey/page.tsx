@@ -1,5 +1,3 @@
-"use client";
-
 import React from "react";
 import DefaultLayout from "@/layouts/default1";
 import { MenuButton } from "@/layouts/menu";
@@ -13,7 +11,7 @@ export default function ListArtikel() {
         <HeaderAvatar />
         <div className="absolute bottom-20">
         </div>
-        <MenuButton />
+        <MenuButton currentPath={"/listsurvey"} />
       </section>
 
       <section className="flex flex-col items-center gap-4 top-20 absolute w-full z-20">

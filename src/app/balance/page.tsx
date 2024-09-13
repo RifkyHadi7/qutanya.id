@@ -4,9 +4,9 @@ import DefaultLayout from "@/layouts/default1";
 import { MenuButton } from "@/layouts/menu";
 import { HeaderAvatar } from "@/layouts/headerAvatar";
 import { Saldo } from "@/layouts/saldo";
-import { Router } from "react-router-dom";
+// import { Router } from "react-router-dom";
 import { ScrollShadow } from "@nextui-org/react";
-import { createBrowserHistory } from "history";
+// import { createBrowserHistory } from "history";
 
 const transactionHistory = [
   { id: 1, title: "Tarik Saldo", amount: "-Rp 10.000", date: "2023-01-01" },
@@ -16,15 +16,15 @@ const transactionHistory = [
 ];
 
 export default function BalancePage() {
-  const history = createBrowserHistory();
+  // const history = createBrowserHistory();
   return (
     <DefaultLayout>
       <section className="flex flex-col items-center justify-between min-h-screen bg-background2 relative z-10">
         <HeaderAvatar />
 
-        <Router location={"/beranda"} navigator={history}>
-          <MenuButton />
-        </Router>
+       
+        <MenuButton currentPath={"/balance"} />
+       
       </section>
 
         <section className="flex flex-col gap-4 mt-2 w-full px-4 mx-auto absolute top-20 z-20">
@@ -51,7 +51,6 @@ export default function BalancePage() {
             </ScrollShadow>
           </div>
         </section>
-        
     </DefaultLayout>
   );
 }

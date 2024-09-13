@@ -4,18 +4,14 @@ import React from "react";
 import { Card, Button } from "@nextui-org/react";
 import DefaultLayout from "@/layouts/default1";
 import { HeaderAvatar } from "@/layouts/headerAvatar";
-import { NavbarTop } from "@/layouts/navbar";
-import { Router } from "react-router-dom";
-import { createBrowserHistory } from "history";
 import { MenuButton } from "@/layouts/menu";
 
 export default function BayarPage() {
-  const history = createBrowserHistory();
   return (
     <DefaultLayout>
       <section className="flex flex-col items-center justify-between min-h-screen bg-background2">
         <HeaderAvatar />
-        <MenuButton />
+        <MenuButton currentPath={"/bayar"} />
       </section>
 
       <section className="flex flex-col gap-4 mt-2 w-full px-4 mx-auto absolute top-20 z-20">
@@ -34,8 +30,6 @@ export default function BayarPage() {
             </Button>
           </Card>
         </div>
-
-        <Router location={"/bayar"} navigator={history}></Router>
       </section>
     </DefaultLayout>
   );
