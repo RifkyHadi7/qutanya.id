@@ -56,16 +56,15 @@ export default function BuatSurveyPage() {
       .finally(() => setLoading(false));
   }, []);
 
-
   const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const data = event.target.value.split(',').map(Number);
+    const data = event.target.value.split(",").map(Number);
     setSelectedKategori(data);
   };
 
   const handleSubmit = async () => {
     setErrorMessage("");
     const userData = sessionStorage.getItem("userData");
-    let user; 
+    let user;
     if (userData) {
       user = JSON.parse(userData);
       console.log(user);
@@ -89,8 +88,8 @@ export default function BuatSurveyPage() {
         surveyData,
         {
           headers: {
-            'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': "*"
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
           },
         }
       );
@@ -101,9 +100,13 @@ export default function BuatSurveyPage() {
       }
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        setErrorMessage(error.response?.data?.message || "Survei gagal dibuat.");
+        setErrorMessage(
+          error.response?.data?.message || "Survei gagal dibuat."
+        );
       } else if (error instanceof Error) {
-        setErrorMessage(error.message || "Terjadi kesalahan yang tidak terduga.");
+        setErrorMessage(
+          error.message || "Terjadi kesalahan yang tidak terduga."
+        );
       } else {
         setErrorMessage("Terjadi kesalahan yang tidak diketahui.");
       }
@@ -129,93 +132,94 @@ export default function BuatSurveyPage() {
           </div>
         )}
 
-        {loading && (
-          <Spinner color="success"></Spinner>
-        )}
+        {loading && <Spinner color="success"></Spinner>}
 
-        <section className="flex flex-col gap-4 w-full px-4">
-          <div className="flex flex-col gap-4 w-full mx-auto">
-            <Input
-              label="Judul survey"
-              placeholder="Masukkan judul survey"
-              className="mx-auto lg:w-1/2"
-              value={judulSurvey}
-              onChange={(e) => setJudulSurvey(e.target.value)}
-            />
-            <Input
-              label="Link Form untuk responden"
-              placeholder="Masukkan link form"
-              className="mx-auto lg:w-1/2"
-              value={linkFormResponden}
-              onChange={(e) => setLinkFormResponden(e.target.value)}
-            />
-            <Input
-              label="Link Form untuk akses edit"
-              placeholder="Masukkan link form"
-              className="mx-auto lg:w-1/2"
-              value={linkFormEdit}
-              onChange={(e) => setLinkFormEdit(e.target.value)}
-            />
-            <Select
-              label="Kategori"
-              placeholder="Pilih kategori"
-              selectionMode="multiple"
-              className="mx-auto lg:w-1/2"
-              onChange={handleSelectChange}
-            >
-              {kategori.map((item) => (
-                <SelectItem key={item.value} value={item.value}>
-                  {item.label}
-                </SelectItem>
-              ))}
-            </Select>
-
-            <Input
-              label="Harga survey"
-              placeholder="Masukkan harga survey"
-              type="number"
-              className="mx-auto lg:w-1/2"
-              value={hargaSurvey}
-              onChange={(e) => setHargaSurvey(e.target.value)}
-            />
-            <Button
-              variant="solid"
-              size="lg"
-              fullWidth
-              className={[
-                "mx-auto",
-                "lg:w-1/2",
-                "w-full",
-                "bg-default-200/50",
-                "dark:bg-default/60",
-                "text-black/90 dark:text-white/90",
-                "placeholder:text-default-700/50 dark:placeholder:text-white/60",
-                "shadow-xl",
-                "bg-transparent",
-                "backdrop-blur-xl",
-                "backdrop-saturate-200",
-                "hover:bg-default-200/70",
-                "dark:hover:bg-default/70",
-                "group-data-[focus=true]:bg-default-200/50",
-                "dark:group-data-[focus=true]:bg-default/60",
-                "!cursor-pointer",
-              ].join(" ")}
-              onClick={handleSubmit}
-            >
-              Buat Survey
-            </Button>
-
-            {/* Jika tidak ada token Google, tampilkan tombol login */}
-            {!googleToken && (
-              <Button
-                className="w-full mt-4"
-                onClick={()=> window.location.href= "https://be-qutanya.vercel.app/auth/auth/google"}
+        {/* Jika tidak ada token Google, tampilkan tombol login */}
+        {!googleToken ? (
+          <Button
+            className="w-full mt-4"
+            onClick={() =>
+              (window.location.href =
+                "https://be-qutanya.vercel.app/auth/auth/google")
+            }
+          >
+            Login with Google
+          </Button>
+        ) : (
+          <section className="flex flex-col gap-4 w-full px-4">
+            <div className="flex flex-col gap-4 w-full mx-auto">
+              <Input
+                label="Judul survey"
+                placeholder="Masukkan judul survey"
+                className="mx-auto lg:w-1/2"
+                value={judulSurvey}
+                onChange={(e) => setJudulSurvey(e.target.value)}
+              />
+              <Input
+                label="Link Form untuk responden"
+                placeholder="Masukkan link form"
+                className="mx-auto lg:w-1/2"
+                value={linkFormResponden}
+                onChange={(e) => setLinkFormResponden(e.target.value)}
+              />
+              <Input
+                label="Link Form untuk akses edit"
+                placeholder="Masukkan link form"
+                className="mx-auto lg:w-1/2"
+                value={linkFormEdit}
+                onChange={(e) => setLinkFormEdit(e.target.value)}
+              />
+              <Select
+                label="Kategori"
+                placeholder="Pilih kategori"
+                selectionMode="multiple"
+                className="mx-auto lg:w-1/2"
+                onChange={handleSelectChange}
               >
-                Login with Google
+                {kategori.map((item) => (
+                  <SelectItem key={item.value} value={item.value}>
+                    {item.label}
+                  </SelectItem>
+                ))}
+              </Select>
+
+              <Input
+                label="Harga survey"
+                placeholder="Masukkan harga survey"
+                type="number"
+                className="mx-auto lg:w-1/2"
+                value={hargaSurvey}
+                onChange={(e) => setHargaSurvey(e.target.value)}
+              />
+              <Button
+                variant="solid"
+                size="lg"
+                fullWidth
+                className={[
+                  "mx-auto",
+                  "lg:w-1/2",
+                  "w-full",
+                  "bg-default-200/50",
+                  "dark:bg-default/60",
+                  "text-black/90 dark:text-white/90",
+                  "placeholder:text-default-700/50 dark:placeholder:text-white/60",
+                  "shadow-xl",
+                  "bg-transparent",
+                  "backdrop-blur-xl",
+                  "backdrop-saturate-200",
+                  "hover:bg-default-200/70",
+                  "dark:hover:bg-default/70",
+                  "group-data-[focus=true]:bg-default-200/50",
+                  "dark:group-data-[focus=true]:bg-default/60",
+                  "!cursor-pointer",
+                ].join(" ")}
+                onClick={handleSubmit}
+              >
+                Buat Survey
               </Button>
-            )}
-          </div>
-        </section>
+            </div>
+          </section>
+        )}
       </section>
     </DefaultLayout>
   );
