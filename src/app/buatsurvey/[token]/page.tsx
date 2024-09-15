@@ -5,8 +5,8 @@ import DefaultLayout from "@/layouts/default1";
 import { MenuButton } from "@/layouts/menu";
 import { HeaderAvatar } from "@/layouts/headerAvatar";
 import axios from "axios";
-import { useRouter } from "next/navigation";
-import { NextRequest } from "next/server";
+import { useRouter, useSearchParams } from "next/navigation";
+
 
 interface Kategori {
   id: number;
@@ -18,7 +18,7 @@ interface KategoriOption {
   label: string;
 }
 
-export default function BuatSurveyPage(request:NextRequest) {
+export default function BuatSurveyPage() {
   const [judulSurvey, setJudulSurvey] = useState("");
   const [linkFormResponden, setLinkFormResponden] = useState("");
   const [linkFormEdit, setLinkFormEdit] = useState("");
@@ -31,10 +31,12 @@ export default function BuatSurveyPage(request:NextRequest) {
 
   const router = useRouter();
 
+  const params = useSearchParams();
+  const query = params.get("token");
+
   useEffect(() => {
     // Mengecek token Google di session storage hanya di sisi klien
-    const params = request.nextUrl.searchParams
-    const query = params.get("token");
+    
     if (query){
       sessionStorage.setItem("token", JSON.stringify(query));
       // Set timeout untuk menghapus data setelah 3600 detik (1 jam)
@@ -44,7 +46,7 @@ export default function BuatSurveyPage(request:NextRequest) {
         sessionStorage.removeItem("userData");
       }, 3600000);
     }
-    
+
     const token = sessionStorage.getItem("googleToken");
     setGoogleToken(token);
 
