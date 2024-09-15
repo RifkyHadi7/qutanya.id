@@ -67,7 +67,7 @@ export default function BerandaPage() {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/kategori");
+        const response = await axios.get("https://be-qutanya.vercel.app/survei/kategori");
         if (
           response.data.status === "success" &&
           Array.isArray(response.data.data)
