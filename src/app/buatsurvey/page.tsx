@@ -63,7 +63,7 @@ export default function BuatSurveyPage() {
           throw new Error("Failed to generate authorization URL");
         }
       } catch (error) {
-        setError(error as string);
+        setError("Failed to generate authorization URL");
       }
     };
 
@@ -106,7 +106,7 @@ export default function BuatSurveyPage() {
           {
             headers: {
               'Content-Type': 'application/json',
-              'Access-Control-Allow-Origin': "*",
+              'Access-Control-Allow-Origin': "*"
             },
           }
         );
