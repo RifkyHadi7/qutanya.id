@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, } from "react";
 import DefaultLayout from "@/layouts/default1";
-import { Input, Select, SelectItem, Spinner, Button } from "@nextui-org/react";
+import { Input, Select, SelectItem, Spinner } from "@nextui-org/react";
 import { SearchIcon } from "@/components/icons";
 import { MenuButton } from "@/layouts/menu";
 import { HeaderAvatar } from "@/layouts/headerAvatar";
@@ -31,28 +31,24 @@ export default function BerandaPage() {
   const [error, setError] = useState<string | null>(null);
   const [filterKategori, setFilterKategori] = useState<string[]>([]);
   const [kategori, setKategori] = useState<Category[]>([]);
-  const [googleToken, setGoogleToken] = useState<string | null>(null);
 
-  // Check for Google token in session storage
-  useEffect(() => {
-    const token = sessionStorage.getItem("googleToken");
-    setGoogleToken(token);
-  }, []);
-
-  // Fetch data on component mount
   useEffect(() => {
     fetchData();
   }, [filterKategori]);
-
+  // Use useCallback to memoize the fetchData function
   const fetchData = async () => {
     setLoading(true);
-    const filterState = filterKategori.join(",");
-    const response = await axios.post(
-      "https://be-qutanya.vercel.app/survei/get-all",
-      { filter: filterState } // Sending the filter as JSON in the request body
-    );
 
-    if (response.data.status === "success" && Array.isArray(response.data.data)) {
+    const filterState = filterKategori.join(",");
+    const response = await axios.post("https://be-qutanya.vercel.app/survei/get-all", {
+      filter: filterState, // Sending the filter as JSON in the request body
+    });
+
+    if (
+      response.data.status === "success" &&
+      Array.isArray(response.data.data)
+    ) {
+      
       const mappedData: Survei[] = response.data.data.map((item: any) => ({
         judul: item.judul,
         kategori: item.kategori,
@@ -60,19 +56,18 @@ export default function BerandaPage() {
         hadiah: item.hadiah,
       }));
       setDataSurvei(mappedData);
-      setLoading(false);
-    } else {
-      setError(response.data.error);
+      setLoading(false)
+    }else {
+      setError(response.data.error)
       setLoading(false);
     }
+    
   };
 
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await axios.get(
-          "https://be-qutanya.vercel.app/kategori"
-        );
+        const response = await axios.get("https://be-qutanya.vercel.app/kategori");
         if (
           response.data.status === "success" &&
           Array.isArray(response.data.data)
@@ -93,18 +88,21 @@ export default function BerandaPage() {
     fetchCategories();
   }, []);
 
+  // const handleSelectChange = (
+  //   selectedValues: React.ChangeEvent<HTMLSelectElement>
+  // ) => {
+  //   // Store selected values without fetching data immediately
+  //   const selected = selectedValues.target.value.split(",").map(String);
+  //   console.log(selected);
+  //   setFilterKategori(selected);
+  // };
+
   const handleSelectChange2 = (selectedValues: Set<string>) => {
     const selected = Array.from(selectedValues).map(String);
     setFilterKategori(selected);
 
     // Trigger fetch after selecting options
     fetchData();
-  };
-
-  // Function to handle Google login
-  const handleGoogleLogin = () => {
-    window.location.href =
-     'https://be-qutanya.vercel.app/auth/google'
   };
 
   return (
@@ -146,6 +144,7 @@ export default function BerandaPage() {
       {error && (
         <div className="text-red-500 text-center font-bold">{error}</div>
       )}
+      : (
       <section className="flex flex-col absolute top-64 gap-2 w-full px-4 z-30">
         <div className="flex flex-row min-w-80 items-center justify-between mx-auto">
           <span className="text-md text-secondary leading-none font-bold">
@@ -157,6 +156,7 @@ export default function BerandaPage() {
               selectionMode="multiple"
               className="w-[150px]"
               onSelectionChange={handleSelectChange2 as any}
+              // onClose={ handleSelectClose}
             >
               {kategori.map((item) => (
                 <SelectItem key={item.value} value={item.value}>
@@ -172,12 +172,6 @@ export default function BerandaPage() {
           <Content data={dataSurvei} />
         )}
       </section>
-      {/* Display Google login button if no token is found */}
-      {!googleToken && (
-        <Button className="absolute top-10 right-10" onClick={handleGoogleLogin}>
-          Login with Google
-        </Button>
-      )}
     </DefaultLayout>
   );
 }

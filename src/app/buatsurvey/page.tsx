@@ -5,7 +5,7 @@ import DefaultLayout from "@/layouts/default1";
 import { MenuButton } from "@/layouts/menu";
 import { HeaderAvatar } from "@/layouts/headerAvatar";
 import axios from "axios";
-import { useRouter } from 'next/navigation';
+import { useRouter } from "next/navigation";
 
 interface Kategori {
   id: number;
@@ -24,16 +24,19 @@ export default function BuatSurveyPage() {
   const [hargaSurvey, setHargaSurvey] = useState<string | "">("");
   const [kategori, setKategori] = useState<KategoriOption[]>([]);
   const [selectedKategori, setSelectedKategori] = useState<number[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [authUrl, setAuthUrl] = useState<string | null>(null);
 
   const router = useRouter();
 
+  // Mengecek apakah ada token Google di session storage
+  const googleToken = sessionStorage.getItem("googleToken");
+
+  // Fetch data kategori
   useEffect(() => {
     axios
-      .get("https://be-qutanya.vercel.app/kategori") // Ganti dengan URL endpoint API Anda
+      .get("https://be-qutanya.vercel.app/kategori")
       .then((response) => {
         if (
           response.data.status === "success" &&
@@ -48,27 +51,21 @@ export default function BuatSurveyPage() {
           throw new Error("Data tidak dalam format yang diharapkan");
         }
       })
-      .catch((error) => setError(error.message))
+      .catch((error) => setErrorMessage(error.message))
       .finally(() => setLoading(false));
   }, []);
 
-  useEffect(() => {
-    // Generate the authorization URL for Google OAuth
-    const generateAuthUrl = async () => {
-      try {
-        const response = await axios.get("https://be-qutanya.vercel.app/auth/auth/google");
-        if (response.status === 200) {
-          setAuthUrl(response.data.url);
-        } else {
-          throw new Error("Failed to generate authorization URL");
-        }
-      } catch (error) {
-        setError("Failed to generate authorization URL");
+  const handleLoginWithGoogle = async () => {
+    try {
+      const response = await axios.get("https://be-qutanya.vercel.app/auth/auth/google");
+      if (response.status === 200) {
+        setAuthUrl(response.data.url);
+        window.location.href = response.data.url; // Redirect ke Google OAuth
       }
-    };
-
-    generateAuthUrl();
-  }, []);
+    } catch (error) {
+      setErrorMessage("Gagal menghasilkan URL otorisasi Google.");
+    }
+  };
 
   const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const data = event.target.value.split(',').map(Number);
@@ -96,44 +93,34 @@ export default function BuatSurveyPage() {
     };
 
     try {
-      console.log("Submitting surveyData: ", surveyData);
       setLoading(true);
-
-      try {
-        const response = await axios.post(
-          "https://be-qutanya.vercel.app/survei/create",
-          surveyData,
-          {
-            headers: {
-              'Content-Type': 'application/json',
-              'Access-Control-Allow-Origin': "*"
-            },
-          }
-        );
-
-        if (response.status === 200) {
-          const data = response.data;
-          router.push(`/bayar?data=${encodeURIComponent(JSON.stringify(data))}`);
+      const response = await axios.post(
+        "https://be-qutanya.vercel.app/survei/create",
+        surveyData,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': "*"
+          },
         }
-      } catch (error) {
-        if (axios.isAxiosError(error)) {
-          setErrorMessage(error.response?.data?.message || "Survei failed. created");
-        } else if (error instanceof Error) {
-          setErrorMessage(error.message || "An unexpected error occurred.");
-        } else {
-          setErrorMessage("An unknown error occurred.");
-        }
-      } finally {
-        setLoading(false);
+      );
+
+      if (response.status === 200) {
+        const data = response.data;
+        router.push(`/bayar?data=${encodeURIComponent(JSON.stringify(data))}`);
       }
     } catch (error) {
-      console.error("Error serializing surveyData:", error);
+      if (axios.isAxiosError(error)) {
+        setErrorMessage(error.response?.data?.message || "Survei gagal dibuat.");
+      } else if (error instanceof Error) {
+        setErrorMessage(error.message || "Terjadi kesalahan yang tidak terduga.");
+      } else {
+        setErrorMessage("Terjadi kesalahan yang tidak diketahui.");
+      }
+    } finally {
+      setLoading(false);
     }
   };
-
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
 
   return (
     <DefaultLayout>
@@ -228,10 +215,14 @@ export default function BuatSurveyPage() {
               Buat Survey
             </Button>
 
-            {authUrl && (
-              <a href={authUrl} className="text-blue-500 mt-4">
-                Hubungkan Akun Google
-              </a>
+            {/* Jika tidak ada token Google, tampilkan tombol login */}
+            {!googleToken && (
+              <Button
+                className="w-full mt-4"
+                onClick={handleLoginWithGoogle}
+              >
+                Login with Google
+              </Button>
             )}
           </div>
         </section>
