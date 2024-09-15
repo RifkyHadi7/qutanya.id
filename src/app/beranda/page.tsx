@@ -71,7 +71,7 @@ export default function BerandaPage() {
     const fetchCategories = async () => {
       try {
         const response = await axios.get(
-          "https://be-qutanya.vercel.app/survei/kategori"
+          "https://be-qutanya.vercel.app/kategori"
         );
         if (
           response.data.status === "success" &&
@@ -104,7 +104,7 @@ export default function BerandaPage() {
   // Function to handle Google login
   const handleGoogleLogin = () => {
     window.location.href =
-      "https://accounts.google.com/o/oauth2/v2/auth?access_type=offline&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fforms.body.readonly%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fforms.responses.readonly&redirect_uri=https%3A%2F%2Fbe-qutanya.vercel.app%2Fauth%2Foauth2callback&response_type=code&client_id=YOUR_GOOGLE_CLIENT_ID";
+     'https://be-qutanya.vercel.app/auth/google'
   };
 
   return (
