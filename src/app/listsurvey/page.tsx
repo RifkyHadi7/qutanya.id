@@ -22,7 +22,7 @@ export default function ListArtikel() {
         </div>
 
         <section className="flex flex-col  gap-2 w-full px-4">
-          <Content />
+          <Content data={[]} />
         </section>
 
         
