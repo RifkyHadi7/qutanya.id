@@ -26,15 +26,16 @@ export default function BuatSurveyPage() {
   const [selectedKategori, setSelectedKategori] = useState<number[]>([]);
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  const [authUrl, setAuthUrl] = useState<string | null>(null);
+  const [googleToken, setGoogleToken] = useState<string | null>(null);
 
   const router = useRouter();
 
-  // Mengecek apakah ada token Google di session storage
-  const googleToken = sessionStorage.getItem("googleToken");
-
-  // Fetch data kategori
   useEffect(() => {
+    // Mengecek token Google di session storage hanya di sisi klien
+    const token = sessionStorage.getItem("googleToken");
+    setGoogleToken(token);
+
+    // Fetch data kategori
     axios
       .get("https://be-qutanya.vercel.app/kategori")
       .then((response) => {
@@ -208,7 +209,7 @@ export default function BuatSurveyPage() {
             {!googleToken && (
               <Button
                 className="w-full mt-4"
-                onClick={() => (window.location.href = 'https://be-qutanya.vercel.app/auth/google')}
+                onClick={()=> window.location.href= "https://be-qutanya.vercel.app/auth/auth/google"}
               >
                 Login with Google
               </Button>
