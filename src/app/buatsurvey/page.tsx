@@ -55,17 +55,6 @@ export default function BuatSurveyPage() {
       .finally(() => setLoading(false));
   }, []);
 
-  const handleLoginWithGoogle = async () => {
-    try {
-      const response = await axios.get("https://be-qutanya.vercel.app/auth/auth/google");
-      if (response.status === 200) {
-        setAuthUrl(response.data.url);
-        window.location.href = response.data.url; // Redirect ke Google OAuth
-      }
-    } catch (error) {
-      setErrorMessage("Gagal menghasilkan URL otorisasi Google.");
-    }
-  };
 
   const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const data = event.target.value.split(',').map(Number);
@@ -219,7 +208,7 @@ export default function BuatSurveyPage() {
             {!googleToken && (
               <Button
                 className="w-full mt-4"
-                onClick={handleLoginWithGoogle}
+                onClick={() => (window.location.href = 'https://be-qutanya.vercel.app/auth/google')}
               >
                 Login with Google
               </Button>
