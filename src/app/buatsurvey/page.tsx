@@ -103,6 +103,12 @@ export default function BuatSurveyPage() {
         const response = await axios.post(
           "https://be-qutanya.vercel.app/survei/create",
           surveyData,
+          {
+            headers: {
+              'Content-Type': 'application/json',
+              'Access-Control-Allow-Origin': "*",
+            },
+          }
         );
 
         if (response.status === 200) {
