@@ -63,7 +63,7 @@ export default function BuatSurveyPage() {
           throw new Error("Failed to generate authorization URL");
         }
       } catch (error) {
-        setError("Failed to generate authorization URL");
+        setError(error as string);
       }
     };
 
