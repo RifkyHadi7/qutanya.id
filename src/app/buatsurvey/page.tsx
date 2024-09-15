@@ -1,11 +1,11 @@
 "use client";
-import { Input, Select, SelectItem, Spinner } from "@nextui-org/react";
+import { Input, Select, SelectItem, Spinner, Button } from "@nextui-org/react";
 import React, { useEffect, useState } from "react";
 import DefaultLayout from "@/layouts/default1";
 import { MenuButton } from "@/layouts/menu";
 import { HeaderAvatar } from "@/layouts/headerAvatar";
-import { Button } from "@nextui-org/react";
 import axios from "axios";
+import { useRouter } from 'next/navigation';
 
 interface Kategori {
   id: number;
@@ -27,10 +27,13 @@ export default function BuatSurveyPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState("");
+  const [authUrl, setAuthUrl] = useState<string | null>(null);
+
+  const router = useRouter();
 
   useEffect(() => {
     axios
-      .get("https://qutanya-be.vercel.app/kategori") // Ganti dengan URL endpoint API Anda
+      .get("https://be-qutanya.vercel.app/kategori") // Ganti dengan URL endpoint API Anda
       .then((response) => {
         if (
           response.data.status === "success" &&
@@ -49,52 +52,72 @@ export default function BuatSurveyPage() {
       .finally(() => setLoading(false));
   }, []);
 
+  useEffect(() => {
+    // Generate the authorization URL for Google OAuth
+    const generateAuthUrl = async () => {
+      try {
+        const response = await axios.get("https://be-qutanya.vercel.app/auth/auth/google");
+        if (response.status === 200) {
+          setAuthUrl(response.data.url);
+        } else {
+          throw new Error("Failed to generate authorization URL");
+        }
+      } catch (error) {
+        setError("Failed to generate authorization URL");
+      }
+    };
 
-  const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {  
+    generateAuthUrl();
+  }, []);
+
+  const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const data = event.target.value.split(',').map(Number);
     setSelectedKategori(data);
   };
 
-
   const handleSubmit = async () => {
+    setErrorMessage("");
     const userData = sessionStorage.getItem("userData");
-    let user;
+    let user; 
     if (userData) {
       user = JSON.parse(userData);
+      console.log(user);
     } else {
       console.log("User data not found in session storage");
+      return;
     }
     const surveyData = {
+      id_user_create: user.data.uuid,
       title: judulSurvey,
       form_res: linkFormResponden,
       form_meta_req: linkFormEdit,
       kategori: selectedKategori,
       harga: parseFloat(hargaSurvey as string),
-      id_user_create: user?.uuid,
     };
 
     try {
-      // Make sure there are no unwanted fields or circular references
       console.log("Submitting surveyData: ", surveyData);
       setLoading(true);
 
       try {
         const response = await axios.post(
-          "https://qutanya-be.vercel.app/survei/create",
+          "https://be-qutanya.vercel.app/survei/create",
           surveyData,
+          {
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          }
         );
 
         if (response.status === 200) {
           const data = response.data;
-          console.log(data);
+          router.push(`/bayar?data=${encodeURIComponent(JSON.stringify(data))}`);
         }
       } catch (error) {
-        // Type guard for Axios error or Error instance
         if (axios.isAxiosError(error)) {
-          // Handle Axios error (from the server)
           setErrorMessage(error.response?.data?.message || "Survei failed. created");
         } else if (error instanceof Error) {
-          // Handle generic errors
           setErrorMessage(error.message || "An unexpected error occurred.");
         } else {
           setErrorMessage("An unknown error occurred.");
@@ -129,7 +152,7 @@ export default function BuatSurveyPage() {
         )}
 
         {loading && (
-         <Spinner color="success"></Spinner>
+          <Spinner color="success"></Spinner>
         )}
 
         <section className="flex flex-col gap-4 w-full px-4">
@@ -162,8 +185,7 @@ export default function BuatSurveyPage() {
               className="mx-auto lg:w-1/2"
               onChange={handleSelectChange}
             >
-              {
-              kategori.map((item) => (
+              {kategori.map((item) => (
                 <SelectItem key={item.value} value={item.value}>
                   {item.label}
                 </SelectItem>
@@ -186,8 +208,8 @@ export default function BuatSurveyPage() {
                 "mx-auto",
                 "lg:w-1/2",
                 "w-full",
-                "bg-default-200/50", // Background color
-                "dark:bg-default/60", // Background color for dark mode
+                "bg-default-200/50",
+                "dark:bg-default/60",
                 "text-black/90 dark:text-white/90",
                 "placeholder:text-default-700/50 dark:placeholder:text-white/60",
                 "shadow-xl",
@@ -204,6 +226,12 @@ export default function BuatSurveyPage() {
             >
               Buat Survey
             </Button>
+
+            {authUrl && (
+              <a href={authUrl} className="text-blue-500 mt-4">
+                Hubungkan Akun Google
+              </a>
+            )}
           </div>
         </section>
       </section>

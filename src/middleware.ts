@@ -3,32 +3,35 @@ import type { NextRequest } from 'next/server';
 
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
-
+  
   // Daftar halaman yang tidak memerlukan sesi
   const publicPaths = ['/loginpage', '/register', '/lupapassword'];
-
-  // Jika pengguna mencoba mengakses halaman login, register, atau lupa password, izinkan
-  if (publicPaths.includes(pathname)) {
-    return NextResponse.next();
-  }
-
-  // Periksa apakah sesi ada di cookies
+  
   const session = request.cookies.get('session');
 
+  // Log untuk membantu debug
+  // Jika ada sesi dan mencoba mengakses halaman login, register, atau lupa password, arahkan ke halaman beranda
   if (session && publicPaths.includes(pathname)) {
     const url = request.nextUrl.clone();
     url.pathname = '/beranda';
-    return NextResponse.redirect(url);
-  }
-  // Jika sesi tidak ada, arahkan ke halaman login
-  if (!session ) {
-    const url = request.nextUrl.clone();
-    url.pathname = '/loginpage';
-    return NextResponse.redirect(url);
+    const response = NextResponse.redirect(url);
+    response.headers.set('Access-Control-Allow-Origin', '*'); // Mengizinkan semua origin, sesuaikan sesuai kebutuhan
+    return response;
   }
 
-  // Jika sesi ada, izinkan akses
-  return NextResponse.next();
+  // Jika tidak ada sesi dan mencoba mengakses halaman yang memerlukan sesi, arahkan ke halaman login
+  if (!session && !publicPaths.includes(pathname)) {  
+    const url = request.nextUrl.clone();
+    url.pathname = '/loginpage';
+    const response = NextResponse.redirect(url);
+    response.headers.set('Access-Control-Allow-Origin', '*'); // Mengizinkan semua origin, sesuaikan sesuai kebutuhan
+    return response;
+  }
+
+  // Izinkan akses ke halaman yang sesuai dengan aturan di atas
+  const response = NextResponse.next();
+  response.headers.set('Access-Control-Allow-Origin', '*'); // Mengizinkan semua origin, sesuaikan sesuai kebutuhan
+  return response;
 }
 
 // Tentukan rute mana yang akan menggunakan middleware ini
