@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState, useCallback, useRef } from "react";
+import React, { useEffect, useState, } from "react";
 import DefaultLayout from "@/layouts/default1";
 import { Input, Select, SelectItem, Spinner } from "@nextui-org/react";
 import { SearchIcon } from "@/components/icons";
@@ -88,14 +88,14 @@ export default function BerandaPage() {
     fetchCategories();
   }, []);
 
-  const handleSelectChange = (
-    selectedValues: React.ChangeEvent<HTMLSelectElement>
-  ) => {
-    // Store selected values without fetching data immediately
-    const selected = selectedValues.target.value.split(",").map(String);
-    console.log(selected);
-    setFilterKategori(selected);
-  };
+  // const handleSelectChange = (
+  //   selectedValues: React.ChangeEvent<HTMLSelectElement>
+  // ) => {
+  //   // Store selected values without fetching data immediately
+  //   const selected = selectedValues.target.value.split(",").map(String);
+  //   console.log(selected);
+  //   setFilterKategori(selected);
+  // };
 
   const handleSelectChange2 = (selectedValues: Set<string>) => {
     const selected = Array.from(selectedValues).map(String);
