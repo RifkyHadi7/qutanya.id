@@ -33,7 +33,6 @@ const BuatSurveyComponent = () => {
   const query = param.get("token");
 
   useEffect(() => {
-    console.log(query);
     // Mengecek token Google di session storage hanya di sisi klien
     if (query) {
       sessionStorage.setItem("googleToken", JSON.stringify(query));
@@ -92,6 +91,7 @@ const BuatSurveyComponent = () => {
       form_meta_req: linkFormEdit,
       kategori: selectedKategori,
       harga: parseFloat(hargaSurvey as string),
+      accessToken :query,
     };
 
     try {
@@ -99,12 +99,6 @@ const BuatSurveyComponent = () => {
       const response = await axios.post(
         "https://be-qutanya.vercel.app/survei/create",
         surveyData,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            "Access-Control-Allow-Origin": "*",
-          },
-        }
       );
 
       if (response.status === 200) {
