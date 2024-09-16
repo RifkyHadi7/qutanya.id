@@ -14,7 +14,7 @@ import { usePathname } from "next/navigation";
 export const MenuButton:React.FC  = () => {
   const pathName = usePathname();
   return (
-    <div className="flex p-4 bg-primary bottom-0 shadow-xl backdrop-blur-xl backdrop-saturate-200" style={{ gap: "4rem" }}>
+    <div className="flex justify-center p-4 bg-primary bottom-0 shadow-xl backdrop-blur-xl backdrop-saturate-200 max-w-full" style={{ gap: "4rem" }}>
       <Link href="/beranda">
         <Image
           // src={currentPath === '/beranda' ? HomeIconFilled : HomeIcon}

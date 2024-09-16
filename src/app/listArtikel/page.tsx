@@ -67,7 +67,6 @@ export default function ListArtikel() {
         <HeaderAvatar />
         <div className="absolute bottom-20">
         </div>
-        <MenuButton />
       </section>
 
       <section className="flex flex-col items-center gap-4 top-20 absolute w-full z-20">
@@ -81,7 +80,11 @@ export default function ListArtikel() {
         <section className="flex flex-col gap-2 w-full px-4">
           <Content articles={articles}/>
         </section>
+        <section className="w-full fixed bottom-0">
+        <MenuButton  />
       </section>
+      </section>
+      
     </DefaultLayout>
   );
 }
