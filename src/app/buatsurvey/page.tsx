@@ -30,7 +30,7 @@ export default function BuatSurveyPage({param}: any) {
   const [googleToken, setGoogleToken] = useState<string | null>(null);
 
   const router = useRouter();
-  const query = param.get('token');
+  const query =param;
   
 
   useEffect(() => {
