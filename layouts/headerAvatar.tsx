@@ -26,7 +26,7 @@ export const HeaderAvatar = () => {
   }, []);
 
   return (
-    <header className="relative bg-background shadow-lg rounded-b-extra p-4 pb-12 flex items-center justify-between w-full">
+    <header className=" bg-background shadow-lg rounded-b-extra p-4 pb-12 flex items-center justify-between w-full z-20">
       {userName || profileImage ? (
         <div className="flex items-center">
           <Image

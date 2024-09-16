@@ -17,7 +17,12 @@ const config: Config = {
         background2:"#F2F2FE",
         balance: "#21FF5C",
         saldo: "#21FF5C" ,
-      }
+      },
+      borderWidth: {
+        small: "1px", // border-small
+        medium: "2px", // border-medium (default)
+        large: "3px", // border-large
+      },
     },
   },
   darkMode: "class",
@@ -31,7 +36,12 @@ const config: Config = {
           background2:"#F2F2FE",
           balance: "#21FF5C",
           saldo: "#21FF5C" ,
-        }
+        },
+        borderWidth: {
+          small: "1px", // border-small
+          medium: "2px", // border-medium (default)
+          large: "3px", // border-large
+        },
       },
       dark: {
         colors: {
@@ -41,7 +51,12 @@ const config: Config = {
           background2:"#F2F2FE",
           balance: "#21FF5C",
           saldo: "#21FF5C" ,
-        }
+        },
+        borderWidth: {
+          small: "1px", // border-small
+          medium: "2px", // border-medium (default)
+          large: "3px", // border-large
+        },
       },
     },
   }),

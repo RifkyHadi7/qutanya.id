@@ -101,7 +101,7 @@ export default function SettingsPage() {
     <DefaultLayout>
       <section className="flex flex-col h-screen bg-background2 items-center justify-between mx-auto relative z-10">
         <HeaderAvatar />
-        <MenuButton currentPath={"/setting"}></MenuButton>
+        <MenuButton />
       </section>
 
       <section className="flex flex-col items-center justify-center w-screen mx-auto gap-2 absolute top-24 z-20">

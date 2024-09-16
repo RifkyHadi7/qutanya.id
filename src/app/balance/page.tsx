@@ -58,7 +58,10 @@ export default function BalancePage() {
     <DefaultLayout>
       <section className="flex flex-col items-center justify-between min-h-screen bg-background2 relative z-10">
         <HeaderAvatar />
+
+       
         <MenuButton currentPath={"/balance"} />
+       
       </section>
 
       <section className="flex flex-col gap-4 mt-2 w-full px-4 mx-auto absolute top-20 z-20">

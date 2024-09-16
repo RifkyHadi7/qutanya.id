@@ -5,7 +5,7 @@ import { Card, ScrollShadow } from "@nextui-org/react";
 import DefaultLayout from "@/layouts/default1";
 import { HeaderAvatar } from "@/layouts/headerAvatar";
 import { MenuButton } from "@/layouts/menu";
-import { ContentSaya } from "@/layouts/SurveySaya";
+// import { ContentSaya } from "@/layouts/SurveySaya";
 
 export default function HasilSurveyPage() {
   return (
@@ -13,7 +13,7 @@ export default function HasilSurveyPage() {
       <section className="flex flex-col items-center justify-between min-h-screen bg-background2 relative z-10">
         <HeaderAvatar />
         
-          <MenuButton currentPath={"/hasilsurvey"} />
+          <MenuButton  />
         
       </section>
 
@@ -25,7 +25,7 @@ export default function HasilSurveyPage() {
           <Card className="w-full h-full mt-2 p-4 bg-white shadow-md flex-grow">
             <ScrollShadow className="max-h-64 overflow-y-auto">
               
-                <ContentSaya/>
+                {/* <ContentSaya/> */}
                 <div className="mb-4 p-4 border-b border-divider">
                   <h3 className="text-sm font-semibold text-secondary">Detail survey</h3>
                   <p className="text-sm text-secondary">Jumlah responden</p>

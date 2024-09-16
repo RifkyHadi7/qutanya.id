@@ -1,7 +1,6 @@
 "use client";
 
-import React, { useEffect, useState, } from "react";
-import DefaultLayout from "@/layouts/default1";
+import React, { useEffect, useState } from "react";
 import { Input, Select, SelectItem, Spinner } from "@nextui-org/react";
 import { SearchIcon } from "@/components/icons";
 import { MenuButton } from "@/layouts/menu";
@@ -18,8 +17,8 @@ interface Category {
 // Define the type for your survey data
 interface Survei {
   judul: string;
-  kategori: string[];
-  pembuat: {
+  kategori_survei: any[];
+  user: {
     nama: string;
   };
   hadiah: number;
@@ -29,45 +28,40 @@ export default function BerandaPage() {
   const [dataSurvei, setDataSurvei] = useState<Survei[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const [filterKategori, setFilterKategori] = useState<string[]>([]);
   const [kategori, setKategori] = useState<Category[]>([]);
+  const [dataTemp, setDateTemp] = useState<Survei[]>([]);
 
-  useEffect(() => {
-    fetchData();
-  }, [filterKategori]);
   // Use useCallback to memoize the fetchData function
   const fetchData = async () => {
     setLoading(true);
 
-    const filterState = filterKategori.join(",");
-    const response = await axios.post("https://be-qutanya.vercel.app/survei/get-all", {
-      filter: filterState, // Sending the filter as JSON in the request body
-    });
+    // const filterState = filterKategori.join(",");
+    const response = await axios.post("https://qutanya-be.vercel.app/survei/get-all");
 
-    if (
-      response.data.status === "success" &&
-      Array.isArray(response.data.data)
-    ) {
-      
-      const mappedData: Survei[] = response.data.data.map((item: any) => ({
-        judul: item.judul,
-        kategori: item.kategori,
-        pembuat: item.user,
-        hadiah: item.hadiah,
-      }));
-      setDataSurvei(mappedData);
-      setLoading(false)
-    }else {
-      setError(response.data.error)
+    if (response.data.status === "success") {
+      console.log(response.data.data);
+      // const mappedData: Survei[] = response.data.data?.map((item: any) => ({
+      //   judul: item.judul,
+      //   kategori_survei: item.kategori_survei,
+      //   user: item.user,
+      //   hadiah: item.hadiah,
+      // }));
+
+      setDateTemp(response.data.data);
+      setDataSurvei(response.data.data);
+      setLoading(false);
+    } else {
+      setError(response.data.error);
       setLoading(false);
     }
-    
   };
 
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await axios.get("https://be-qutanya.vercel.app/kategori");
+        const response = await axios.get(
+          "https://qutanya-be.vercel.app/kategori"
+        );
         if (
           response.data.status === "success" &&
           Array.isArray(response.data.data)
@@ -86,6 +80,7 @@ export default function BerandaPage() {
     };
 
     fetchCategories();
+    fetchData();
   }, []);
 
   // const handleSelectChange = (
@@ -99,19 +94,35 @@ export default function BerandaPage() {
 
   const handleSelectChange2 = (selectedValues: Set<string>) => {
     const selected = Array.from(selectedValues).map(String);
-    setFilterKategori(selected);
+    // [1,2]
+    
+    if (selected.length == 0) {
+      setDataSurvei(dataTemp);
+    } else {
+      // ['1','2','3']
+      const dataFilter = dataTemp.filter((e) => {
+        // Check if any of the kategori_survei objects have id_filter equal to 1
+        return e.kategori_survei.some((kat) => {
+          return selected.includes(String(kat.id_filter));
+        });
+        // Filter based on status and id_filter condition
 
-    // Trigger fetch after selecting options
-    fetchData();
+        // return hasKategoriFilter && e.status === "close";
+      });
+      setDataSurvei(dataFilter);
+    }
   };
 
+  // useEffect(() => {
+  //   fetchData();
+  // }, [filterKategori]);
+
   return (
-    <DefaultLayout>
-      <section className="flex flex-col items-center justify-between min-h-screen bg-background2 relative z-10">
-        <HeaderAvatar />
-        <MenuButton currentPath={"/beranda"} />
-      </section>
-      <section className="flex flex-col items-center gap-6 top-20 absolute w-full z-20">
+    <section className="min-h-screen bg-primary relative">
+      
+      <HeaderAvatar />
+      
+      <section className="flex flex-col items-center gap-6 top-20 w-full">
         <div className="px-4 w-3/4">
           <Input
             startContent={<SearchIcon className="text-secondary" />}
@@ -141,37 +152,48 @@ export default function BerandaPage() {
 
         <NavbarTop />
       </section>
-      {error && (
-        <div className="text-red-500 text-center font-bold">{error}</div>
-      )}
-      : (
-      <section className="flex flex-col absolute top-64 gap-2 w-full px-4 z-30">
-        <div className="flex flex-row min-w-80 items-center justify-between mx-auto">
-          <span className="text-md text-secondary leading-none font-bold">
-            Survey Tersedia
-          </span>
-          <span className="text-sm text-secondary leading-none">
-            <Select
-              placeholder="Pilih kategori"
-              selectionMode="multiple"
-              className="w-[150px]"
-              onSelectionChange={handleSelectChange2 as any}
-              // onClose={ handleSelectClose}
-            >
-              {kategori.map((item) => (
-                <SelectItem key={item.value} value={item.value}>
-                  {item.label}
-                </SelectItem>
-              ))}
-            </Select>
-          </span>
-        </div>
-        {loading ? (
-          <Spinner color="success"></Spinner>
-        ) : (
-          <Content data={dataSurvei} />
+
+      <section className="flex flex-col items-center justify-between bg-background2 relative">
+        <section className="flex flex-col top-64 gap-2 sm:w-full lg: w-full lg:w-[50%] px-4">
+          <div className="flex flex-row min-w-80 items-center justify-between mx-auto mt-2">
+            <span className="text-md text-secondary leading-none font-bold">
+              Survey Tersedia
+            </span>
+            <span className="text-sm text-secondary leading-none">
+              <Select
+                placeholder="Pilih kategori"
+                selectionMode="multiple"
+                className="w-[150px]"
+                onSelectionChange={handleSelectChange2 as any}
+                // onClose={ handleSelectClose}
+              >
+                {kategori.map((item) => (
+                  <SelectItem key={item.value} value={item.value}>
+                    {item.label}
+                  </SelectItem>
+                ))}
+              </Select>
+            </span>
+          </div>
+
+          {error && (
+          <div className="text-red-500 text-center font-bold">
+            {error}
+          </div>
         )}
+                
+          {loading ? (
+            <Spinner color="success"></Spinner>
+          ) : (
+            <div className="h-[30rem] overflow-auto">
+              <Content data={dataSurvei} />
+            </div>
+          )}
+        </section>
       </section>
-    </DefaultLayout>
+      <section className="fixed bottom-0">
+        <MenuButton  />
+      </section>
+    </section>
   );
 }
