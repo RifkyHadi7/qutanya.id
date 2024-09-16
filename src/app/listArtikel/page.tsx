@@ -16,32 +16,37 @@ interface Article {
 
 export default function ListArtikel() {
   const [articles, setArticles] = useState<Article[]>([]); // Inisialisasi dengan array kosong
-  const [currentPage] = useState(1);
 
-  useEffect(() => {
-    fetchArticles(currentPage);
-  }, [currentPage]);
-
-  const fetchArticles = async (page: number) => {
+  const fetchArticles = async () => {
     try {
-      const limit = 2; // Ubah limit menjadi 2
-      const endpoint = `https://qutanya-be.vercel.app/artikel?page=${page}&limit=${limit}`;
-      console.log("Fetching articles from:", endpoint); // Log endpoint yang digunakan
+      const endpoint = `https://qutanya-be.vercel.app/artikel`;
+      console.log("Fetching articles from:", endpoint);
       const response = await fetch(endpoint);
       const data = await response.json();
-      console.log("Full response from backend:", data); // Log seluruh respons yang diterima
+      console.log("Full response from backend:", data);
+  
       if (data && data.status === "success" && data.data.length > 0) {
-        console.log("Articles data:", data.data); // Log data artikel
-        setArticles(data.data); // Pastikan data ada sebelum mengatur state
+        const articles = data.data.map((item: any) => ({
+          id: item.id.toString(), // Convert id to string for consistency
+          judul: item.judul,
+          deskripsi: item.deskripsi,
+          isi: "", // Default to empty since the API doesn't return `isi`
+          cover: item.cover || undefined, // Use undefined if cover is null
+        }));
+        console.log("Mapped articles data:", articles);
+        setArticles(articles); // Update state with mapped articles
       } else {
-        console.log("No articles found in response."); // Log jika data tidak ada
-        setArticles([]); // Set articles ke array kosong jika data tidak ada
+        console.log("No articles found in response.");
+        setArticles([]); // Set to empty array if no data
       }
     } catch (error) {
       console.error("Error fetching articles:", error);
-      setArticles([]); // Set articles ke array kosong jika terjadi kesalahan
+      setArticles([]); // Set to empty array in case of error
     }
   };
+  useEffect(() => {
+    fetchArticles();
+  }, []);
 
   // const handleReadArticle = (article: Article) => {
   //   console.log("Navigating to article:", article); // Log data artikel yang akan dinavigasikan

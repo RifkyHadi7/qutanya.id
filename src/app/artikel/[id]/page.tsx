@@ -11,35 +11,47 @@ interface Article {
   judul: string;
   deskripsi: string;
   isi: string;
-  cover?: string;
+  cover: string;
 }
 
-const ArtikelPage: React.FC = () => {
+export default function ArtikelPage({ params }: { params: { id: string } }){
+  const { id } = params;
   const [article, setArticle] = useState<Article | null>(null);
-  const [loading, setLoading] = useState(true);
+
+  const fetchArticle = async (id: string) => {
+    try {
+      const response = await fetch(`https://qutanya-be.vercel.app/artikel/${id}`);
+      const result = await response.json();
+      console.log("API Data fetch", result.data)
+  
+      if (result.status === "success" && result.data.length > 0) {
+        const articleData = result.data[0]
+        const article = {
+          id: articleData.id, // Convert id to string for consistency
+          judul: articleData.judul,
+          deskripsi: articleData.deskripsi,
+          isi: articleData.isi,
+          cover: articleData.cover || undefined, // Use undefined if cover is null
+        };
+        console.log("Mapped articles data:", article);
+        setArticle(article);
+      } else {
+        console.log("No article found with the provided id.");
+        return null;
+      }
+    } catch (error) {
+      console.error("Error fetching article:", error);
+      return null;
+    }
+  };
 
   useEffect(() => {
-    const searchParams = new URLSearchParams(window.location.search);
-    const id = searchParams.get("id");
-    const judul = searchParams.get("judul");
-    const deskripsi = searchParams.get("deskripsi");
-    const isi = searchParams.get("isi");
-    const cover = searchParams.get("cover");
-
-    if (id && judul && deskripsi && isi) {
-      setArticle({ id, judul, deskripsi, isi, cover: cover || undefined });
-    }
-    setLoading(false);
-  }, []);
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+    fetchArticle(id);
+  }, [id]);
 
   if (!article) {
     return <div>No article found</div>;
   }
-
   return (
     <DefaultLayout>
       <section className="flex flex-col items-center justify-between min-h-screen bg-background2 relative z-10">
@@ -57,6 +69,8 @@ const ArtikelPage: React.FC = () => {
             <Image
               src={article.cover || "https://nextui.org/images/album-cover.png"}
               alt={article.judul}
+              width={100}
+              height={100}
               className="w-full h-auto mb-4"
             />
             <p className="text-md text-secondary">{article.deskripsi}</p>
@@ -67,5 +81,3 @@ const ArtikelPage: React.FC = () => {
     </DefaultLayout>
   );
 };
-
-export default ArtikelPage;
