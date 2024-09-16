@@ -23,7 +23,7 @@ export default function BalancePage() {
         <HeaderAvatar />
 
        
-        <MenuButton currentPath={"/balance"} />
+        <MenuButton />
        
       </section>
 

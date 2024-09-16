@@ -49,7 +49,7 @@ const BuatSurveyComponent = () => {
 
     // Fetch data kategori
     axios
-      .get("https://be-qutanya.vercel.app/kategori")
+      .get("https://qutanya-be.vercel.app/kategori")
       .then((response) => {
         if (
           response.data.status === "success" &&
@@ -97,7 +97,8 @@ const BuatSurveyComponent = () => {
     try {
       setLoading(true);
       const response = await axios.post(
-        "https://be-qutanya.vercel.app/survei/create",
+        "https://qutanya-be.vercel.app/survei/create",
+        // "https://qutanya-be.vercel.app/survei/create",
         surveyData,
       );
 
@@ -126,7 +127,7 @@ const BuatSurveyComponent = () => {
     <DefaultLayout>
       <section className="flex flex-col items-center justify-between min-h-screen bg-background2 relative z-10">
         <HeaderAvatar />
-        <MenuButton currentPath={"/buatsurvey"} />
+        <MenuButton />
       </section>
 
       <section className="flex flex-col items-center gap-4 top-20 absolute w-full z-20">
@@ -149,7 +150,7 @@ const BuatSurveyComponent = () => {
               className=" mx-auto  lg:w-1/2  bg-slate-200 p-2"
               onClick={() =>
                 (window.location.href =
-                  "https://be-qutanya.vercel.app/auth/auth/google")
+                  "https://qutanya-be.vercel.app/auth/auth/google")
               }
             >
               <svg

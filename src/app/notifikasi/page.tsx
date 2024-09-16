@@ -18,7 +18,7 @@ export default function NotifikasiPage() {
     <DefaultLayout>
       <section className="flex flex-col items-center justify-between min-h-screen bg-background2 relative z-10">
         <HeaderAvatar />
-          <MenuButton currentPath={"/notfikasi"} />
+          <MenuButton />
       </section>
 
       <section className="flex flex-col items-center justify-center w-screen mx-auto gap-2 absolute top-24 z-20">

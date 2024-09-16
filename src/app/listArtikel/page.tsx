@@ -62,7 +62,7 @@ export default function ListArtikel() {
         <HeaderAvatar />
         <div className="absolute bottom-20">
         </div>
-        <MenuButton currentPath={"/listartikel"} />
+        <MenuButton />
       </section>
 
       <section className="flex flex-col items-center gap-4 top-20 absolute w-full z-20">
