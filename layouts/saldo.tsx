@@ -7,11 +7,37 @@ export const Saldo = () => {
   const router = useRouter(); // Initialize useRouter
 
   useEffect(() => {
-    const userData = sessionStorage.getItem("userData");
-    if (userData) {
-      const parsedData = JSON.parse(userData);
-      setSaldo(parsedData.data.saldo);
-    }
+    const fetchSaldo = async () => {
+      try {
+        const userData = sessionStorage.getItem("userData");
+        if (userData) {
+          const parsedData = JSON.parse(userData);
+          const id_user = parsedData.data.biodata.id_user; // Assuming you have the email in session storage
+          console.log(parsedData)
+          console.log(id_user)
+          // Fetch saldo using POST with email
+          const response = await fetch("https://qutanya-be.vercel.app/saldo/", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ "id_user" : id_user }), // Send email in the request body
+          });
+          
+          const result = await response.json();
+          console.log(result)
+          if (result.status === "success" && result.data) {
+            setSaldo(result.data[0].saldo); // Set the fetched saldo
+          } else {
+            console.log("Failed to fetch saldo or no saldo available.");
+          }
+        }
+      } catch (error) {
+        console.error("Error fetching saldo:", error);
+      }
+    };
+
+    fetchSaldo(); // Call the function to fetch saldo on component mount
   }, []);
 
   const handleTarikSaldo = () => {
@@ -30,7 +56,7 @@ export const Saldo = () => {
             <div className="col-span-2">
               {/* Konten lain di sebelah kanan gambar */}
               <h3 className="text-xl font-light text-balance-900">
-                Rp {saldo.toLocaleString("id-ID")}
+                Rp {saldo}
               </h3>
               <p className="text-sm font-extralight text-secondary">
                 *Penarikan dengan minimal saldo Rp. 15.000
