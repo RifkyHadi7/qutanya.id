@@ -1,5 +1,3 @@
-"use client";
-
 import React from "react";
 import { Card, Button } from "@nextui-org/react";
 import DefaultLayout from "@/layouts/default1";
@@ -21,10 +19,17 @@ export default function BayarPage() {
               Total yang harus dibayar
             </h2>
             <p className="text-xl font-semibold text-secondary mb-4">
-              Rp 1.000.000
+              Rp 
+            </p>
+            <h2 className="text-xl font-bold text-secondary mb-4">
+              Hadiah Per-Responden
+            </h2>
+            <p className="text-xl font-semibold text-secondary mb-4">
+              Rp 
             </p>
             <Button
               className="w-full"
+          
             >
               Bayar
             </Button>
