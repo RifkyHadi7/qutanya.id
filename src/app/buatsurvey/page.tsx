@@ -5,7 +5,7 @@ import DefaultLayout from "@/layouts/default1";
 import { MenuButton } from "@/layouts/menu";
 import { HeaderAvatar } from "@/layouts/headerAvatar";
 import axios from "axios";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 
 interface Kategori {
@@ -18,7 +18,7 @@ interface KategoriOption {
   label: string;
 }
 
-export default function BuatSurveyPage() {
+export default function BuatSurveyPage({param}: any) {
   const [judulSurvey, setJudulSurvey] = useState("");
   const [linkFormResponden, setLinkFormResponden] = useState("");
   const [linkFormEdit, setLinkFormEdit] = useState("");
@@ -30,13 +30,12 @@ export default function BuatSurveyPage() {
   const [googleToken, setGoogleToken] = useState<string | null>(null);
 
   const router = useRouter();
-
-  const params = useSearchParams();
-  const query = params.get("token");
+  const query = param.get('token');
+  
 
   useEffect(() => {
     // Mengecek token Google di session storage hanya di sisi klien
-    
+  
     if (query){
       sessionStorage.setItem("token", JSON.stringify(query));
       // Set timeout untuk menghapus data setelah 3600 detik (1 jam)
