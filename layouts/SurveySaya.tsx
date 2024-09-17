@@ -58,7 +58,7 @@ export const ContentSaya = ({ data }: ContentSurvei) => (
                     {formatDate(item.created_at)}
                   </h3>
                 </div>
-                <p className="text-sm text-secondary">
+                <p className="text-sm text-white">
                   Status :{" "}
                   {item.status === "close" ? (
                     <Chip color="danger"> {item.status}</Chip>

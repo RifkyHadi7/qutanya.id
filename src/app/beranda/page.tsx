@@ -22,6 +22,7 @@ interface Survei {
     nama: string;
   };
   hadiah: number;
+  status:string;
 }
 
 export default function BerandaPage() {

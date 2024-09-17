@@ -1,6 +1,5 @@
 import React from "react";
 import { Card, CardBody, Chip } from "@nextui-org/react";
-import { Button } from "@nextui-org/react";
 import Image from "next/image";
 import IsiSurvei from "../assets/respon_survei.svg";
 import Link from "next/link";
@@ -62,7 +61,7 @@ export const Content = ({ data }: ContentComponentProps) => {
                       {formatDate(item.created_at)}
                     </h3>
                   </div>
-                  <p className="text-sm text-secondary">
+                  <p className="text-sm text-white">
                     Status :{" "}
                     {item.survei.status === "close" ? (
                       <Chip color="danger"> {item.survei.status}</Chip>

@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, CardBody, Button } from "@nextui-org/react";
+import { Card, CardBody, } from "@nextui-org/react";
 import Image from "next/image";
 import IsiSurvei from "../assets/respon_survei.svg";
 import moneyReward from "../assets/money.svg";
@@ -31,6 +31,7 @@ export const Content: React.FC<ContentProps> = ({ data }) => {
           <CardBody>
             <div className="flex items-center gap-4">
               <div className="flex-shrink-0">
+                
                 <Image
                   alt="Survey image"
                   className="object-cover"
@@ -61,10 +62,9 @@ export const Content: React.FC<ContentProps> = ({ data }) => {
                     </p>
                   ))}
                 </div>
-                
+
                 <div className=" flex flex-row-reverse w-full mt-2">
                   {/* Other content */}
-
                   <div className="border-medium p-1 text-success border-success rounded-md flex flex-col items-center  ml-auto">
                     <Image
                       alt="Survey image"
