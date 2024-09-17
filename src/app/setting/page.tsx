@@ -10,6 +10,7 @@ import { HeaderAvatar } from "@/layouts/headerAvatar";
 import { useRouter } from "next/navigation";
 import { MenuButton } from "@/layouts/menu";
 import Image from "next/image";
+import ProfileIconFilled from "@/assets/profil-filled.svg";
 
 // Define types for user data
 interface UserData {
@@ -174,8 +175,7 @@ export default function SettingsPage() {
               <div className="flex items-center w-full mb-4">
                 <Image
                   src={
-                    profileImage ||
-                    "https://oadqfnknwbaahnminxvl.supabase.co/storage/v1/object/public/foto_profile/default.png"
+                    profileImage || ProfileIconFilled
                   }
                   width={40}
                   height={50}
