@@ -21,7 +21,8 @@ const BuatSurveyComponent = () => {
   const [judulSurvey, setJudulSurvey] = useState("");
   const [linkFormResponden, setLinkFormResponden] = useState("");
   const [linkFormEdit, setLinkFormEdit] = useState("");
-  const [hargaSurvey, setHargaSurvey] = useState<string | "">("");
+  const [hargaSurvey, setHargaSurvey] = useState<string>("");
+  const [hargaSurveyNumber, setHargaSurveyNumber] = useState<number>(0);
   const [kategori, setKategori] = useState<KategoriOption[]>([]);
   const [selectedKategori, setSelectedKategori] = useState<number[]>([]);
   const [loading, setLoading] = useState(false);
@@ -73,6 +74,29 @@ const BuatSurveyComponent = () => {
     setSelectedKategori(data);
   };
 
+  const formatRupiah = (value: string) => {
+    const numberString = value.replace(/[^,\d]/g, "").toString();
+    const split = numberString.split(",");
+    const sisa = split[0].length % 3;
+    let rupiah = split[0].substr(0, sisa);
+    const ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+
+    if (ribuan) {
+      const separator = sisa ? "." : "";
+      rupiah += separator + ribuan.join(".");
+    }
+
+    rupiah = split[1] !== undefined ? rupiah + "," + split[1] : rupiah;
+    return "Rp " + rupiah;
+  };
+
+  const handleHargaChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    const numericValue = parseFloat(value.replace(/[^0-9,-]+/g, "").replace(",", "."));
+    setHargaSurvey(formatRupiah(value));
+    setHargaSurveyNumber(numericValue);
+  };
+
   const handleSubmit = async () => {
     setErrorMessage("");
     const userData = sessionStorage.getItem("userData");
@@ -90,16 +114,15 @@ const BuatSurveyComponent = () => {
       form_res: linkFormResponden,
       form_meta_req: linkFormEdit,
       kategori: selectedKategori,
-      harga: parseFloat(hargaSurvey as string),
-      accessToken :query,
+      harga: hargaSurveyNumber,
+      accessToken: query,
     };
 
     try {
       setLoading(true);
       const response = await axios.post(
         "https://qutanya-be.vercel.app/survei/create",
-        // "https://qutanya-be.vercel.app/survei/create",
-        surveyData,
+        surveyData
       );
 
       if (response.status === 200) {
@@ -144,7 +167,6 @@ const BuatSurveyComponent = () => {
 
         {/* Jika tidak ada token Google, tampilkan tombol login */}
         {!googleToken ? (
-
           <div className="flex flex-row w-full mx-auto px-4">
             <Button
               className=" mx-auto  lg:w-1/2  bg-slate-200 p-2"
@@ -213,7 +235,11 @@ const BuatSurveyComponent = () => {
                 onChange={handleSelectChange}
               >
                 {kategori.map((item) => (
-                  <SelectItem key={item.value} value={item.value}>
+                  <SelectItem
+                    key={item.value}
+                    value={item.value}
+                    className="text-black hover:text-black"
+                  >
                     {item.label}
                   </SelectItem>
                 ))}
@@ -222,10 +248,10 @@ const BuatSurveyComponent = () => {
               <Input
                 label="Harga survey"
                 placeholder="Masukkan harga survey"
-                type="number"
+                type="text"
                 className="mx-auto lg:w-1/2"
                 value={hargaSurvey}
-                onChange={(e) => setHargaSurvey(e.target.value)}
+                onChange={handleHargaChange}
               />
               <Button
                 variant="solid"

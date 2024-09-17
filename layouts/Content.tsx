@@ -74,7 +74,7 @@ export const Content: React.FC<ContentProps> = ({ data }) => {
                       width={30}
                     />
                     <p className="text-sm text-success">
-                      Rp.{Math.floor(item.hadiah)}
+                      Rp.{item.hadiah.toLocaleString("id-ID")}
                     </p>
                   </div>
                 </div>
