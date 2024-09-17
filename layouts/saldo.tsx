@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Card, CardBody, Button } from "@nextui-org/react";
 import { useRouter } from "next/navigation"; // Import useRouter
+import { TarikSaldoPopover } from "./popover";
+
 
 export const Saldo = () => {
   const [saldo, setSaldo] = useState(0);
@@ -40,9 +42,6 @@ export const Saldo = () => {
     fetchSaldo(); // Call the function to fetch saldo on component mount
   }, []);
 
-  const handleTarikSaldo = () => {
-    router.push("/"); // Redirect to klaim page
-  };
 
   return (
     <div>
@@ -61,9 +60,7 @@ export const Saldo = () => {
               <p className="text-sm font-extralight text-secondary">
                 *Penarikan dengan minimal saldo Rp. 15.000
               </p>
-              <Button className="mt-2" onClick={handleTarikSaldo}>
-                Tarik Saldo
-              </Button>
+              <TarikSaldoPopover/>
             </div>
           </div>
         </CardBody>
