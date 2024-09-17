@@ -46,9 +46,11 @@ export const Content: React.FC<ContentProps> = ({ articles}) => {
               <div className="col-span-2">
                 <h3 className="text-md font-semibold">{artikel.judul}</h3>
                 <p className="text-sm text-secondary">{artikel.deskripsi}</p>
-                <Button className="mt-2" onClick={() => {}}>
-                  Baca Artikel
-                </Button>
+                <a href={`/artikel/${artikel.id}`}>
+                  <Button className="mt-2">
+                    Baca Artikel
+                  </Button>
+                </a>
               </div>
             </div>
           </CardBody>

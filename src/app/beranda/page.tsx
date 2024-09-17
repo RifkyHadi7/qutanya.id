@@ -169,7 +169,7 @@ export default function BerandaPage() {
                 // onClose={ handleSelectClose}
               >
                 {kategori.map((item) => (
-                  <SelectItem key={item.value} value={item.value}>
+                  <SelectItem key={item.value} value={item.value} className="text-secondary">
                     {item.label}
                   </SelectItem>
                 ))}
@@ -192,7 +192,7 @@ export default function BerandaPage() {
           )}
         </section>
       </section>
-      <section className="fixed bottom-0">
+      <section className="w-full fixed bottom-0">
         <MenuButton  />
       </section>
     </section>

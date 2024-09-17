@@ -33,6 +33,6 @@ body {
 }
 
 .rounded-b-extra {
-  border-bottom-left-radius: 3rem; /* Sesuaikan nilai sesuai kebutuhan */
-  border-bottom-right-radius: 3rem; /* Sesuaikan nilai sesuai kebutuhan */
+  border-bottom-left-radius: 2rem; /* Sesuaikan nilai sesuai kebutuhan */
+  border-bottom-right-radius: 2rem; /* Sesuaikan nilai sesuai kebutuhan */
 }

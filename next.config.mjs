@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ["https://i.pravatar.cc", "localhost"],
+    domains: ["https://i.pravatar.cc", "localhost", 'nextui.org', 'qutanya-be.vercel.app'],
     remotePatterns: [
       {
         protocol: "https",
