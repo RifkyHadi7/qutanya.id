@@ -92,8 +92,8 @@ export default function BalancePage() {
                         transaction.pemasukan ? "text-green-500" : "text-red-500"
                       }`}>
                       {transaction.pemasukan
-                        ? `+Rp ${transaction.nominal.toLocaleString("id-ID")}`
-                        : `-Rp ${transaction.nominal.toLocaleString("id-ID")}`}
+                        ? `+Rp.${transaction.nominal.toLocaleString("id-ID")}`
+                        : `-Rp.${transaction.nominal.toLocaleString("id-ID")}`}
                     </p>
                     <h4 className="text-secondary text-sm font-light">
                       {transaction.keterangan}
