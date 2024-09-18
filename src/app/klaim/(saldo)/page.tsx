@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { Suspense, useState } from "react";
 import { Card, Button, Input } from "@nextui-org/react";
 import DefaultLayout from "@/layouts/default1";
 import { HeaderAvatar } from "@/layouts/headerAvatar";
@@ -9,7 +9,7 @@ import { useSearchParams } from "next/navigation";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 
-export default function KlaimKeuntunganPage() {
+const KlaimKeuntunganComponent = () => {
   const param = useSearchParams();
   const saldoDidapat = param.get("saldo");
   const [linkBukti, setLinkBukti] = useState("");
@@ -22,7 +22,7 @@ export default function KlaimKeuntunganPage() {
   const handleKlaim = async () => {
     try {
       setLoading(true);
-      setErrorMessage("")
+      setErrorMessage("");
       const userData = sessionStorage.getItem("userData");
       let user;
       if (userData) {
@@ -132,4 +132,14 @@ export default function KlaimKeuntunganPage() {
       </section>
     </DefaultLayout>
   );
-}
+};
+
+const KlaimKeuntunganPage = () => {
+  return (
+    <Suspense>
+      <KlaimKeuntunganComponent />
+    </Suspense>
+  );
+};
+
+export default KlaimKeuntunganPage;

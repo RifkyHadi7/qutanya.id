@@ -1,6 +1,5 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import DefaultLayout from "@/layouts/default1";
 import { MenuButton } from "@/layouts/menu";
 import { HeaderAvatar } from "@/layouts/headerAvatar";
 import { Content } from "@/layouts/Content";
