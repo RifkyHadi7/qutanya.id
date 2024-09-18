@@ -1,99 +1,168 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import axios from "axios"; // Import axios
 import { Button, Input, Card, CardBody } from "@nextui-org/react";
 import DefaultLayout from "@/layouts/default1";
 import { Accordion, AccordionItem } from "@nextui-org/react";
 import { EyeFilledIcon } from "@/components/icons";
 import { EyeSlashFilledIcon } from "@/components/icons";
 import { HeaderAvatar } from "@/layouts/headerAvatar";
-import { useRouter } from "next/navigation"; // Import useRouter
+import { useRouter } from "next/navigation";
 import { MenuButton } from "@/layouts/menu";
-import Image from "next/image"; // Import Image component
+import Image from "next/image";
+
+// Define types for user data
+interface UserData {
+  id_user: string;
+  nama: string;
+  foto_profil: string;
+}
 
 export default function SettingsPage() {
-  const [name, setName] = useState("");
-  const [job, setJob] = useState("");
-  const [isVisible, setIsVisible] = React.useState(false);
-  const [userData, setUserData] = useState<any>(null);
-  const router = useRouter(); // Initialize useRouter
-  const [profileImage, setProfileImage] = useState("");
-  
-    useEffect(() => {
-      // Fungsi untuk mengambil data pengguna dari sessionStorage
-      const fetchUserData = () => {
-        const userData = sessionStorage.getItem("userData");
-        console.log("User data from sessionStorage:", userData); // Log ini untuk melihat apakah datanya tersedia
-        if (userData) {
-          const parsedData = JSON.parse(userData);
-          console.log("Parsed user data:", parsedData); // Log data yang diambil dari sessionStorage
-          setName(parsedData.data.nama);
-          setProfileImage(parsedData.data.foto_profil);
-        } else {
-          console.error("User data not found in sessionStorage");
-        }
-      };
-  
-      fetchUserData();
-    }, []);
+  const [name, setName] = useState<string>("");
+  const [isVisible, setIsVisible] = useState<boolean>(false);
+  const [userData, setUserData] = useState<UserData | null>(null);
+  const router = useRouter();
+  const [userName, setUserName] = useState<string>("");
+  const [profileImage, setProfileImage] = useState<string>("");
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [oldPassword, setOldPassword] = useState<string>("");
+  const [newPassword, setNewPassword] = useState<string>("");
 
   useEffect(() => {
-    const userData: any = sessionStorage.getItem("userData");
-    if (userData) {
-      setUserData(JSON.parse(userData).data);
-    }
+    // Fetch user data from sessionStorage
+    const fetchUserData = () => {
+      const userData = sessionStorage.getItem("userData");
+      if (userData) {
+        const parsedData = JSON.parse(userData);
+        setUserData(parsedData.data);
+        setUserName(parsedData.data.nama);
+        setProfileImage(parsedData.data.foto_profil);
+      }
+    };
+    fetchUserData();
   }, []);
 
   const toggleVisibility = () => setIsVisible(!isVisible);
 
   const handleLogout = () => {
-    // Clear session storage
     sessionStorage.clear();
-
-    // Clear session cookie
     document.cookie = "session=; path=/; max-age=0";
-
-    // Redirect to login page
     router.push("/loginpage");
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      const file = e.target.files[0];
+      if (file.size > 5 * 1024 * 1024) { // 5 MB
+        alert("File size must be less than 5 MB");
+        return;
+      }
+      setSelectedFile(file);
+    }
   };
 
   const updateBiodata = async () => {
     try {
-      const response = await axios.post(
-        "https://qutanya-be.vercel.app/user/update",
-        {
-          nama: name,
-          pekerjaan: job,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const userDataString = sessionStorage.getItem("userData");
+      if (!userDataString) {
+        throw new Error("User data not found in sessionStorage");
+      }
 
-      const data = response.data;
-      if (data.status === "success") {
-        // Update berhasil, lakukan sesuatu seperti menampilkan notifikasi
-        console.log("Biodata updated successfully:", data);
-        // Perbarui userData di sessionStorage
-        const updatedUserData = {
-          ...userData,
-          nama: name,
-          biodata: [{ ...userData.biodata[0], pekerjaan: job }],
-        };
-        sessionStorage.setItem(
-          "userData",
-          JSON.stringify({ data: updatedUserData })
-        );
-        setUserData(updatedUserData);
+      const userData = JSON.parse(userDataString);
+      const id_user = userData?.data?.biodata?.id_user;
+
+      if (!id_user) {
+        throw new Error("User ID not found in userData");
+      }
+
+      const formData = new FormData();
+      formData.append("id_user", id_user);
+      formData.append("nama", name);
+      if (selectedFile) {
+        formData.append("foto_profil", selectedFile);
+      }
+
+      const response = await fetch("https://qutanya-be.vercel.app/user/update", {
+        method: "POST",
+        body: formData,
+      });
+
+      const result = await response.json();
+
+      if (result.status === "success") {
+        setUserName(userName)
+        userData.data.nama = result.data[0].nama;
+        userData.data.foto_profil = result.data[0].foto_profil;
+
+        sessionStorage.setItem("userData", JSON.stringify(userData));
+        
+        alert("Profile updated successfully.");
       } else {
-        // Tangani kesalahan
-        console.error("Failed to update biodata:", data);
+        alert("Failed to update profile.");
       }
     } catch (error) {
-      console.error("Error updating biodata:", error);
+      console.error("Error updating profile:", error);
+    }
+  };
+
+  const updatePassword = async () => {
+    try {
+      const userDataString = sessionStorage.getItem("userData");
+      if (!userDataString) {
+        throw new Error("User data not found in sessionStorage");
+      }
+  
+      const userData = JSON.parse(userDataString);
+      const id_user = userData?.data?.biodata?.id_user;
+  
+      if (!id_user) {
+        throw new Error("User ID not found in userData");
+      }
+  
+      const payload = {
+        id_user,
+        oldPassword,
+        newPassword,
+      };
+  
+      console.log("Password payload to be sent:", payload); // Log data yang akan dikirim
+  
+      const response = await fetch("https://qutanya-be.vercel.app/user/newpassword", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({"id_user": payload.id_user, "oldpassword": payload.oldPassword, "newpassword": payload.newPassword}),
+      });
+  
+      const responseText = await response.text(); // Get response as text
+      console.log("Response text:", responseText); // Log the raw response text
+  
+      if (!response.ok) {
+        throw new Error(`Server error: ${response.status} ${response.statusText}`);
+      }
+  
+      let result;
+      try {
+        result = JSON.parse(responseText); // Try to parse JSON
+      } catch (parseError) {
+        console.error("Failed to parse JSON response:", parseError);
+        throw new Error("Failed to parse JSON response");
+      }
+  
+      if (result.status === "success") {
+        // Update berhasil, lakukan sesuatu seperti menampilkan notifikasi
+        console.log("Password updated successfully:", result);
+        alert("Password updated successfully.");
+      } else {
+        // Tangani kesalahan
+        console.error("Failed to update password:", result);
+        alert("Failed to update password: " + result.message);
+      }
+    } catch (error) {
+      console.error("Error updating password:", error);
+      alert("An unexpected error occurred. Please try again.");
     }
   };
 
@@ -105,7 +174,7 @@ export default function SettingsPage() {
       </section>
 
       <section className="flex flex-col items-center justify-center w-screen mx-auto gap-2 absolute top-24 z-20">
-      <Card className="bg-primary shadow-lg rounded-lg p-6 mt-2 w-full max-w-md mx-auto">
+        <Card className="bg-primary shadow-lg rounded-lg p-6 mt-2 w-full max-w-md mx-auto">
           <CardBody>
             {userData && (
               <div className="flex items-center w-full mb-4">
@@ -113,7 +182,7 @@ export default function SettingsPage() {
                   src={
                     profileImage ||
                     "https://oadqfnknwbaahnminxvl.supabase.co/storage/v1/object/public/foto_profile/default.png"
-                  } // URL gambar default
+                  }
                   width={40}
                   height={50}
                   alt="Profile"
@@ -128,11 +197,7 @@ export default function SettingsPage() {
             )}
 
             <Accordion variant="splitted" className=" p-2">
-              <AccordionItem
-                key="1"
-                aria-label="Accordion 1"
-                title="Update Biodata"
-              >
+              <AccordionItem key="1" aria-label="Accordion 1" title="Update Biodata">
                 <div className="flex flex-col gap-2">
                   <Input
                     label="Nama"
@@ -140,166 +205,53 @@ export default function SettingsPage() {
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                   />
-                  <Input
-                    label="Pekerjaan"
-                    placeholder="Enter your job"
-                    value={job}
-                    onChange={(e) => setJob(e.target.value)}
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleFileChange}
+                    className="mt-2"
                   />
-                  <Button
-                    variant="solid"
-                    size="md"
-                    fullWidth
-                    className={[
-                      "bg-default-200/50",
-                      "dark:bg-default/60",
-                      "text-black/90 dark:text-white/90",
-                      "shadow-xl",
-                      "bg-transparent",
-                      "backdrop-blur-xl",
-                      "backdrop-saturate-200",
-                      "hover:bg-default-200/70",
-                      "dark:hover:bg-default/70",
-                    ].join(" ")}
-                    onClick={updateBiodata}
-                  >
+                  <Button onClick={updateBiodata}>
                     Save
                   </Button>
                 </div>
               </AccordionItem>
-              <AccordionItem
-                key="2"
-                aria-label="Accordion 2"
-                title="Ganti Password"
-              >
+              <AccordionItem key="2" aria-label="Accordion 2" title="Ganti Password">
                 <div className="flex flex-col gap-2">
                   <Input
                     isRequired
                     label="Old Password"
-                    variant="bordered"
                     placeholder="Enter your old password"
+                    value={oldPassword}
+                    onChange={(e) => setOldPassword(e.target.value)}
                     endContent={
-                      <button
-                        className="focus:outline-none"
-                        type="button"
-                        onClick={toggleVisibility}
-                        aria-label="toggle password visibility"
-                      >
-                        {isVisible ? (
-                          <EyeSlashFilledIcon className="text-2xl text-default-400 pointer-events-none" />
-                        ) : (
-                          <EyeFilledIcon className="text-2xl text-default-400 pointer-events-none" />
-                        )}
+                      <button type="button" onClick={toggleVisibility}>
+                        {isVisible ? <EyeSlashFilledIcon /> : <EyeFilledIcon />}
                       </button>
                     }
                     type={isVisible ? "text" : "password"}
-                    className="max-w-xs"
-                    classNames={{
-                      label: "text-black/50 dark:text-white/90",
-                      input: [
-                        "bg-white",
-                        "text-black/90 dark:text-white/90",
-                        "placeholder:text-default-700/50 dark:placeholder:text-white/60",
-                      ],
-                      innerWrapper: "bg-white",
-                      inputWrapper: [
-                        "shadow-xl",
-                        "bg-white",
-                        "dark:bg-default/60",
-                        "backdrop-blur-xl",
-                        "backdrop-saturate-200",
-                        "group-data-[focus=true]:bg-default-200/50",
-                        "dark:group-data-[focus=true]:bg-default/60",
-                        "!cursor-text",
-                        "!hover:bg-white", // Disable hover effect
-                        "!dark:hover:bg-default/60", // Disable dark mode hover effect
-                      ],
-                    }}
                   />
                   <Input
                     isRequired
                     label="New Password"
-                    variant="bordered"
                     placeholder="Enter your new password"
+                    value={newPassword}
+                    onChange={(e) => setNewPassword(e.target.value)}
                     endContent={
-                      <button
-                        className="focus:outline-none"
-                        type="button"
-                        onClick={toggleVisibility}
-                        aria-label="toggle password visibility"
-                      >
-                        {isVisible ? (
-                          <EyeSlashFilledIcon className="text-2xl text-default-400 pointer-events-none" />
-                        ) : (
-                          <EyeFilledIcon className="text-2xl text-default-400 pointer-events-none" />
-                        )}
+                      <button type="button" onClick={toggleVisibility}>
+                        {isVisible ? <EyeSlashFilledIcon /> : <EyeFilledIcon />}
                       </button>
                     }
                     type={isVisible ? "text" : "password"}
-                    className="max-w-xs"
-                    classNames={{
-                      label: "text-black/50 dark:text-white/90",
-                      input: [
-                        "bg-white",
-                        "text-black/90 dark:text-white/90",
-                        "placeholder:text-default-700/50 dark:placeholder:text-white/60",
-                      ],
-                      innerWrapper: "bg-white",
-                      inputWrapper: [
-                        "shadow-xl",
-                        "bg-white",
-                        "dark:bg-default/60",
-                        "backdrop-blur-xl",
-                        "backdrop-saturate-200",
-                        "group-data-[focus=true]:bg-default-200/50",
-                        "dark:group-data-[focus=true]:bg-default/60",
-                        "!cursor-text",
-                        "!hover:bg-white", // Disable hover effect
-                        "!dark:hover:bg-default/60", // Disable dark mode hover effect
-                      ],
-                    }}
                   />
-                  <Button
-                    variant="solid"
-                    size="md"
-                    fullWidth
-                    className={[
-                      "bg-default-200/50",
-                      "dark:bg-default/60",
-                      "text-black/90 dark:text-white/90",
-                      "shadow-xl",
-                      "bg-transparent",
-                      "backdrop-blur-xl",
-                      "backdrop-saturate-200",
-                      "hover:bg-default-200/70",
-                      "dark:hover:bg-default/70",
-                    ].join(" ")}
-                  >
+                  <Button onClick={updatePassword}>
                     Ganti
                   </Button>
                 </div>
               </AccordionItem>
             </Accordion>
 
-            <Button
-              variant="solid"
-              size="md"
-              fullWidth
-              className={[
-                "max-w-md",
-                "bg-default-200/50",
-                "dark:bg-default/60",
-                "text-black/90 dark:text-white/90",
-                "shadow-xl",
-                "bg-background",
-                "backdrop-blur-xl",
-                "backdrop-saturate-200",
-                "hover:bg-default-200/70",
-                "dark:hover:bg-default/70",
-                "mt-4",
-              ].join(" ")}
-              onClick={handleLogout} // Add onClick handler
-            >
+            <Button onClick={handleLogout}>
               Log Out
             </Button>
           </CardBody>

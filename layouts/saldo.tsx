@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Card, CardBody, Button } from "@nextui-org/react";
 import { useRouter } from "next/navigation"; // Import useRouter
+import { TarikSaldoPopover } from "./popover";
 
 export const Saldo = () => {
   const [saldo, setSaldo] = useState(0);
@@ -43,10 +44,6 @@ export const Saldo = () => {
     fetchSaldo(); // Call the function to fetch saldo on component mount
   }, []);
 
-  const handleTarikSaldo = () => {
-    router.push("/klaim"); // Redirect to klaim page
-  };
-
   return (
     <div>
       <Card
@@ -61,18 +58,19 @@ export const Saldo = () => {
             ) : (
               <div className="col-span-2">
                 {/* Konten lain di sebelah kanan gambar */}
-                <h3 className="text-xl font-light text-balance-900">
-                  Rp {Math.ceil(saldo).toLocaleString("id-ID")}
-                </h3>
-                <p className="text-sm font-extralight text-secondary">
-                  *Penarikan dengan minimal saldo Rp. 15.000
-                </p>
-                <p className="text-sm font-extralight text-secondary">
-                  *Saldo Mengendap minimal Rp. 1.000
-                </p>
-                <Button className="mt-2" onClick={handleTarikSaldo}>
-                  Tarik Saldo
-                </Button>
+                <div className="col-span-2">
+                  {/* Konten lain di sebelah kanan gambar */}
+                  <h3 className="text-xl font-light text-balance-900">
+                    Rp.{saldo.toLocaleString("id-ID")}
+                  </h3>
+                  <p className="text-sm font-extralight text-secondary">
+                    *Penarikan dengan minimal saldo Rp. 15.000
+                  </p>
+                  <p className="text-sm font-extralight text-secondary">
+                    *Saldo Mengendap minimal Rp. 1.000
+                  </p>
+                  <TarikSaldoPopover />
+                </div>
               </div>
             )}
           </div>
