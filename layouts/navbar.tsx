@@ -20,7 +20,7 @@ export const NavbarTop = () => {
       setNotifications(JSON.parse(storedNotifications));
     } else {
       // Fetch notifications from the API if not available in sessionStorage
-      axios.get('http://localhost:3000/user/notif')
+      axios.get('https://qutanya-be.vercel.app/user/notif')
         .then(response => {
           if (response.data.status === 'success') {
             const fetchedNotifications = response.data.data;
