@@ -2,19 +2,23 @@
 
 import { Input } from "@nextui-org/react";
 import { Button } from "@nextui-org/react";
-import React, { useState, useEffect } from "react";
+import React, { Suspense, useState } from "react";
 import DefaultLayout from "@/layouts/default";
 import axios from "axios";
 import { useRouter, useSearchParams } from "next/navigation";
 
-export default function KonfirmasiNamaTanggalLahirPage() {
+const KonfirmasiNamaTanggalLahirComponent = () => {
   const [nama, setNama] = useState("");
-  const [tanggalLahir, setTanggalLahir] = useState({ dd: "", mm: "", yyyy: "" });
+  const [tanggalLahir, setTanggalLahir] = useState({
+    dd: "",
+    mm: "",
+    yyyy: "",
+  });
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const router = useRouter();
   const searchParams = useSearchParams();
-  const email = searchParams.get("email");
+  const email: any = searchParams.get("email");
 
   const handleSubmit = async () => {
     setLoading(true);
@@ -24,21 +28,29 @@ export default function KonfirmasiNamaTanggalLahirPage() {
       const payload = {
         nama,
         email,
-        tanggal_lahir: tanggal_lahir.toString()
+        tanggal_lahir: tanggal_lahir.toString(),
       };
       console.log("Sending request to /user/otp with payload:", payload);
-      const response = await axios.post("https://qutanya-be.vercel.app/user/otp", payload, {
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
+      const response = await axios.post(
+        "https://qutanya-be.vercel.app/user/otp",
+        payload,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
         }
-      });
+      );
       console.log("Response received:", response);
       if (response.data.status === "success") {
-        setMessage("Data berhasil diverifikasi. Mengarahkan ke halaman berikutnya...");
-        router.push(`/passwordchange?email=${encodeURIComponent(email)}`); 
+        setMessage(
+          "Data berhasil diverifikasi. Mengarahkan ke halaman berikutnya..."
+        );
+        router.push(`/passwordchange?email=${encodeURIComponent(email)}`);
       } else {
-        setMessage("Nama atau tanggal lahir tidak ditemukan. Silakan coba lagi.");
+        setMessage(
+          "Nama atau tanggal lahir tidak ditemukan. Silakan coba lagi."
+        );
       }
     } catch (error) {
       console.error("Error occurred:", error);
@@ -52,11 +64,15 @@ export default function KonfirmasiNamaTanggalLahirPage() {
     <DefaultLayout>
       <section className="flex flex-col items-center justify-center mt-32 gap-2 max-w-xs mx-auto">
         <div className="inline-block max-w-md text-center justify-center">
-          <h1 className="text-3xl lg:text-4xl font-bold">Konfirmasi Nama dan Tanggal Lahir</h1>
+          <h1 className="text-3xl lg:text-4xl font-bold">
+            Konfirmasi Nama dan Tanggal Lahir
+          </h1>
         </div>
 
-        <span className="text-secondary text-center">Masukkan nama dan tanggal lahir Anda untuk melanjutkan</span>
-        
+        <span className="text-secondary text-center">
+          Masukkan nama dan tanggal lahir Anda untuk melanjutkan
+        </span>
+
         <div className="flex flex-col gap-2 mt-4 w-full">
           <Input
             placeholder="Nama Lengkap"
@@ -71,7 +87,9 @@ export default function KonfirmasiNamaTanggalLahirPage() {
               maxLength={2}
               className="w-12 h-12 text-center text-lg font-bold w-full"
               value={tanggalLahir.dd}
-              onChange={(e) => setTanggalLahir({ ...tanggalLahir, dd: e.target.value })}
+              onChange={(e) =>
+                setTanggalLahir({ ...tanggalLahir, dd: e.target.value })
+              }
             />
             <Input
               type="number"
@@ -79,7 +97,9 @@ export default function KonfirmasiNamaTanggalLahirPage() {
               maxLength={2}
               className="w-12 h-12 text-center text-lg font-bold w-full"
               value={tanggalLahir.mm}
-              onChange={(e) => setTanggalLahir({ ...tanggalLahir, mm: e.target.value })}
+              onChange={(e) =>
+                setTanggalLahir({ ...tanggalLahir, mm: e.target.value })
+              }
             />
             <Input
               type="number"
@@ -87,7 +107,9 @@ export default function KonfirmasiNamaTanggalLahirPage() {
               maxLength={4}
               className="w-20 h-12 text-center text-lg font-bold w-full"
               value={tanggalLahir.yyyy}
-              onChange={(e) => setTanggalLahir({ ...tanggalLahir, yyyy: e.target.value })}
+              onChange={(e) =>
+                setTanggalLahir({ ...tanggalLahir, yyyy: e.target.value })
+              }
             />
           </div>
         </div>
@@ -119,11 +141,17 @@ export default function KonfirmasiNamaTanggalLahirPage() {
         </Button>
 
         {message && (
-          <div className="mt-4 text-center text-secondary">
-            {message}
-          </div>
+          <div className="mt-4 text-center text-secondary">{message}</div>
         )}
       </section>
     </DefaultLayout>
   );
-}
+};
+
+const KonfirmasiNamaTanggalLahirPage = () => {
+  <Suspense>
+    <KonfirmasiNamaTanggalLahirComponent></KonfirmasiNamaTanggalLahirComponent>
+  </Suspense>;
+};
+
+export default KonfirmasiNamaTanggalLahirPage;

@@ -2,14 +2,14 @@
 
 import { Input } from "@nextui-org/react";
 import { Button } from "@nextui-org/react";
-import React, { useState } from "react";
+import React, { Suspense, useState } from "react";
 import DefaultLayout from "@/layouts/default";
 import { EyeFilledIcon } from "@/components/icons";
 import { EyeSlashFilledIcon } from "@/components/icons";
 import axios from "axios";
 import { useRouter, useSearchParams } from "next/navigation";
 
-export default function LupaPage() {
+const LupaComponent = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
@@ -140,3 +140,9 @@ export default function LupaPage() {
     </DefaultLayout>
   );
 }
+
+export default function LupaPage() {
+  <Suspense>
+    <LupaComponent></LupaComponent>
+  </Suspense>
+};
