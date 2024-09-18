@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { Card, ScrollShadow, Tabs, Tab } from "@nextui-org/react";
-import DefaultLayout from "@/layouts/default1";
+import { Card, Tabs, Tab } from "@nextui-org/react";
+// import DefaultLayout from "@/layouts/default1";
 import { HeaderAvatar } from "@/layouts/headerAvatar";
 import { MenuButton } from "@/layouts/menu";
 import { Content } from "@/layouts/ContentRiwayat";
@@ -57,47 +57,51 @@ export default function RiwayatSurveyPage() {
   }, []);
 
   return (
-    <DefaultLayout>
-      <section className="flex flex-col items-center justify-between min-h-screen bg-background2 relative z-10">
-        <HeaderAvatar />
+    // <DefaultLayout>
 
-        <MenuButton />
-      </section>
-      
-      <section className="flex flex-col items-center absolute top-24 w-full mx-auto z-20 ">
-        <div className="flex flex-col items-center w-full px-4 mx-auto">
-        {error && (
-          <div className="text-red-500 text-center font-bold">
-            {error}
+    <section className="min-h-screen bg-primary relative">
+      <HeaderAvatar />
+      <section className="flex flex-col items-center justify-between bg-background2 relative">
+        
+        <section className="flex flex-col top-64 gap-2 lg:w-[50%] px-4 mt-5">
+          <div className="flex flex-col items-center px-4 mx-auto min-w-80 w-full">
+            {error && (
+              <div className="text-red-500 text-center font-bold">{error}</div>
+            )}
+
+            <Card className="flex flex-col gap-2 w-full px-4">
+              <Tabs
+                aria-label="Options"
+                variant="underlined"
+                classNames={{
+                  tabList:
+                    "gap-6 w-full relative rounded-none p-0 border-b border-divider",
+                  cursor: "w-full bg-[#22d3ee]",
+                  tab: "w-full px-0 h-12",
+                  tabContent: "group-data-[selected=true]:text-[#06b6d4]",
+                }}
+              >
+                <Tab className="w-full" title="Riwayat Survey">
+                  <div className=" h-[35rem] overflow-auto">
+                    <Content data={dataSurvey} />
+                  </div>
+                </Tab>
+                <Tab className="w-full" title="Survey Saya">
+                  <div className=" h-[35rem] overflow-auto">
+                    <ContentSaya data={myData} />
+                  </div>
+                </Tab>
+              </Tabs>
+            </Card>
           </div>
-        )}
+        </section>
 
-          <Card className="w-full h-full mt-2 p-4 bg-white shadow-md flex-grow">
-            <Tabs
-              aria-label="Options"
-              variant="underlined"
-              classNames={{
-                tabList:
-                  "gap-6 w-full relative rounded-none p-0 border-b border-divider",
-                cursor: "w-full bg-[#22d3ee]",
-                tab: "w-full px-0 h-12",
-                tabContent: "group-data-[selected=true]:text-[#06b6d4]",
-              }}
-            >
-              <Tab className="w-full" title="Riwayat Survey">
-                <ScrollShadow className="max-h-96 overflow-y-auto">
-                  <Content data={dataSurvey} />
-                </ScrollShadow>
-              </Tab>
-              <Tab className="w-full" title="Survey Saya">
-                <ScrollShadow className="max-h-96 overflow-y-auto">
-                  <ContentSaya data={myData} />
-                </ScrollShadow>
-              </Tab>
-            </Tabs>
-          </Card>
-        </div>
+        <section className="w-full fixed bottom-0">
+          <MenuButton />
+        </section>
       </section>
-    </DefaultLayout>
+    </section>
+
+    // </DefaultLayout>
   );
 }

@@ -61,12 +61,12 @@ export const Content = ({ data }: ContentComponentProps) => {
                       {formatDate(item.created_at)}
                     </h3>
                   </div>
-                  <p className="text-sm text-white">
+                  <p className="text-sm ">
                     Status :{" "}
                     {item.survei.status === "close" ? (
-                      <Chip color="danger"> {item.survei.status}</Chip>
+                      <Chip color="danger" className="text-white font-semibold"> {item.survei.status}</Chip>
                     ) : (
-                      <Chip color="success"> {item.survei.status}</Chip>
+                      <Chip color="success" className="text-white font-semibold"> {item.survei.status}</Chip>
                     )}
                   </p>
                   <h3>
@@ -79,7 +79,7 @@ export const Content = ({ data }: ContentComponentProps) => {
               </div>
 
               <Link
-                href="/klaim"
+                href={`/klaim?saldo=${Math.floor(item.survei.hadiah)}`}
                 className="p-2 mt-2 text-white bg-warning text-center rounded-lg shadow-lg transition duration-300 ease-in-out transform hover:scale-105"
               >
                 Klaim 💵

@@ -16,13 +16,15 @@ interface Category {
 
 // Define the type for your survey data
 interface Survei {
+  id:number,
   judul: string;
   kategori_survei: any[];
   user: {
     nama: string;
   };
   hadiah: number;
-  status:string;
+  status: string;
+  link_form: string;
 }
 
 export default function BerandaPage() {
@@ -31,6 +33,7 @@ export default function BerandaPage() {
   const [error, setError] = useState<string | null>(null);
   const [kategori, setKategori] = useState<Category[]>([]);
   const [dataTemp, setDateTemp] = useState<Survei[]>([]);
+  const [searchQuery, setSearchQuery] = useState('');
 
   // Use useCallback to memoize the fetchData function
   const fetchData = async () => {
@@ -40,14 +43,6 @@ export default function BerandaPage() {
     const response = await axios.post("https://qutanya-be.vercel.app/survei/get-all");
 
     if (response.data.status === "success") {
-      console.log(response.data.data);
-      // const mappedData: Survei[] = response.data.data?.map((item: any) => ({
-      //   judul: item.judul,
-      //   kategori_survei: item.kategori_survei,
-      //   user: item.user,
-      //   hadiah: item.hadiah,
-      // }));
-
       setDateTemp(response.data.data);
       setDataSurvei(response.data.data);
       setLoading(false);
@@ -84,19 +79,29 @@ export default function BerandaPage() {
     fetchData();
   }, []);
 
-  // const handleSelectChange = (
-  //   selectedValues: React.ChangeEvent<HTMLSelectElement>
-  // ) => {
-  //   // Store selected values without fetching data immediately
-  //   const selected = selectedValues.target.value.split(",").map(String);
-  //   console.log(selected);
-  //   setFilterKategori(selected);
-  // };
+
+  useEffect(() => {
+    if (searchQuery) {
+      const filtered = dataSurvei.filter((survey) =>
+        survey.judul.toLowerCase().includes(searchQuery)
+      );
+      console.log('test');
+      setDataSurvei(filtered);
+    } else {
+      console.log('test2');
+      setDataSurvei(dataTemp); // If no search query, show all surveys
+    }
+  }, [searchQuery, dataSurvei]);
+
+  const handleSearchChange = (event: { target: { value: string; }; }) => {
+    const query = event.target.value.toLowerCase();
+    setSearchQuery(query);
+  };
 
   const handleSelectChange2 = (selectedValues: Set<string>) => {
     const selected = Array.from(selectedValues).map(String);
     // [1,2]
-    
+
     if (selected.length == 0) {
       setDataSurvei(dataTemp);
     } else {
@@ -113,16 +118,10 @@ export default function BerandaPage() {
       setDataSurvei(dataFilter);
     }
   };
-
-  // useEffect(() => {
-  //   fetchData();
-  // }, [filterKategori]);
-
   return (
     <section className="min-h-screen bg-primary relative">
-      
       <HeaderAvatar />
-      
+
       <section className="flex flex-col items-center gap-6 top-20 w-full">
         <div className="px-4 w-3/4">
           <Input
@@ -130,6 +129,7 @@ export default function BerandaPage() {
             isClearable
             placeholder="Cari survei sesuai fashion anda"
             className="w-full"
+            onChange={handleSearchChange}
             classNames={{
               input: [
                 "bg-white",
@@ -169,7 +169,11 @@ export default function BerandaPage() {
                 // onClose={ handleSelectClose}
               >
                 {kategori.map((item) => (
-                  <SelectItem key={item.value} value={item.value} className="text-secondary">
+                  <SelectItem
+                    key={item.value}
+                    value={item.value}
+                    className="text-secondary"
+                  >
                     {item.label}
                   </SelectItem>
                 ))}
@@ -178,11 +182,9 @@ export default function BerandaPage() {
           </div>
 
           {error && (
-          <div className="text-red-500 text-center font-bold">
-            {error}
-          </div>
-        )}
-                
+            <div className="text-red-500 text-center font-bold">{error}</div>
+          )}
+
           {loading ? (
             <Spinner color="success"></Spinner>
           ) : (
@@ -193,7 +195,7 @@ export default function BerandaPage() {
         </section>
       </section>
       <section className="w-full fixed bottom-0">
-        <MenuButton  />
+        <MenuButton />
       </section>
     </section>
   );

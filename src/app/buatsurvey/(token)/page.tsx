@@ -41,7 +41,7 @@ const BuatSurveyComponent = () => {
       // Handle successful login
       setTimeout(() => {
         sessionStorage.removeItem("googleToken");
-      }, 3600000);
+      }, 600000);
     }
 
     const token = sessionStorage.getItem("googleToken");

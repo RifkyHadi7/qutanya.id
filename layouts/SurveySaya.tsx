@@ -58,12 +58,12 @@ export const ContentSaya = ({ data }: ContentSurvei) => (
                     {formatDate(item.created_at)}
                   </h3>
                 </div>
-                <p className="text-sm text-white">
+                <p className="text-sm ">
                   Status :{" "}
                   {item.status === "close" ? (
-                    <Chip color="danger"> {item.status}</Chip>
+                    <Chip className="text-white font-semibold" color="danger"> {item.status}</Chip>
                   ) : (
-                    <Chip color="success"> {item.status}</Chip>
+                    <Chip className="text-white font-semibold" color="success"> {item.status}</Chip>
                   )}
                 </p>
                 <p className="text-sm text-secondary">
@@ -90,7 +90,7 @@ export const ContentSaya = ({ data }: ContentSurvei) => (
               Link Pembayaran
             </Button>
 
-            <Link href="/about" className="p-2 mt-2 text-white bg-warning text-center rounded-lg shadow-lg transition duration-300 ease-in-out transform hover:scale-105">
+            <Link href={`/hasilsurvey/${item.id_form}`} className="p-2 mt-2 text-white bg-warning text-center rounded-lg shadow-lg transition duration-300 ease-in-out transform hover:scale-105">
               Hasil
             </Link>
           </CardBody>

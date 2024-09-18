@@ -5,16 +5,60 @@ import { Card, Button, Input } from "@nextui-org/react";
 import DefaultLayout from "@/layouts/default1";
 import { HeaderAvatar } from "@/layouts/headerAvatar";
 import { MenuButton } from "@/layouts/menu";
+import { useSearchParams } from "next/navigation";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 
 export default function KlaimKeuntunganPage() {
-  const saldoDidapat = "Rp 50.000"; // Contoh saldo yang didapat dari mengisi survey
+  const param = useSearchParams();
+  const saldoDidapat = param.get("saldo");
   const [linkBukti, setLinkBukti] = useState("");
 
-  const handleKlaim = () => {
-    if (linkBukti) {
-      alert("Klaim anda telah dikirimkan! Saldo akan masuk dalam beberapa saat");
-    } else {
-      alert("Harap masukkan link bukti pengisian survey.");
+  const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const router = useRouter();
+
+  const handleKlaim = async () => {
+    try {
+      setLoading(true);
+      setErrorMessage("")
+      const userData = sessionStorage.getItem("userData");
+      let user;
+      if (userData) {
+        user = JSON.parse(userData);
+      } else {
+        setErrorMessage("Please refresh page and login again");
+        return;
+      }
+      const response = await axios.post(
+        // "https://qutanya-be.vercel.app/survei/claim-reward",
+        "https://qutanya-be.vercel.app/survei/claim-reward",
+        {
+          link_form: linkBukti,
+          id_user_create: user.data.uuid,
+        }
+      );
+
+      if (response.status === 200) {
+        setLoading(true);
+        router.push("/balance");
+        setLoading(false);
+      }
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        setErrorMessage(
+          error.response?.data?.message || "Gagal melakukan Claim!."
+        );
+      } else if (error instanceof Error) {
+        setErrorMessage(
+          error.message || "Terjadi kesalahan yang tidak terduga."
+        );
+      } else {
+        setErrorMessage("Terjadi kesalahan yang tidak diketahui.");
+      }
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -26,16 +70,21 @@ export default function KlaimKeuntunganPage() {
       </section>
 
       <section className="flex flex-col items-center gap-4 top-20 absolute w-full z-20">
-        <div className="flex flex-col items-center w-full px-4 mt-4"> {/* Menambahkan margin bawah */}
-        <h2 className="text-secondary text-md font-bold">
-              Klaim Reward
-            </h2>
+        <div className="flex flex-col items-center w-full px-4 mt-4">
+          {" "}
+          {/* Menambahkan margin bawah */}
+          <h2 className="text-secondary text-md font-bold">Klaim Reward</h2>
+          {errorMessage && (
+            <div className="text-red-500 text-center font-bold">
+              {errorMessage}
+            </div>
+          )}
           <Card className="bg-primary shadow-lg rounded-lg p-6 mt-2 w-full max-w-md mx-auto">
             <h2 className="text-sm font-bold text-secondary mb-2">
               Saldo yang Didapat dari Isi Survey
             </h2>
-            <p className="text-xl font-semibold text-secondary mb-2">
-              {saldoDidapat}
+            <p className="text-xl font-semibold text-success mb-2">
+              Rp. {saldoDidapat}
             </p>
             <Input
               value={linkBukti}
@@ -71,8 +120,12 @@ export default function KlaimKeuntunganPage() {
               onChange={(e) => setLinkBukti(e.target.value)}
               onClear={() => setLinkBukti("")} // Handler for clearing the text
             />
-            <Button className="w-full bg-background" onClick={handleKlaim}>
-              Klaim Keuntungan
+            <Button
+              className="w-full bg-background text-white font-semibold"
+              isLoading={loading}
+              onClick={handleKlaim}
+            >
+              Klaim Keuntungan 💵
             </Button>
           </Card>
         </div>
