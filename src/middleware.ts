@@ -5,7 +5,7 @@ export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   
   // Daftar halaman yang tidak memerlukan sesi
-  const publicPaths = ['/loginpage', '/register', '/lupapassword'];
+  const publicPaths = ['/loginpage', '/register', '/lupapassword', '/konfirmasi', '/passwordchange'];
   
   const session = request.cookies.get('session');
 

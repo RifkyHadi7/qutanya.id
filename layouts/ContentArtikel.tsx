@@ -28,7 +28,7 @@ export const Content: React.FC<ContentProps> = ({ articles}) => {
         <Card
           key={artikel.id}
           isBlurred
-          className="border-none bg-background/60 dark:bg-default-100/50 w-full lg:w-1/2 mx-auto mb-4"
+          className="border-none bg-white dark:bg-default-100/50 w-full lg:w-1/2 mx-auto mb-4"
           shadow="sm"
         >
           <CardBody>

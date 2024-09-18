@@ -1,6 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { Popover, PopoverTrigger, PopoverContent, Button, Input } from "@nextui-org/react";
 
+interface Transaction {
+  id: number;
+  nominal: number;
+  pemasukan: boolean;
+  keterangan: string;
+  created_at: string;
+}
+
 export const TarikSaldoPopover: React.FC = () => {
   const [jumlah, setJumlah] = useState("");
   const [saldo, setSaldo] = useState<number | null>(null);
@@ -84,7 +92,7 @@ export const TarikSaldoPopover: React.FC = () => {
 
       console.log("API response:", result);
 
-      if (result.status === "success") {
+      if (response.ok && result.status === "success" && result.data) {
         alert("Transaksi berhasil ditambahkan.");
         fetchSaldo(); // Fetch saldo again after successful transaction
       } else {

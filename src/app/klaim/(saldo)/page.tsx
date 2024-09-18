@@ -112,8 +112,8 @@ const KlaimKeuntunganComponent = () => {
                   "group-data-[focus=true]:bg-default-200/50",
                   "dark:group-data-[focus=true]:bg-default/60",
                   "!cursor-text",
-                  "!hover:bg-white", // Disable hover effect
-                  "!dark:hover:bg-default/60", // Disable dark mode hover effect
+                  "!hover:bg-white",
+                  "!dark:hover:bg-default/60",
                 ],
                 clearButton: "text-black",
               }}

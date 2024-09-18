@@ -1,7 +1,8 @@
-"use client"
+"use client";
 
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import ProfileIconFilled from "../assets/profil-filled.svg";
 
 export const HeaderAvatar = () => {
   const [userName, setUserName] = useState("");
@@ -26,11 +27,11 @@ export const HeaderAvatar = () => {
   }, []);
 
   return (
-    <header className=" bg-background shadow-lg rounded-b-extra p-4 pb-12 flex items-center justify-between w-full z-20">
+    <header className="bg-background shadow-lg rounded-b-extra p-4 pb-12 flex items-center justify-between w-full z-20">
       {userName || profileImage ? (
         <div className="flex items-center">
           <Image
-            src={profileImage || "https://oadqfnknwbaahnminxvl.supabase.co/storage/v1/object/public/foto_profile/default.png"} // URL gambar default
+            src={profileImage || ProfileIconFilled} // Gunakan gambar default jika profileImage tidak tersedia
             width={40}
             height={50}
             alt="Profile"

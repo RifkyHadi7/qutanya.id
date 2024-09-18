@@ -2,15 +2,53 @@
 
 import { Input } from "@nextui-org/react";
 import { Button } from "@nextui-org/react";
-import React from "react";
+import React, { useState } from "react";
 import DefaultLayout from "@/layouts/default";
 import { EyeFilledIcon } from "@/components/icons";
 import { EyeSlashFilledIcon } from "@/components/icons";
+import axios from "axios";
+import { useRouter, useSearchParams } from "next/navigation";
 
 export default function LupaPage() {
-  const [isVisible, setIsVisible] = React.useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+  const [password, setPassword] = useState("");
+  const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const email = searchParams.get("email");
 
   const toggleVisibility = () => setIsVisible(!isVisible);
+
+  const handleSubmit = async () => {
+    setLoading(true);
+    setMessage("");
+    try {
+      const payload = {
+        email,
+        password
+      };
+      console.log("Sending request to /user/reset-password with payload:", payload);
+      const response = await axios.post("https://qutanya-be.vercel.app/user/lupapassword", payload, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        }
+      });
+      console.log("Response received:", response);
+      if (response.data.status === "success") {
+        setMessage("Password berhasil direset. Mengarahkan ke halaman login...");
+        router.push("/loginpage"); // Ganti dengan halaman tujuan berikutnya
+      } else {
+        setMessage("Terjadi kesalahan. Silakan coba lagi.");
+      }
+    } catch (error) {
+      console.error("Error occurred:", error);
+      setMessage("Terjadi kesalahan. Silakan coba lagi.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <DefaultLayout>
@@ -42,6 +80,8 @@ export default function LupaPage() {
           }
           type={isVisible ? "text" : "password"}
           className="max-w-xs"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
           classNames={{
             label: "text-black/50 dark:text-white/90",
             input: [
@@ -65,7 +105,7 @@ export default function LupaPage() {
           }}
         />
 
-<Button
+        <Button
           variant="solid"
           size="md"
           fullWidth
@@ -85,10 +125,17 @@ export default function LupaPage() {
             "dark:group-data-[focus=true]:bg-default/60",
             "!cursor-pointer",
           ].join(" ")}
+          onClick={handleSubmit}
+          disabled={loading}
         >
-          Done
+          {loading ? "Loading..." : "Done"}
         </Button>
-        
+
+        {message && (
+          <div className="mt-4 text-center text-secondary">
+            {message}
+          </div>
+        )}
       </section>
     </DefaultLayout>
   );
