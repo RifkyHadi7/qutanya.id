@@ -85,13 +85,13 @@ export default function BerandaPage() {
       const filtered = dataSurvei.filter((survey) =>
         survey.judul.toLowerCase().includes(searchQuery)
       );
-      console.log('test');
+     
       setDataSurvei(filtered);
     } else {
-      console.log('test2');
+      
       setDataSurvei(dataTemp); // If no search query, show all surveys
     }
-  }, [searchQuery, dataSurvei]);
+  }, [searchQuery]);
 
   const handleSearchChange = (event: { target: { value: string; }; }) => {
     const query = event.target.value.toLowerCase();
@@ -105,6 +105,7 @@ export default function BerandaPage() {
     if (selected.length == 0) {
       setDataSurvei(dataTemp);
     } else {
+      console.log("wte");
       // ['1','2','3']
       const dataFilter = dataTemp.filter((e) => {
         // Check if any of the kategori_survei objects have id_filter equal to 1
