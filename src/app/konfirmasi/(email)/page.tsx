@@ -149,7 +149,7 @@ const KonfirmasiNamaTanggalLahirComponent = () => {
 };
 
 const KonfirmasiNamaTanggalLahirPage = () => {
-  <Suspense>
+  return <Suspense>
     <KonfirmasiNamaTanggalLahirComponent></KonfirmasiNamaTanggalLahirComponent>
   </Suspense>;
 };
