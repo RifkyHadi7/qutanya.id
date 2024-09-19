@@ -78,7 +78,7 @@ const BayarPageComponet = () => {
               Hadiah Per-Responden
             </h2>
             <p className="text-xl font-semibold text-success mb-4">
-              Rp {Math.floor(paymentData.data.hadiah)}
+              Rp {Math.floor(paymentData.data.hadiah).toLocaleString("id-ID")}
             </p>
             <Button
               className="w-full bg-success text-white font-semibold"
