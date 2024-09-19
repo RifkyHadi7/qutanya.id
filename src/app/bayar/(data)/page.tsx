@@ -72,13 +72,13 @@ const BayarPageComponet = () => {
               Total yang harus dibayar
             </h2>
             <p className="text-xl font-semibold text-success mb-4">
-              Rp {paymentData.data.harga}
+              Rp {paymentData.data.harga.toLocaleString("id-ID")}
             </p>
             <h2 className="text-xl font-bold text-secondary mb-4">
               Hadiah Per-Responden
             </h2>
             <p className="text-xl font-semibold text-success mb-4">
-              Rp {Math.floor(paymentData.data.hadiah)}
+               {Math.floor(paymentData.data.hadiah).toLocaleString("id-ID")}
             </p>
             <Button
               className="w-full bg-success text-white font-semibold"

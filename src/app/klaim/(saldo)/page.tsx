@@ -84,7 +84,7 @@ const KlaimKeuntunganComponent = () => {
               Saldo yang Didapat dari Isi Survey
             </h2>
             <p className="text-xl font-semibold text-success mb-2">
-              Rp. {saldoDidapat}
+              Rp. {saldoDidapat.toLocaleString("id-ID")}
             </p>
             <Input
               value={linkBukti}
