@@ -89,7 +89,7 @@ export default function BerandaPage() {
       setDataSurvei(filtered);
     } else {
       
-      setDataSurvei(dataTemp); // If no search query, show all surveys
+      setDataSurvei(dataTemp);
     }
   }, [searchQuery]);
 
