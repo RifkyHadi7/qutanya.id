@@ -33,7 +33,7 @@ export default function BerandaPage() {
   const [error, setError] = useState<string | null>(null);
   const [kategori, setKategori] = useState<Category[]>([]);
   const [dataTemp, setDateTemp] = useState<Survei[]>([]);
-  const [searchQuery, setSearchQuery] = useState('');
+  // const [searchQuery, setSearchQuery] = useState('');
 
   // Use useCallback to memoize the fetchData function
   const fetchData = async () => {
@@ -80,10 +80,25 @@ export default function BerandaPage() {
   }, []);
 
 
-  useEffect(() => {
-    if (searchQuery) {
+  // useEffect(() => {
+  //   if (searchQuery) {
+  //     const filtered = dataSurvei.filter((survey) =>
+  //       survey.judul.toLowerCase().includes(searchQuery)
+  //     );
+     
+  //     setDataSurvei(filtered);
+  //   } else {
+      
+  //     setDataSurvei(dataTemp);
+  //   }
+  // }, [dataSurvei, dataTemp, searchQuery]);
+
+
+  const handleSearchChange = (event: { target: { value: string; }; }) => {
+    const query = event.target.value.toLowerCase();
+    if (query) {
       const filtered = dataSurvei.filter((survey) =>
-        survey.judul.toLowerCase().includes(searchQuery)
+        survey.judul.toLowerCase().includes(query)
       );
      
       setDataSurvei(filtered);
@@ -91,11 +106,6 @@ export default function BerandaPage() {
       
       setDataSurvei(dataTemp);
     }
-  }, [searchQuery]);
-
-  const handleSearchChange = (event: { target: { value: string; }; }) => {
-    const query = event.target.value.toLowerCase();
-    setSearchQuery(query);
   };
 
   const handleSelectChange2 = (selectedValues: Set<string>) => {
