@@ -142,7 +142,7 @@ const LupaComponent = () => {
 }
 
 export default function LupaPage() {
-  <Suspense>
+  return <Suspense>
     <LupaComponent></LupaComponent>
   </Suspense>
 };
