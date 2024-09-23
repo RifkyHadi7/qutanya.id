@@ -120,8 +120,8 @@ const KonfirmasiNamaTanggalLahirComponent = () => {
           fullWidth
           className={[
             "max-w-xs",
-            "bg-default-200/50", // Background color
-            "dark:bg-default/60", // Background color for dark mode
+            "bg-default-200/50",
+            "dark:bg-default/60",
             "text-black/90 dark:text-white/90",
             "placeholder:text-default-700/50 dark:placeholder:text-white/60",
             "shadow-xl",
